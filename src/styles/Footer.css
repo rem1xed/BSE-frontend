@@ -3,7 +3,8 @@
     justify-content: space-between;
     background-color: rgb(0, 0, 0);
     width: 100%;
-    position: botttom;
+    position:relative;
+    bottom: 0;
     color: white;
 }
 
