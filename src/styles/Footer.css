@@ -1,0 +1,13 @@
+.Footer {
+    display: flex;
+    justify-content: space-between;
+    background-color: rgb(0, 0, 0);
+    width: 100%;
+    position: botttom;
+    color: white;
+}
+
+.Footer ul{
+    padding: 0 ;
+    padding-inline: 5em ;
+}
