@@ -12,3 +12,10 @@
     padding: 0 ;
     padding-inline: 5em ;
 }
+.Up-Word{
+    color: grey;
+}
+a {
+    text-decoration: none;
+    color: white;
+}
