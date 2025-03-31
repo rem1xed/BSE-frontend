@@ -13,7 +13,6 @@ function App() {
         </div>
         <div className="Footer-conteiner">
           <Footer />
-
         </div>
       </div>
     </div>

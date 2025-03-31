@@ -9,13 +9,18 @@
 }
 
 .Footer ul{
-    padding: 0 ;
+
+    padding: 0 ;                   
     padding-inline: 5em ;
+    list-style: none;
 }
 .Up-Word{
-    color: grey;
+    color: grey;                         
 }
 a {
     text-decoration: none;
     color: white;
+}
+li {
+    margin: 16px;
 }
