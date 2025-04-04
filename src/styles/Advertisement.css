@@ -1,0 +1,57 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.Advertisement {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 95%;
+    max-width: 1000px;
+    padding: 30px;
+}
+
+.Advertisement-image {
+    width: 150px;
+    height: 100px;
+    margin-right: 20px;
+}
+
+.Advertisement-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* об'єкт маштабуєьтся в задані розміри з дотриманням пропорцій */
+    border-radius: 4px;
+}
+
+.Advertisement-info {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.Advertisement-text-conteiner {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.current-item-condition {
+    font-size: 16px;
+    font-weight: bold;
+    color: #888;
+}
+
+.item-location {
+    font-size: 14px;
+    color: #777;
+}
+
+.Advertisement-cost {
+    font-size: 20px;
+    font-weight: bold;
+    color: black;
+    text-align: right;
+}

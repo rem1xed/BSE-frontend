@@ -1,5 +1,6 @@
-import Footer from './components/Footer';
 import './App.css';
+import Footer from './components/molecules/Footer';
+import Advertisement from './components/molecules/Advertisement';
 
 function App() {
   return (
@@ -9,10 +10,10 @@ function App() {
           {/* here must be header */}
         </div>
         <div className="Content-conteiner">
-          {/* here must be content */}
+          {/* here must be main content */}
         </div>
         <div className="Footer-conteiner">
-          <Footer />
+          {/* here must be footer */}
         </div>
       </div>
     </div>
