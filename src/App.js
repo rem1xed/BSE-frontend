@@ -11,9 +11,15 @@ function App() {
         </div>
         <div className="Content-conteiner">
           {/* here must be main content */}
+          <div className="Advertisement-conteiner">
+          <Advertisement />
+          <Advertisement />
+          <Advertisement />
+          </div>
         </div>
         <div className="Footer-conteiner">
           {/* here must be footer */}
+          <Footer />
         </div>
       </div>
     </div>
