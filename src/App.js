@@ -12,14 +12,11 @@ function App() {
         <div className="Content-conteiner">
           {/* here must be main content */}
           <div className="Advertisement-conteiner">
-          <Advertisement />
-          <Advertisement />
-          <Advertisement />
+          {/* here must be advertisement */}
           </div>
         </div>
         <div className="Footer-conteiner">
           {/* here must be footer */}
-          <Footer />
         </div>
       </div>
     </div>
