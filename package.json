@@ -10,8 +10,12 @@
     "axios": "^1.8.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+<<<<<<< HEAD
+    "react-scripts": "^5.0.1",
+=======
     "react-router-dom": "^7.4.1",
     "react-scripts": "5.0.1",
+>>>>>>> VS-registration-page
     "web-vitals": "^2.1.4"
   },
   "scripts": {
