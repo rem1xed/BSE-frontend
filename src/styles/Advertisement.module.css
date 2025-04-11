@@ -12,45 +12,45 @@
     padding: 30px;
 }
 
-.Advertisement-image {
+.Advertisement_Image {
     width: 150px;
     height: 100px;
     margin-right: 20px;
 }
 
-.Advertisement-image img {
+.Advertisement_Image img {
     width: 100%;
     height: 100%;
-    object-fit: contain; /* об'єкт маштабуєьтся в задані розміри з дотриманням пропорцій */
+    object-fit: contain;
     border-radius: 4px;
 }
 
-.Advertisement-info {
+.Advertisement_Info {
     display: flex;
     flex-grow: 1;
     flex-direction: column;
     width: 70%;
 }
 
-.Advertisement-text-conteiner {
+.Advertisement_Text_Conteiner {
     font-size: 18px;
     font-weight: bold;
     margin-bottom: 8px;
     color: #333;
 }
 
-.current-item-condition {
+.current_Item_Condition {
     font-size: 16px;
     font-weight: bold;
     color: #888;
 }
 
-.item-location {
+.item_Location {
     font-size: 14px;
     color: #777;
 }
 
-.Advertisement-cost {
+.Advertisement_Cost {
     font-size: 20px;
     font-weight: bold;
     color: black;
@@ -58,13 +58,37 @@
 }
 
 @media (max-width: 1000px){
-    .Advertisement{
-        width: 200px;
+    .Advertisement {
+        width: 90%;
         flex-direction: column;
+        align-items: center;
+        padding: 20px;
     }
-    .Advertisement-image {
+
+    .Advertisement_Image {
         width: 100%;
         height: auto;
-        margin-right: 0;
+        margin-bottom: 10px;
+    }
+
+    .Advertisement_Info {
+        width: 100%;
+        align-items: center;
+        text-align: center;
+    }
+
+    .Advertisement_Text_Conteiner {
+        font-size: 16px;
+    }
+
+    .current_Item_Condition,
+    .itemLocation {
+        font-size: 14px;
+    }
+
+    .Advertisement_Cost {
+        font-size: 18px;
+        margin-top: 10px;
+        text-align: center;
     }
 }
