@@ -1,26 +1,14 @@
 import './App.css';
-import Footer from './components/molecules/Footer';
-import Advertisement from './components/molecules/Advertisement';
+// import Footer from './components/molecules/Footer';
 
 function App() {
   return (
     <div className="App">
-      <div className="page-conteiner">
-        <div className="Header-conteiner">
-          {/* here must be header */}
-        </div>
-        <div className="Content-conteiner">
-          {/* here must be main content */}
-          <div className="Advertisement-conteiner">
-          {/* here must be advertisement */}
-          </div>
-        </div>
-        <div className="Footer-conteiner">
-          {/* here must be footer */}
-        </div>
-      </div>
+        {/* here must be header */}
+        {/* here must be main content */}
+        {/* here must be footer */}
     </div>
-  );
+  )
 }
 
 export default App;
