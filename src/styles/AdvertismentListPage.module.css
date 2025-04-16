@@ -1,0 +1,24 @@
+.advertisList{
+    width: 100%;
+}
+
+
+.Advertisement_Conteiner{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    width:100%;
+}
+.advertisList h1 {
+    text-align: left;
+}
+
+
+@media (max-width: 1000px) {
+    .Advertisement_Conteiner {
+        display: flex;
+        flex-wrap: wrap;
+        /* justify-content: space-evenly; */
+        max-width: 1000px;
+    }
+}
