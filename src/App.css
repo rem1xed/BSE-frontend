@@ -1,38 +1,101 @@
-.App {
-  text-align: center;
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #fff;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.chat-container {
+    display: flex;
+    height: 86.5vh;
+    margin-left: 283px;
+    margin-top: 98px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.sidebar {
+    width: 250px;
+    background-color: #f9f9f9;
+    border-right: 1px solid #ccc;
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.sidebar-header {
+    margin-bottom: 20px;
 }
 
-.App-link {
-  color: #61dafb;
+.buy-sell-btn {
+    padding: 8px 16px;
+    font-size: 16px;
+    background-color: #f1f1f1;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    font-weight: bold;
+    margin: 0 auto;
+    display: block;
+    border-radius: 16px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+
+.msg-p {
+    background: #f1f1f1;
+    width: 209px;
+        height: 47px;
+        font-weight: 400;
+            font-size: 24px;
+            padding-top: 20px;
+            text-align: center;
+            color: #000;
+}
+
+.buy-sell-btn span {
+    text-decoration: underline;
+}
+
+.chat-list {
+    list-style: none;
+    padding: 0;
+}
+
+.chat-list li {
+    margin-bottom: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+}
+
+.chat-list li.active {
+    font-weight: bold;
+    background-color: #e6f0ff;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    background-color: #007bff;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 8px;
+}
+
+.chat-main {
+    flex-grow: 1;
+    padding: 30px;
+    background-color: #fff;
+    box-sizing: border-box;
+}
+
+.message {
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
+.sender {
+    font-weight: bold;
+    margin-right: 8px;
 }
