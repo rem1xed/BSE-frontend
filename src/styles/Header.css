@@ -135,7 +135,6 @@ header {
     background-color: white;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-    overflow: hidden;
 }
 
 .sidebar {
@@ -237,4 +236,9 @@ header {
     outline: none;
     box-shadow: none;
     border: none;
+}
+
+.sidebar-container {
+    z-index: 1000;
+    position: relative;
 }
