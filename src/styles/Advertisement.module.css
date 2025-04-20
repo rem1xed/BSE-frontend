@@ -59,7 +59,6 @@
     text-align: right;
   }
   
-  /* Контейнер для двох елементів в ряд */
   .Advertisement_Conteiner {
     display: flex;
     flex-wrap: wrap;
@@ -69,6 +68,7 @@
     margin: 0 auto;
   }
   
+  /* Контейнер для двох елементів в ряд */
   @media (max-width: 1000px) {
     .Advertisement {
       display: flex;
@@ -105,8 +105,8 @@
       text-align: center;
     }
   }
-  
-  @media (max-width: 820px) {
+  /* версія для малих телефонів */
+  @media (max-width: 750px) {
     .Advertisement {
       width: 80%;
     }

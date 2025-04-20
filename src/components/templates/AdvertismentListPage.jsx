@@ -6,9 +6,8 @@ import classes from '../../styles/AdvertismentListPage.module.css';
 function AdvertismentListPage() {
     return (
         <div classame={classes.Page}>
-            {/* <Header/> */}
             <div className={classes.advertisList}>
-                <h1 >New advertisment</h1>
+                <h1 >Advertisement</h1>
 
                 <div className={classes.Advertisement_Conteiner}>
                     <Advertisement />
@@ -17,11 +16,6 @@ function AdvertismentListPage() {
                     <Advertisement />
                     <Advertisement />
                     <Advertisement />
-
-                    
-
-
-
                 </div>
             </div>
             <Footer />

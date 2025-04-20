@@ -11,6 +11,7 @@
 }
 .advertisList h1 {
     text-align: left;
+    margin: 20px;
 }
 
 
@@ -18,7 +19,6 @@
     .Advertisement_Conteiner {
         display: flex;
         flex-wrap: wrap;
-        /* justify-content: space-evenly; */
         max-width: 1000px;
     }
 }
