@@ -11,6 +11,7 @@ const App = () => {
       <div className="divForNewCust">
         <h1>New Customer?</h1>
         <p>Sign in</p>
+        {/* <p>or you forget password</p>  */}
       </div>
       <div className="registration">
         <div className="alighElRegist">

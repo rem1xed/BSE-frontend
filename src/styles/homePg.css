@@ -1,0 +1,342 @@
+/* App.css */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .main-container {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .add-button {
+    display: block;
+    margin: 20px auto;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    background-color: #2563eb;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 2px 5px rgba(37, 99, 235, 0.3);
+  }
+  
+  .add-button:hover {
+    background-color: #1d4ed8;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(37, 99, 235, 0.3);
+  }
+  
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .form-container-large {
+    position: relative;
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 900px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
+  }
+  
+  .close-button {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    color: #666;
+    transition: all 0.2s;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+  }
+  
+  .close-button:hover {
+    background-color: #f5f5f5;
+    color: #333;
+  }
+  
+  .form-columns {
+    display: flex;
+    gap: 30px;
+  }
+  
+  .form-left {
+    flex: 1;
+  }
+  
+  .form-right {
+    flex: 1;
+  }
+  
+  .input,
+  .textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    margin-top: 8px;
+    margin-bottom: 15px;
+    font-size: 16px;
+    transition: all 0.3s;
+  }
+  
+  .input:focus,
+  .textarea:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+  }
+  
+  .textarea {
+    min-height: 120px;
+    resize: vertical;
+  }
+  
+  .file-upload {
+    margin: 15px 0;
+  }
+  
+  .file-upload-label {
+    display: block;
+    padding: 12px;
+    background: #f8fafc;
+    border: 2px dashed #bfdbfe;
+    border-radius: 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-bottom: 15px;
+  }
+  
+  .file-upload-label:hover {
+    background: #f0f5ff;
+    border-color: #93c5fd;
+  }
+  
+  .file-upload-label span {
+    color: #2563eb;
+    font-weight: 500;
+  }
+  
+  #file-input {
+    display: none;
+  }
+  
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 12px 0;
+  }
+  
+  .grid-item {
+    position: relative;
+    aspect-ratio: 1;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #f5f5f5;
+    border: 1px solid #e2e8f0;
+  }
+  
+  .image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .delete-button {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 24px;
+    height: 24px;
+    background: rgba(37, 99, 235, 0.8);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+  }
+  
+  .delete-button:hover {
+    background: rgba(29, 78, 216, 0.9);
+  }
+  
+  .submit-button {
+    width: 100%;
+    padding: 15px;
+    background: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: all 0.3s;
+  }
+  
+  .submit-button:hover {
+    background: #1d4ed8;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(37, 99, 235, 0.3);
+  }
+  
+  .advertisements-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 25px;
+    margin-top: 40px;
+  }
+  
+  .advertisement-card {
+    display: flex;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s;
+    height: 200px;
+    border: 1px solid #e2e8f0;
+  }
+  
+  .advertisement-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(37, 99, 235, 0.1);
+  }
+  
+  .advertisement-image {
+    width: 200px;
+    height: 100%;
+    flex-shrink: 0;
+  }
+  
+  .advertisement-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .advertisement-content {
+    padding: 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .advertisement-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  
+  .advertisement-header h3 {
+    font-size: 18px;
+    color: #1e293b;
+  }
+  
+  .advertisement-price {
+    font-size: 20px;
+    font-weight: bold;
+    color: #2563eb;
+  }
+  
+  .advertisement-category {
+    font-size: 14px;
+    color: #64748b;
+    margin-bottom: 10px;
+  }
+  
+  .advertisement-description {
+    font-size: 14px;
+    color: #475569;
+    margin-bottom: auto;
+    display: -webkit-box;
+    /* -webkit-line-clamp: 3; */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  .advertisement-footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    font-size: 13px;
+    color: #64748b;
+  }
+  
+  @media (max-width: 900px) {
+    .form-columns {
+      flex-direction: column;
+      gap: 20px;
+    }
+  
+    .form-container-large {
+      width: 95%;
+      padding: 20px;
+    }
+  
+    .grid-container {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .advertisements-container {
+      grid-template-columns: 1fr;
+    }
+  
+    .advertisement-card {
+      flex-direction: column;
+      height: auto;
+    }
+  
+    .advertisement-image {
+      width: 100%;
+      height: 200px;
+    }
+  
+    .grid-container {
+      grid-template-columns: 1fr;
+    }
+  
+    .main-container {
+      padding: 10px;
+    }
+  
+    .add-button {
+      width: 100%;
+      margin: 10px 0;
+    }
+  }
+  
