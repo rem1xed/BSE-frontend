@@ -1,4 +1,5 @@
 import './App.css';
+import AddPage from './components/templates/addPage';
 // import Footer from './components/molecules/Footer';
 
 function App() {

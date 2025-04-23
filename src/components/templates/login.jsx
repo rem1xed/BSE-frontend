@@ -1,21 +1,21 @@
-import '../../styles/Login.css'
+import classes from '../../styles/Login.module.css'
 
 const App = () => {
   return (
-    <div className="login-container">
-      <div className="navigation">
+    <div className={classes.login_container}>
+      <div className={classes.navigation}>
         <h1>Home</h1>
         <h1>&rarr;</h1>
         <h1>Login</h1>
       </div>
-      <div className="divForNewCust">
+      <div className={classes.divForNewCust}>
         <h1>New Customer?</h1>
         <p>Sign in</p>
       </div>
-      <div className="registration">
-        <div className="alighElRegist">
-          <h1 className="h1InReg">Email address</h1>
-          <p className="zirochkaRed">*</p>
+      <div className={classes.registration}>
+        <div className={classes.alighElRegist}>
+          <h1 className={classes.h1InReg}>Email address</h1>
+          <p className={classes.zirochkaRed}>*</p>
           <input
             placeholder="Write your Email"
             type="text"
@@ -24,8 +24,8 @@ const App = () => {
           />
         </div>
         <div>
-          <h1 className="h1InReg">Phone Number</h1>
-          <p className="zirochkaRed">*</p>
+          <h1 className={classes.h1InReg}>Phone Number</h1>
+          <p className={classes.zirochkaRed}>*</p>
           <br />
           <input
             placeholder="Write your Phone Number"
@@ -35,12 +35,13 @@ const App = () => {
           />
 
           <div>
-            <button className="leftSideInLoginEl">Button</button>
+            <button className={classes.leftSideInLoginEl}>Button</button>
           </div>
         </div>
       </div>
     </div>
   )
 }
+
 
 export default App
