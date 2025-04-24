@@ -57,7 +57,7 @@
   border-radius: 8px;
 }
 
-button{
+.registrationButton {
   border-radius: 50px;
   width: 30%;
   height: 30px;
@@ -67,7 +67,7 @@ button{
   transition: all 0.1s ease-in-out;
 }
 
-button:focus{
+.registrationButton:focus {
   border-radius: 50px;
   width: 30%;
   height: 30px;
@@ -75,6 +75,10 @@ button:focus{
   background-color: #fff;
   color: #0156ff;
   transition: all 0.1s ease-in-out;
+}
+
+.registrationButton:hover {
+  background-color: #0145cc;
 }
 
 .right_container{
