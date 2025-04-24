@@ -1,3 +1,6 @@
+import { useState } from "react";
+
+
 const allMessages = {
   Ihor: [
     { sender: "Ihor", icon: "🧑‍💼", text: "Hello this is your advertisement?" },
@@ -11,15 +14,42 @@ const allMessages = {
 };
 
 function ChatWindow({ selectedUser }) {
-  const messages = allMessages[selectedUser] || [];
+  const [messages, setMessages] = useState(allMessages[selectedUser] || []);
+  const [newMessage, setNewMessage] = useState("");
+
+  const handleSendMessage = () => {
+    if (newMessage.trim() !== "") {
+      const newMsg = {
+        sender: "user1",
+        icon: "🌷",
+        text: newMessage,
+      };
+      setMessages([...messages, newMsg]);
+      setNewMessage(""); 
+    }
+  };
 
   return (
     <main className="chat-main">
-      {messages.map((msg, index) => (
-        <div className="message" key={index}>
-          <span className="sender">{msg.icon} {msg.sender}:</span> {msg.text}
-        </div>
-      ))}
+      <div className="chat-messages">
+        {messages.map((msg, index) => (
+          <div className="message" key={index}>
+            <span className="sender">{msg.icon} {msg.sender}:</span> {msg.text}
+          </div>
+        ))}
+      </div>
+
+      <div className="message-input">
+        <input
+          type="text"
+          value={newMessage}
+          onChange={(e) => setNewMessage(e.target.value)}
+          placeholder="Send a message"
+        />
+        <button className="btn" onClick={handleSendMessage}>
+    <img src={`${process.env.PUBLIC_URL}/photo-chat/btnn.png`} alt="send" />
+  </button>
+      </div>
     </main>
   );
 }

@@ -9,6 +9,7 @@ body {
     height: 86.5vh;
     margin-left: 283px;
     margin-top: 98px;
+    flex-direction: row;
 }
 
 .sidebar {
@@ -38,16 +39,15 @@ body {
     border-radius: 16px;
 }
 
-
 .msg-p {
     background: #f1f1f1;
     width: 209px;
-        height: 47px;
-        font-weight: 400;
-            font-size: 24px;
-            padding-top: 20px;
-            text-align: center;
-            color: #000;
+    height: 47px;
+    font-weight: 400;
+    font-size: 24px;
+    padding-top: 20px;
+    text-align: center;
+    color: #000;
 }
 
 .buy-sell-btn span {
@@ -88,6 +88,13 @@ body {
     padding: 30px;
     background-color: #fff;
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-messages {
+    overflow-y: auto;
+    flex-grow: 1;
 }
 
 .message {
@@ -98,4 +105,39 @@ body {
 .sender {
     font-weight: bold;
     margin-right: 8px;
+}
+
+/* New styles for message input */
+.message-input {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+    position: sticky;
+    bottom: 0;
+    background-color: white;
+    padding: 10px 0;
+    box-sizing: border-box;
+}
+
+.message-input input {
+    width: 650px;
+    padding: 12px;
+    border-radius: 24px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    margin-right: 10px;
+    box-sizing: border-box;
+}
+
+.message-input button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.message-input p {
+    font-size: 12px;
+    color: #888;
+    margin-left: 10px;
+    margin-top: 5px;
 }
