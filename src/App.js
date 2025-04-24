@@ -1,5 +1,5 @@
 import './App.css'
-import AddPage from './components/templates/addPage' // Шлях до вашого компонента
+import AddPage from './components/templates/AddPage' // Шлях до вашого компонента
 
 function App() {
   return (

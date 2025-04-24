@@ -9,6 +9,7 @@ import RegistrationPage from './components/templates/RegistrationPage';
 import Account from './components/templates/Account';
 import LoginPage from './components/templates/LoginPage';
 import ProtectedRoute, { PublicOnlyRoute } from './components/molecules/ProtectedRoute';
+import AddPage from './components/templates/AddPage';
 
 // Елементи з перевіркою авторизації
 const ProtectedAccount = () => (
@@ -34,6 +35,7 @@ const router = createBrowserRouter([
   {path:'/login', element: <PublicLogin />},
   {path:'/register', element: <PublicRegister />},
   {path:'/account', element: <ProtectedAccount />},
+  {path:'/add', element: <AddPage />},
   {path:'*', element: <NotFoundPage />},
 ]);
 
