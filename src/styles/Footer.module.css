@@ -3,19 +3,17 @@
     justify-content: space-between;
     background-color: rgb(0, 0, 0);
     width: 100%;
-    position:relative;
+    position: relative;
     bottom: 0;
     color: white;
 }
-
-.Footer ul{
-
-    padding: 0 ;                   
-    padding-inline: 5em ;
+.Footer ul {
+    padding: 0;                  
+    padding-inline: 5em;
     list-style: none;
 }
-.Up-Word{
-    color: grey;                         
+.Up_Word {
+    color: grey;                        
 }
 a {
     text-decoration: none;

@@ -9,6 +9,7 @@
   justify-content: center;
   height: 100%;
   background-color: #fff;
+  min-height: 600px;
 }
 
 .upper_inner_container{
@@ -57,7 +58,7 @@
   border-radius: 8px;
 }
 
-button{
+.registrationButton {
   border-radius: 50px;
   width: 30%;
   height: 30px;
@@ -67,7 +68,7 @@ button{
   transition: all 0.1s ease-in-out;
 }
 
-button:focus{
+.registrationButton:focus {
   border-radius: 50px;
   width: 30%;
   height: 30px;
@@ -75,6 +76,10 @@ button:focus{
   background-color: #fff;
   color: #0156ff;
   transition: all 0.1s ease-in-out;
+}
+
+.registrationButton:hover {
+  background-color: #0145cc;
 }
 
 .right_container{
@@ -91,4 +96,16 @@ button:focus{
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.container {
+  display: flex;
+}
+
+.left_container, .right_container {
+  flex: 1; /* обидві займають однакову ширину */
+  height: 600px; /* або можна задати висоту під контент */
+  border: 1px solid #ccc; /* просто для наочності */
+  padding: 20px;
+  box-sizing: border-box;
 }
