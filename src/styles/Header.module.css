@@ -3,30 +3,26 @@ body {
     font-family: Arial, sans-serif;
     background-color: #f5f6fa;
 }
-
 header {
     display: flex;
     flex-direction: column;
     border-bottom: 1px solid #cacdd8;
     background-color: white;
-    height: 132px;
+    /* height: 132px; */
 }
-
 /* ----- ВЕРХНІЙ РЯДОК (ЛОГО, ПОШУК, ІКОНКИ) ----- */
 .BasicContent {
     display: flex;
     align-items: center;
 }
-
 /* Логотип */
-.logo-header {
+.logo_header {
     margin-left: 312px;
     margin-top: 26px;
     margin-bottom: 26px;
 }
-
 /* Пошук */
-.search-bar {
+.search_bar {
     max-width: 490px;
     margin-left: 200px;
     margin-right: 49px;
@@ -35,8 +31,7 @@ header {
     display: flex;
     justify-content: center;
 }
-
-.search-bar input {
+.search_bar input {
     width: 100%;
     max-width: 458px;
     padding: 15px 16px;
@@ -45,46 +40,39 @@ header {
     font-size: 14px;
     margin: 0;
 }
-
 /* Блок знижки + іконки */
-.right-block {
+.right_block {
     display: flex;
     align-items: center;
     gap: 48px;
 }
-
-.discount-block {
+.discount_block {
     display: flex;
     align-items: center;
     gap: 8px;
 }
-
-.discount-button {
+.discount_button {
     width: 48px;
     height: 48px;
 }
-
-.discount-block p {
+.discount_block p {
     margin: 0;
     font-size: 14px;
 }
-
 /* Іконки */
 .comunication {
     display: flex;
     gap: 20px;
     align-items: center;
 }
-
 /* ----- НИЖНІЙ РЯДОК (МЕНЮ + ВАЛЮТА) ----- */
-.nav-row {
+.nav_row {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin: 0 112px 0 312px;
 }
-
-/* Меню товарів (Best Sellers, Today’s Deals...) */
+/* Меню товарів (Best Sellers, Today's Deals...) */
 .goods {
     display: flex;
     align-items: center;
@@ -92,7 +80,6 @@ header {
     padding: 0;
     margin: 0;
 }
-
 .goods a {
     text-decoration: none;
     color: black;
@@ -101,7 +88,6 @@ header {
     font-weight: bold;
     cursor: pointer;
 }
-
 /* Кнопка FILTER */
 .filter {
     display: flex;
@@ -118,14 +104,12 @@ header {
     padding: 11px 20px;
     position: relative;
 }
-
 .filter .arrow {
     margin-left: auto;
     /* стрілка праворуч */
 }
-
 /* ----- САЙДБАР (ЛІВА ПАНЕЛЬ + ПРАВА ПАНЕЛЬ) ----- */
-.sidebar-container {
+.sidebar_container {
     display: flex;
     flex-direction: row;
     margin-top: 20px;
@@ -136,7 +120,6 @@ header {
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
-
 .sidebar {
     width: 260px;
     background-color: #f1f3f9;
@@ -144,21 +127,18 @@ header {
     padding: 16px;
     border-right: 1px solid #ccc;
 }
-
 .sidebar h3 {
     margin-top: 0;
     margin-bottom: 16px;
     color: #2f2f2f;
 }
-
 /* Список категорій */
-.categories-list {
+.categories_list {
     list-style: none;
     padding: 0;
     margin: 0;
 }
-
-.category-item {
+.category_item {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -166,79 +146,65 @@ header {
     color: #333;
     cursor: pointer;
 }
-
-.category-item:hover {
+.category_item:hover {
     font-weight: bold;
 }
-
-.category-item img {
+.category_item img {
     width: 20px;
     height: 20px;
     object-fit: contain;
 }
-
 /* Права панель (підкатегорії) */
 .subcategories {
     flex: 1;
     padding: 16px;
 }
-
 .subcategories h3 {
     margin-top: 0;
     margin-bottom: 24px;
 }
-
-.subcategories .subcategory-grid {
+.subcategories .subcategory_grid {
     display: flex;
     gap: 40px;
 }
-
 .subcategory {
     width: 160px;
 }
-
 .subcategory h4 {
     margin-top: 0;
     margin-bottom: 10px;
     font-size: 16px;
 }
-
 .subcategory ul {
     list-style: none;
     padding: 0;
     margin: 0;
 }
-
 .subcategory li {
     margin-bottom: 8px;
     color: #333;
     cursor: pointer;
 }
-
 .subcategory li:hover {
     text-decoration: underline;
 }
-
 /* ----- МОВА ТА ВАЛЮТА ----- */
 .dropdowns {
     display: flex;
     gap: 10px;
     justify-content: end;
 }
-
 .dropdowns select {
     padding: 4px 8px;
     border-radius: 4px;
     border: none;
 }
-
 .dropdowns select:focus {
     outline: none;
     box-shadow: none;
     border: none;
 }
-
-.sidebar-container {
+.sidebar_container {
     z-index: 1000;
     position: relative;
 }

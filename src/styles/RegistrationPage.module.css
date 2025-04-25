@@ -9,6 +9,7 @@
   justify-content: center;
   height: 100%;
   background-color: #fff;
+  min-height: 600px;
 }
 
 .upper_inner_container{
@@ -95,4 +96,16 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.container {
+  display: flex;
+}
+
+.left_container, .right_container {
+  flex: 1; /* обидві займають однакову ширину */
+  height: 600px; /* або можна задати висоту під контент */
+  border: 1px solid #ccc; /* просто для наочності */
+  padding: 20px;
+  box-sizing: border-box;
 }

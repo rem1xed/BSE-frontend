@@ -17,7 +17,7 @@
 .divForNewCust {
   display: flex;
   flex-direction: column;
-  justify-content: start;
+  justify-content: center;
   align-items: start;
   background-color: #f5f7ff;
   width: 600px;

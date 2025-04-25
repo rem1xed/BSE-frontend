@@ -1,28 +1,28 @@
 import React from 'react'
-import './ForgotPassword.css' // Підключаємо окремий CSS файл
+import style from '../../styles/ForgotPassword.module.css' // Підключаємо окремий CSS файл
 
 const ForgotPassword = () => {
   return (
-    <div className="App">
+    <div className={style.App}>
       {/* Навігаційна панель */}
-      <div className="navigation">
+      <div className={style.navigation}>
         <h1>Home</h1>
         <h1>·</h1>
         <h1>Forgot password</h1>
       </div>
 
       {/* Основний контент */}
-      <div className="containerForForgetPassP1">
-        <div className="forgotPasswordContent">
-          <h1 className="forgotPasswordh1">Forgot password</h1>
+      <div className={style.containerForForgetPassP1}>
+        <div className={style.forgotPasswordContent}>
+          <h1 className={style.forgotPasswordh1}>Forgot password</h1>
           <p>Please enter your email to reset the password</p>
 
-          <form className="forgotPasswordForm">
+          <form className={style.forgotPasswordForm}>
             <label htmlFor="email">Your Email</label>
             <input
               type="email"
               id="email"
-              className="input"
+              className={style.input}
               placeholder="Enter your email"
               required
             />

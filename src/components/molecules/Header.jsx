@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../../styles/Header.css";
+import style from "../../styles/Header.module.css";
 
 import logo from "../../assets/photo-header/logo.png";
 import secondaryButton from "../../assets/photo-header/Secondary Button.png";
@@ -108,24 +108,24 @@ function Header() {
 
   return (
     <header>
-      <div className="BasicContent">
+      <div className={style.BasicContent}>
         <a href="#">
-          <img src={logo} alt="logo" className="logo-header" width="36" height="36" />
+          <img src={logo} alt="logo" className={style.logo_header} width="36" height="36" />
         </a>
 
-        <div className="search-bar">
+        <div className={style.search_bar}>
           <input type="text" placeholder="Search the products" />
         </div>
 
-        <div className="right-block">
-          <div className="discount-block">
+        <div className={style.right_block}>
+          <div className={style.discount_block}>
             <a href="#">
-              <img src={secondaryButton} alt="discount" className="discount-button" />
+              <img src={secondaryButton} alt="discount" className={style.discount_button} />
             </a>
             <p>Only this month</p>
           </div>
 
-          <div className="comunication">
+          <div className={style.comunication}>
             <a href="#"><img src={iconMoon} alt="dark-theme" width="18" height="18" /></a>
             <a href="#"><img src={iconHeart} alt="like" width="18" height="18" /></a>
             <a href="#"><img src={iconUser} alt="cabinet" width="18" height="18" /></a>
@@ -134,11 +134,11 @@ function Header() {
         </div>
       </div>
 
-      <div className="nav-row">
-        <div className="goods">
-          <button className="filter" onClick={handleFilterClick}>
+      <div className={style.nav_row}>
+        <div className={style.goods}>
+          <button className={style.filter} onClick={handleFilterClick}>
             <img src={iconFilter} alt="filter icon" width="18" height="18" />
-            Filter <span className="arrow">{openSidebar ? "▲" : "▼"}</span>
+            Filter <span className={style.arrow}>{openSidebar ? "▲" : "▼"}</span>
           </button>
           <a href="#">Best Sellers</a>
           <a href="#">Today’s Deals</a>
@@ -146,7 +146,7 @@ function Header() {
           <a href="#">Gift Cards</a>
         </div>
 
-        <div className="dropdowns">
+        <div className={style.dropdowns}>
           <select>
             <option>Eng</option>
             <option>Ukr</option>
@@ -159,48 +159,48 @@ function Header() {
       </div>
 
       {openSidebar && (
-        <div className="sidebar-container">
-          <div className="sidebar">
+        <div className={style.sidebar_container}>
+          <div className={style.sidebar}>
             <h3>Categories</h3>
-            <ul className="categories-list">
-              <li className="category-item" onClick={() => handleCategoryClick("gamers")}>
+            <ul className={style.categories_list}>
+              <li className={style.category_item} onClick={() => handleCategoryClick("gamers")}>
                 <img src={category1} alt="gamers" /> products for gamers
               </li>
-              <li className="category-item" onClick={() => handleCategoryClick("electronics")}>
+              <li className={style.category_item} onClick={() => handleCategoryClick("electronics")}>
                 <img src={category2} alt="electronic" /> electronic
               </li>
-              <li className="category-item" onClick={() => handleCategoryClick("children")}>
+              <li className={style.category_item} onClick={() => handleCategoryClick("children")}>
                 <img src={category3} alt="children" /> children's goods
               </li>
-              <li className="category-item" onClick={() => handleCategoryClick("business")}>
+              <li className={style.category_item} onClick={() => handleCategoryClick("business")}>
                 <img src={category4} alt="business" /> business services
               </li>
-              <li className="category-item" onClick={() => handleCategoryClick("animals")}>
+              <li className={style.category_item} onClick={() => handleCategoryClick("animals")}>
                 <img src={category5} alt="animals" /> animals
               </li>
-              <li className="category-item" onClick={() => handleCategoryClick("transport")}>
+              <li className={style.category_item} onClick={() => handleCategoryClick("transport")}>
                 <img src={category6} alt="transport" /> spare parts for transport
               </li>
-              <li className="category-item" onClick={() => handleCategoryClick("furniture")}>
+              <li className={style.category_item} onClick={() => handleCategoryClick("furniture")}>
                 <img src={category7} alt="furniture" /> furniture
               </li>
-              <li className="category-item" onClick={() => handleCategoryClick("realestate")}>
+              <li className={style.category_item} onClick={() => handleCategoryClick("realestate")}>
                 <img src={category8} alt="real-estate" /> real estate
               </li>
-              <li className="category-item" onClick={() => handleCategoryClick("clothing")}>
+              <li className={style.category_item} onClick={() => handleCategoryClick("clothing")}>
                 <img src={category9} alt="clothing" /> clothing
               </li>
-              <li className="category-item" onClick={() => handleCategoryClick("sport")}>
+              <li className={style.category_item} onClick={() => handleCategoryClick("sport")}>
                 <img src={category10} alt="sport" /> sport goods
               </li>
             </ul>
           </div>
 
-          <div className="subcategories">
+          <div className={style.subcategories}>
             <h3>{subcategories[activeCategory].title}</h3>
-            <div className="subcategory-grid">
+            <div className={style.subcategory_grid}>
               {subcategories[activeCategory].data.map((group, index) => (
-                <div className="subcategory" key={index}>
+                <div className={style.subcategory} key={index}>
                   <h4>{group.title}</h4>
                   <ul>
                     {group.items.map((item, i) => (
