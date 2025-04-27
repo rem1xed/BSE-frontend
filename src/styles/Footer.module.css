@@ -1,4 +1,4 @@
-.Footer {
+footer {
     display: flex;
     justify-content: space-between;
     background-color: rgb(0, 0, 0);
@@ -7,7 +7,7 @@
     bottom: 0;
     color: white;
 }
-.Footer ul {
+footer ul {
     padding: 0;                  
     padding-inline: 5em;
     list-style: none;
@@ -15,10 +15,10 @@
 .Up_Word {
     color: grey;                        
 }
-a {
+footer a {
     text-decoration: none;
     color: white;
 }
-li {
+footer li {
     margin: 16px;
 }
