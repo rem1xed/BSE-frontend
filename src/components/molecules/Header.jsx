@@ -126,7 +126,11 @@ function Header() {
           </div>
 
           <div className={style.comunication}>
-            <a href="#"><img src={iconMoon} alt="dark-theme" width="18" height="18" /></a>
+            <a href="#">
+              <img src={iconMoon} alt="dark-theme" width="18" height="18" />
+              {/* add here <i> (it's like a text) from fontawesome.com instead <img> */}
+              {/* use <button> instead <a> ?? */}
+              </a>
             <a href="#"><img src={iconHeart} alt="like" width="18" height="18" /></a>
             <a href="#"><img src={iconUser} alt="cabinet" width="18" height="18" /></a>
             <a href="#"><img src={iconChat} alt="chat" width="18" height="18" /></a>
