@@ -1,10 +1,3 @@
-* {
-  box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
-  color: #666666;
-  margin: 0;
-}
-
 html,
 body,
 .outer_container {
@@ -97,6 +90,7 @@ body .button_inner {
 
 
 .button_inner .active_span {
+  transition: all 0.2s ease;
   background-color: #0156ff;
   width: 1.5%;
   height: 100%;
@@ -124,7 +118,6 @@ body .button_inner {
 .button_inner:has(.active_span) .nav_button {
   color: #0156ff;
   font-weight: 400;
-
 }
 
 /* RIGHT CONTAINER */
@@ -193,24 +186,6 @@ body .button_inner {
   align-items: center;
 }
 
-.edit_button {
-  border: none;
-  border-radius: 8px;
-  width: 100%;
-  height: 60%;
-  color: #fff;
-  background-color: #4182f9;
-  transition: all 0.2s ease;
-}
-
-.edit_button:hover,
-.edit_button:focus {
-  color: #4182f9;
-  background-color: #fff;
-  border: 2px solid #4182f9;
-  outline: none;
-}
-
 .info_2 {
   display: flex;
   flex-direction: row;
@@ -223,26 +198,6 @@ body .button_inner {
   flex-direction: column;
   justify-content: space-between;
   gap: 16px;
-}
-
-.info_row input,
-select {
-  width: 100%;
-  height: 40px;
-  border-radius: 8px;
-  border: none;
-  background-color: #f9f9f9;
-  padding-left: 10px;
-  transition: border 0.1s ease-in-out;
-}
-
-.info_row select:focus,
-input:focus {
-  border: 2px solid #4182f9;
-  background-color: #f9f9f9;
-  padding-left: 8px;
-  outline: none;
-  transition: border 0.1s ease-in-out;
 }
 
 .line{

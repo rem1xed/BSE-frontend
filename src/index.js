@@ -1,7 +1,67 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import App from "./App";
+import React from 'react';
+import { createRoot } from 'react-dom/client';
+import reportWebVitals from './reportWebVitals';
+import './index.css';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
-const rootElement = document.getElementById("root");
-const root = ReactDOM.createRoot(rootElement);
-root.render(<App />);
+import Layout from './components/templates/Layout';
+import AuthLayout from './components/templates/AuthLayout';
+
+import ProtectedRoute, { PublicOnlyRoute } from './components/molecules/ProtectedRoute';
+
+import App from './App';
+import NotFoundPage from './components/templates/NotFoundPage';
+import RegistrationPage from './components/templates/RegistrationPage';
+import Account from './components/templates/Account';
+import LoginPage from './components/templates/LoginPage';
+import AddPage from './components/templates/addPage';
+import ForgotPassword from './components/templates/ForgotPasswordPage';
+
+// Елементи з перевіркою авторизації
+const ProtectedAccount = () => (
+  <ProtectedRoute>
+    <Account />
+  </ProtectedRoute>
+);
+
+const PublicLogin = () => (
+  <PublicOnlyRoute>
+    <LoginPage />
+  </PublicOnlyRoute>
+);
+
+const PublicRegister = () => (
+  <PublicOnlyRoute>
+    <RegistrationPage />
+  </PublicOnlyRoute>
+);
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Layout />,
+    children: [
+      { index: true, element: <App /> }, // Головна сторінка з повним макетом
+      { path: 'account', element: <ProtectedAccount /> },
+      { path: 'add', element: <AddPage /> },
+      { path: '*', element: <NotFoundPage /> }
+    ]
+  },
+  {
+    path: '/', 
+    element: <AuthLayout />, // Використовуємо спрощений макет
+    children: [
+      { path: 'login', element: <PublicLogin /> },
+      { path: 'register', element: <PublicRegister /> },
+      { path: 'password-reset', element: <ForgotPassword /> }
+    ]
+  }
+]);
+
+createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+    <RouterProvider router={router} />
+  </React.StrictMode>
+);
+
+reportWebVitals();

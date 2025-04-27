@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styles from "../../styles/RegistrationPage.module.css";
 import Input from "../atoms/Input";
 import api from "../../api/axios";
+import Button from '../atoms/Button';
 
 export default function RegistrationPage() {
     const [formData, setFormData] = useState({
@@ -150,14 +151,14 @@ export default function RegistrationPage() {
     };
 
     return (
-        <div className={styles.container}>
+        <div className={styles.registration_container}>
             <div className={styles.upper_inner_container}>
                 <h1>Register</h1>
                 {apiError && <div className={styles.errorMessage}>{apiError}</div>}
             </div>
 
             <div className={styles.lower_inner_container}>
-                <div className={styles.left_container}>
+                <div className={`${styles.left_container} ${styles.glass_card}`}>
                     <form onSubmit={handleSubmit}>
                         <div className={styles.input_container}>
                             <label htmlFor="email">Email Address:</label>
@@ -238,27 +239,23 @@ export default function RegistrationPage() {
                         </div>
 
                         <div className={styles.button_container}>
-                            <button 
+                            <Button 
+                                children={loading ? 'Processing...' : 'Register'} 
                                 type="submit" 
                                 disabled={loading} 
-                                className={styles.registrationButton}
-                            >
-                                {loading ? 'Processing...' : 'Register'}
-                            </button>
+                            />
                         </div>
                     </form>
                 </div>
 
-                <div className={styles.right_container}>
+                <div className={`${styles.right_container} ${styles.glass_card}`}>
                     <div className={styles.inner_container}>
                         <h2>Have an account?</h2>
-                        <button 
+                        <Button 
+                            children={"Sign In"}
                             type="button" 
                             onClick={() => navigate('/login')} 
-                            className={styles.registrationButton}
-                        >
-                            Sign In
-                        </button>
+                        />
                     </div>
                 </div>
             </div>

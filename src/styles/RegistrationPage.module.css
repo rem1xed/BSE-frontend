@@ -1,111 +1,164 @@
-.container{
-  /* font: "poppins";
-  font-size: 14px; */
+@-webkit-keyframes bg-scrolling-reverse {
+  100% {
+    background-position: 50px 50px;
+  }
+}
+
+@-moz-keyframes bg-scrolling-reverse {
+  100% {
+    background-position: 50px 50px;
+  }
+}
+
+@-o-keyframes bg-scrolling-reverse {
+  100% {
+    background-position: 50px 50px;
+  }
+}
+
+@keyframes bg-scrolling-reverse {
+  100% {
+    background-position: 50px 50px;
+  }
+}
+
+@-webkit-keyframes bg-scrolling {
+  0% {
+    background-position: 50px 50px;
+  }
+}
+
+@-moz-keyframes bg-scrolling {
+  0% {
+    background-position: 50px 50px;
+  }
+}
+
+@-o-keyframes bg-scrolling {
+  0% {
+    background-position: 50px 50px;
+  }
+}
+
+@keyframes bg-scrolling {
+  0% {
+    background-position: 50px 50px;
+  }
+}
+
+main {
+  height: 100%;
+}
+
+.glass_card {
+  background: rgba(194, 207, 255, 0.20);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  border: 1px solid #0156ff14;
+}
+
+.registration_container {
+  /* img size is 50x50 */
+  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAIAAACRXR/mAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAABnSURBVHja7M5RDYAwDEXRDgmvEocnlrQS2SwUFST9uEfBGWs9c97nbGtDcquqiKhOImLs/UpuzVzWEi1atGjRokWLFi1atGjRokWLFi1atGjRokWLFi1af7Ukz8xWp8z8AAAA//8DAJ4LoEAAlL1nAAAAAElFTkSuQmCC") repeat 0 0;
+
+  -webkit-animation: bg-scrolling-reverse .92s infinite;
+  /* Safari 4+ */
+  -moz-animation: bg-scrolling-reverse .92s infinite;
+  /* Fx 5+ */
+  -o-animation: bg-scrolling-reverse .92s infinite;
+  /* Opera 12+ */
+  animation: bg-scrolling-reverse .92s infinite;
+  /* IE 10+ */
+  -webkit-animation-timing-function: linear;
+  -moz-animation-timing-function: linear;
+  -o-animation-timing-function: linear;
+  animation-timing-function: linear;
+}
+
+.registration_container {
   font-size: 12px;
   font-weight: 700;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100%;
   background-color: #fff;
-  min-height: 600px;
+  width: 100%;
+  padding: 20px 0;
+  height: 100%;
 }
 
-.upper_inner_container{
+.upper_inner_container {
   display: flex;
   justify-content: flex-start;
   width: 60%;
+  margin-bottom: 20px;
 }
 
-.lower_inner_container{
+.lower_inner_container {
   display: flex;
-  align-items: center;
-  gap: 32px;
   width: 60%;
-  height: 60%;
+  gap: 32px;
 }
 
-.left_container{
-  background-color: #f5f7ff;
-  width: 100%;
-  height: 100%;
-  gap: 16px;
+.left_container,
+.right_container {
+  flex: 1;
   border-radius: 8px;
+  height: 500px;
+  /* встановлюємо фіксовану висоту */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* overflow: auto;  для випадку, якщо контент не поміщається */
 }
 
-.left_container form{
+.left_container form {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  height: 100%;
+  width: 90%;
+  padding: 20px 0;
   gap: 16px;
 }
 
-.left_container form div{
+.input_container {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  width: 90%;
-}
-
-.right_container{
-  background-color: #f5f7ff;
   width: 100%;
-  height: 100%;
-  border-radius: 8px;
 }
 
-.registrationButton {
-  border-radius: 50px;
-  width: 30%;
-  height: 30px;
-  border: none;
-  background-color: #0156ff;
-  color: #fff;
-  transition: all 0.1s ease-in-out;
+.button_container {
+  width: 100%;
+  margin-top: 10px;
 }
 
-.registrationButton:focus {
-  border-radius: 50px;
-  width: 30%;
-  height: 30px;
-  border: 3px solid #0156ff;
-  background-color: #fff;
-  color: #0156ff;
-  transition: all 0.1s ease-in-out;
-}
-
-.registrationButton:hover {
-  background-color: #0145cc;
-}
-
-.right_container{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.right_container > .inner_container{
+.right_container .inner_container {
   width: 80%;
-  height: 80%;
   display: flex;
-  justify-content: center;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  text-align: center;
+  gap: 20px;
 }
 
-.container {
-  display: flex;
+/* Додамо стилі для помилок */
+.inputError {
+  border-color: red !important;
 }
 
-.left_container, .right_container {
-  flex: 1; /* обидві займають однакову ширину */
-  height: 600px; /* або можна задати висоту під контент */
-  border: 1px solid #ccc; /* просто для наочності */
-  padding: 20px;
-  box-sizing: border-box;
+.errorText {
+  color: red;
+  font-size: 11px;
+}
+
+.errorMessage {
+  color: red;
+  margin-top: 10px;
+  font-weight: 500;
 }
