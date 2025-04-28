@@ -216,10 +216,14 @@
     gap: 15px;
   }
   
-  .left_container,
-  .right_container {
+  .left_container{
     height: auto;
     min-height: 350px;
+    width: 100%;
+  }
+  .right_container {
+    height: auto;
+    min-height: 250px;
     width: 100%;
   }
   
