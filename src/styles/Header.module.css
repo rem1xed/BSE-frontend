@@ -2,21 +2,106 @@ body {
     margin: 0;
     background-color: #f5f6fa;
 }
+
 header {
     display: flex;
     flex-direction: column;
-    border-bottom: 1px solid #cacdd8;
     background-color: white;
-    /* height: 132px; */
+    background-color: #222934;
 }
+.mobile_header {
+    display: flex;
+    margin: 0 16px;
+    padding: 7px 0;
+    justify-content: space-between;
+    align-items: center;
+}
+.phone_left_mobile {
+    display: flex;
+    gap: 24px;
+}
+.burger {
+    width: 18px;
+    height: 12.6px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+    margin: 4.7px 1.95px;
+    z-index: 999;
+}
+
+.logo_header_mobile {
+    font-weight: 400;
+        font-size: 20px;
+        line-height: 0.9;
+        color: #fff;
+        text-decoration: none;
+}
+
+.filter_mobile {
+    display: flex;
+        align-items: center;
+        gap: 8px;
+        background-color: #333d4c;
+        color: #000;
+        font-weight: bold;
+        cursor: pointer;
+        border: none;
+        justify-content: start;
+        padding: 11px ;
+        position: relative;
+}
+.burger_item {
+    margin-left: 9px;
+    font-weight: 200;
+        font-size: 16px;
+        line-height: 1.5;
+        color: rgba(0, 0, 0, 0.8);
+}
+.line {
+    height: 2px;
+    background-color: #e0e5eb;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+.openTop {
+    transform: rotate(45deg) translateY(8px);
+}
+
+.openMiddle {
+    opacity: 0;
+}
+
+.openBottom {
+    transform: rotate(-45deg) translateY(-8px);
+}
+
+.burgerMenu {
+    position: absolute;
+    top: 69px;
+    left: 0;
+background: #f7f4f4;
+    width: 153px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 998;
+}
+.phone_moon {
+    height: 48px;
+}
+
 /* ----- ВЕРХНІЙ РЯДОК (ЛОГО, ПОШУК, ІКОНКИ) ----- */
 .BasicContent {
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 /* Логотип */
 .logo_header {
-    margin-left: 312px;
+    display: none;
     margin-top: 26px;
     margin-bottom: 26px;
 }
@@ -27,7 +112,8 @@ header {
     margin-right: 49px;
     padding: 0;
     flex-grow: 1;
-    display: flex;
+    display: none;
+    /* display: flex; */
     justify-content: center;
 }
 .search_bar input {
@@ -46,7 +132,7 @@ header {
     gap: 48px;
 }
 .discount_block {
-    display: flex;
+    display: none;
     align-items: center;
     gap: 8px;
 }
@@ -60,7 +146,7 @@ header {
 }
 /* Іконки */
 .comunication {
-    display: flex;
+    display: none;
     gap: 20px;
     align-items: center;
 }
@@ -69,11 +155,11 @@ header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 0 112px 0 312px;
+    margin: 0 170px 0 150px;
 }
 /* Меню товарів (Best Sellers, Today's Deals...) */
 .goods {
-    display: flex;
+    display: none;
     align-items: center;
     gap: 20px;
     padding: 0;
@@ -189,7 +275,7 @@ header {
 }
 /* ----- МОВА ТА ВАЛЮТА ----- */
 .dropdowns {
-    display: flex;
+    display: none;
     gap: 10px;
     justify-content: end;
 }
@@ -206,4 +292,40 @@ header {
 .sidebar_container {
     z-index: 1000;
     position: relative;
+}
+
+@media (min-width: 768px) {
+
+    header {
+        background-color: #fff;
+            border-bottom: 1px solid #cacdd8;
+
+    }
+    .phone_left_mobile {
+        display: none;
+    }
+    .logo_header {
+        display: inline;
+    }
+
+    .search_bar {
+        display: flex;
+    }
+
+    .discount_block {
+        display: flex;
+    }
+
+    .phone_moon {
+        display: none;
+    }
+    .comunication {
+        display: flex;
+    }
+    .goods {
+        display: flex;
+    }
+    .dropdowns {
+        display: flex;
+    }
 }

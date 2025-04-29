@@ -8,6 +8,9 @@ import iconMoon from "../../assets/photo-header/Vector.png";
 import iconHeart from "../../assets/photo-header/Vector-1.png";
 import iconUser from "../../assets/photo-header/Icon.png";
 import iconChat from "../../assets/photo-header/chat-118.png";
+import phoneMoon from "../../assets/photo-header/moon-phone.png";
+import phoneSearch from "../../assets/photo-header/search.png";
+import phoneShopCart from "../../assets/photo-header/shopping-cart.png";
 
 // Імпортуємо зображення категорій
 import category1 from "../../assets/photo-header/category1.png";
@@ -23,6 +26,7 @@ import category10 from "../../assets/photo-header/category10.png";
 
 function Header() {
   const [openSidebar, setOpenSidebar] = useState(false);
+  const [isBurgerOpen, setIsBurgerOpen] = useState(false);
   const [activeCategory, setActiveCategory] = useState("electronics");
 
   const handleFilterClick = () => {
@@ -31,6 +35,10 @@ function Header() {
 
   const handleCategoryClick = (categoryKey) => {
     setActiveCategory(categoryKey);
+  };
+
+  const toggleBurger = () => {
+    setIsBurgerOpen(!isBurgerOpen);
   };
 
   const subcategories = {
@@ -108,6 +116,35 @@ function Header() {
 
   return (
     <header>
+      <div className={style.mobile_header}>
+
+      <div className={style.phone_left_mobile}>
+      <div className={style.burger} onClick={toggleBurger}>
+        <div className={`${style.line} ${isBurgerOpen ? style.openTop : ""}`}></div>
+        <div className={`${style.line} ${isBurgerOpen ? style.openMiddle : ""}`}></div>
+        <div className={`${style.line} ${isBurgerOpen ? style.openBottom : ""}`}></div>
+      </div>
+      <a href="" className={style.logo_header_mobile}>BSE</a>
+      </div>
+        {isBurgerOpen && (
+            <div className={style.burgerMenu}>
+          <button className={style.filter_mobile} onClick={handleFilterClick}>
+            <img src={iconFilter} alt="filter icon" width="18" height="18" />
+            Filter 
+            </button>
+            <a className={style.burger_item}>New Arrivals</a>
+            <a className={style.burger_item}>Best Sellers</a>
+            <a className={style.burger_item}>Today’s Deals</a>
+            <a className={style.burger_item}>Gift Cards</a>
+            </div>
+      )}
+      <div className={style.phone_right_mobile}>
+            <a href="#" className={style.phone_moon}><img src={phoneMoon} alt="dark-theme" width="48" height="48" /></a>
+            <a href="#" className={style.phone_moon}><img src={phoneSearch} alt="dark-theme" width="48" height="48" /></a>
+            <a href="#" className={style.phone_moon}><img src={phoneShopCart} alt="dark-theme" width="48" height="48" /></a>
+      </div>
+      </div>
+
       <div className={style.BasicContent}>
         <a href="#">
           <img src={logo} alt="logo" className={style.logo_header} width="36" height="36" />
@@ -131,6 +168,7 @@ function Header() {
             <a href="#"><img src={iconUser} alt="cabinet" width="18" height="18" /></a>
             <a href="#"><img src={iconChat} alt="chat" width="18" height="18" /></a>
           </div>
+          
         </div>
       </div>
 
