@@ -168,8 +168,6 @@
   font-weight: bold;
 }
 
-/* Responsive styles */
-
 /* For screens between 750px and 1000px */
 @media (max-width: 1000px) {
   .upper_inner_container {
