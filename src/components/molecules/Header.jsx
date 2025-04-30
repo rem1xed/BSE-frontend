@@ -118,8 +118,6 @@ function Header() {
             <input type="text" placeholder="Search the products" />
           </div>
 
-          <div className={style.right_block}>
-
             <div className={style.comunication}>
               <a href="#"><img src={iconMoon} alt="dark-theme" width="18" height="18" /></a>
               {/* ADD <i> from AWESOMEFONTS */}
@@ -127,7 +125,6 @@ function Header() {
               <a href="#"><img src={iconUser} alt="cabinet" width="18" height="18" /></a>
               <a href="#"><img src={iconChat} alt="chat" width="18" height="18" /></a>
             </div>
-          </div>
         </div>
 
         <div className={style.nav_row}>
