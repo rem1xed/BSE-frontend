@@ -107,7 +107,7 @@ main {
 .right_container {
   flex: 1;
   border-radius: 8px;
-  height: 500px;
+  /* height: 500px; */
   /* встановлюємо фіксовану висоту */
   display: flex;
   justify-content: center;
@@ -161,4 +161,85 @@ main {
   color: red;
   margin-top: 10px;
   font-weight: 500;
+}
+
+
+/* For screens between 750px and 1000px */
+@media (max-width: 1000px) {
+  .upper_inner_container {
+    width: 80%;
+  }
+  
+  .lower_inner_container {
+    width: 80%;
+    gap: 20px;
+  }
+
+  .left_container form {
+    width: 85%;
+    padding: 15px 0;
+    gap: 14px;
+  }
+  
+  .right_container .inner_container {
+    width: 85%;
+    gap: 15px;
+  }
+}
+
+/* For screens 750px and below (mobile) */
+@media (max-width: 750px) {
+  .login_container {
+    padding: 15px 0;
+  }
+
+  .button_container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .upper_inner_container {
+    margin-bottom: 15px;
+    justify-content: center;
+  }
+  
+  .lower_inner_container {
+    flex-direction: column;
+  }
+  
+  .left_container{
+    /* height: auto; */
+    /* min-height: 350px; */
+    width: 100%;
+  }
+  .right_container {
+    height: auto;
+    min-height: 250px;
+    width: 100%;
+  }
+  
+  .left_container form {
+    width: 85%;
+    padding: 20px 0;
+    gap: 12px;
+  }
+  
+  .right_container .inner_container {
+    width: 85%;
+    padding: 20px 0;
+    gap: 15px;
+  }
+  
+  .input_container {
+    gap: 6px;
+  }
+  
+  .button_container {
+    margin-top: 8px;
+  }
+
+  .registration_container{
+    height: auto;
+  }
 }

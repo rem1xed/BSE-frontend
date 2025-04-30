@@ -100,7 +100,19 @@ const authService = {
     
     console.log('Вихід виконано успішно');
     return true;
-  }
+  },
+
+  requestPasswordReset: async (email) => {
+    return api.post('/auth/forgot-password', { email });
+  },
+
+  verifyResetCode: async (email, code) => {
+    return api.post('/auth/verify-code', { email, code });
+  },
+
+  resetPassword: async (email, code, newPassword) => {
+    return api.post('/auth/reset-password', { email, code, newPassword });
+  },
 };
 
 export { authService };
