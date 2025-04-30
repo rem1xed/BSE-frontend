@@ -3,22 +3,67 @@ footer {
     justify-content: space-between;
     background-color: rgb(0, 0, 0);
     width: 100%;
-    position: relative;
-    bottom: 0;
     color: white;
+    padding: 40px 0;
+    flex-wrap: wrap;
+    position: relative; /* Змінено з absolute на relative */
+    bottom: 0;
 }
-footer ul {
+
+footer ul.list {
     padding: 0;                  
     padding-inline: 5em;
     list-style: none;
+    margin: 0;
 }
-.Up_Word {
-    color: grey;                        
+
+.footer_header{
+    color: #fff;
+    margin-top: 0;
+    font-size: 22px;
+    margin-bottom: 20px;
 }
-footer a {
+
+footer a.link {
     text-decoration: none;
-    color: white;
+    color: #aaa;
+    transition: all 0.2s ease;
 }
-footer li {
-    margin: 16px;
+
+footer li.list_element {
+    margin: 16px 0;
+    color: #aaa;
+    line-height: 1.5;
+}
+
+footer li.list_element a.link:hover, 
+footer li.list_element a.link:focus {
+    color: white;
+    font-weight: bold;
+    outline: none;
+}
+
+.side {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    flex: 1;
+    min-width: 300px;
+    padding: 0 20px;
+}
+
+/* Адаптивність */
+@media (max-width: 768px) {
+    footer {
+        flex-direction: column;
+        padding: 30px 10px;
+    }
+    
+    footer ul.list {
+        padding-inline: 2em;
+    }
+    
+    .side {
+        margin-bottom: 30px;
+    }
 }

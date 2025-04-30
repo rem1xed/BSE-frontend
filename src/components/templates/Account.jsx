@@ -99,7 +99,7 @@ export default function Account(){
       <h2 className="text-xl font-bold mb-4">Мої замовлення</h2>
       <table className="w-full border-collapse">
         <thead>
-          <tr className="bg-gray-100">
+          <tr className="border-b bg-gray-100">
             <th className="p-2 text-left">ID</th>
             <th className="p-2 text-left">Дата</th>
             <th className="p-2 text-left">Статус</th>

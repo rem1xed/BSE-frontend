@@ -165,6 +165,7 @@ export default function RegistrationPage() {
                             <Input 
                                 type="email" 
                                 name="email"
+                                placeholder="Enter your email"
                                 value={formData.email}
                                 onChange={handleChange}
                                 required
@@ -178,6 +179,7 @@ export default function RegistrationPage() {
                             <Input 
                                 type="text" 
                                 name="firstName"
+                                placeholder="Enter your first name"
                                 value={formData.firstName}
                                 onChange={handleChange}
                                 required
@@ -191,6 +193,7 @@ export default function RegistrationPage() {
                             <Input 
                                 type="text" 
                                 name="lastName"
+                                placeholder="Enter your last name"
                                 value={formData.lastName}
                                 onChange={handleChange}
                                 required
@@ -204,6 +207,7 @@ export default function RegistrationPage() {
                             <Input 
                                 type="password" 
                                 name="password"
+                                placeholder="Enter your password"
                                 value={formData.password}
                                 onChange={handleChange}
                                 required
@@ -217,6 +221,7 @@ export default function RegistrationPage() {
                             <Input 
                                 type="password" 
                                 name="confirmPassword"
+                                placeholder="Repeat your password"
                                 value={formData.confirmPassword}
                                 onChange={handleChange}
                                 required
@@ -230,6 +235,7 @@ export default function RegistrationPage() {
                             <Input 
                                 type="tel" 
                                 name="phone"
+                                placeholder="Enter your phone"
                                 value={formData.phone}
                                 onChange={handleChange}
                                 required
