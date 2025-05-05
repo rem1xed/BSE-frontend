@@ -134,7 +134,6 @@ const ForgotPassword = () => {
         </div>
       )}
 
-<<<<<<< HEAD
       {/* Step 2: Code */}
       {step === 2 && (
         <div className={styles['step-content']}>
@@ -217,6 +216,3 @@ const ForgotPassword = () => {
 };
 
 export default ForgotPassword;
-=======
-export default ForgotPassword;
->>>>>>> origin/develop
