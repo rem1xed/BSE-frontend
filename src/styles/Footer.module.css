@@ -53,7 +53,6 @@ footer li.list_element a.link:focus {
     padding: 0 20px;
 }
 
-/* Responsive styles */
 @media (max-width: 768px) {
     footer {
         flex-direction: column;

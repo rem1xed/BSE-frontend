@@ -3,7 +3,7 @@ import React from 'react';
 import Header from '../molecules/Header';
 import Footer from '../molecules/Footer';
 import { Outlet } from 'react-router-dom';
-import styles from '../../styles/Layout.module.css'; // Import new styles
+import styles from '../../styles/Layout.module.css';
 
 const Layout = () => {
   return (
