@@ -229,6 +229,7 @@
     width: 85%;
     padding: 20px 0;
     gap: 12px;
+    align-items: center;
   }
   
   .right_container .inner_container {
@@ -243,5 +244,7 @@
   
   .button_container {
     margin-top: 8px;
+    display: flex;
+    justify-content: center;
   }
 }

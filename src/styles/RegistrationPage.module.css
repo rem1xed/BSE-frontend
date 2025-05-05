@@ -189,6 +189,10 @@ main {
 
 /* For screens 750px and below (mobile) */
 @media (max-width: 750px) {
+  main {
+    height: unset;
+  }
+
   .login_container {
     padding: 15px 0;
   }

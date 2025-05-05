@@ -11,8 +11,8 @@ const ForgotPassword = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [timer, setTimer] = useState(30);
   const [error, setError] = useState('');
-    const navigate = useNavigate();
-    const location = useLocation();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   // Add regexp email validation
 
@@ -134,7 +134,6 @@ const ForgotPassword = () => {
         </div>
       )}
 
-<<<<<<< HEAD
       {/* Step 2: Code */}
       {step === 2 && (
         <div className={styles['step-content']}>
@@ -217,6 +216,3 @@ const ForgotPassword = () => {
 };
 
 export default ForgotPassword;
-=======
-export default ForgotPassword;
->>>>>>> origin/develop
