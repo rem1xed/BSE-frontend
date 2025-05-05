@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import styles from '../../styles/ForgotPassword.module.css';
-import { authService } from '../../services/authService';
-import { useNavigate, useLocation } from 'react-router-dom';
 
 const ForgotPassword = () => {
   const [step, setStep] = useState(1);
@@ -11,17 +9,11 @@ const ForgotPassword = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [timer, setTimer] = useState(30);
   const [error, setError] = useState('');
-    const navigate = useNavigate();
-    const location = useLocation();
 
   // Add regexp email validation
 
 
   useEffect(() => {
-    if (authService.isAuthenticated()) {
-      console.log('Користувач уже авторизований, перенаправлення на /account');
-      navigate('/account');
-    }
     if (step === 2 && timer > 0) {
       const interval = setInterval(() => {
         setTimer(prev => prev - 1);
@@ -44,60 +36,7 @@ const ForgotPassword = () => {
       setError('Passwords do not match');
       return;
     }
-    if (step === 1) {
-      if (!email) {
-        setError('Please enter email');
-        return;
-      }
-      authService.requestPasswordReset(email)
-        .then(() => {
-          setStep(2);
-          setTimer(30);
-        })
-        .catch(() => {
-          setError('Failed to send reset code. Please try again.');
-        });
-      return;
-    }
-  
-    if (step === 2) {
-      if (!code) {
-        setError('Please enter code');
-        return;
-      }
-      authService.verifyResetCode(email, code)
-        .then(res => {
-          if (res.data.valid) {
-            setStep(3);
-          } else {
-            setError('Invalid code');
-          }
-        })
-        .catch(() => {
-          setError('Verification failed. Try again.');
-        });
-      return;
-    }
-  
-    if (step === 3) {
-      setStep(4); // Просто перейти на встановлення пароля
-      return;
-    }
-  
-    if (step === 4) {
-      if (newPassword !== confirmPassword) {
-        setError('Passwords do not match');
-        return;
-      }
-      authService.resetPassword(email, code, newPassword)
-        .then(() => {
-          setStep(5);
-        })
-        .catch(() => {
-          setError('Password reset failed. Try again.');
-        });
-      return;
-    }      
+    setStep(prev => prev + 1);
   };
 
   const handleBack = () => {
@@ -105,15 +44,8 @@ const ForgotPassword = () => {
   };
 
   const handleResendCode = () => {
-    authService.requestPasswordReset(email)
-      .then(() => {
-        setTimer(30);
-      })
-      .catch(() => {
-        setError('Failed to resend code.');
-      });
+    setTimer(30);
   };
-  
 
   return (
     <div className={styles.password_reset_container}>
@@ -134,7 +66,6 @@ const ForgotPassword = () => {
         </div>
       )}
 
-<<<<<<< HEAD
       {/* Step 2: Code */}
       {step === 2 && (
         <div className={styles['step-content']}>
@@ -177,6 +108,7 @@ const ForgotPassword = () => {
           </button>
         </div>
       )}
+
       {/* Step 4: New Password */}
       {step === 4 && (
         <div className={styles['step-content']}>
@@ -209,7 +141,7 @@ const ForgotPassword = () => {
         <div className={`${styles['step-content']} ${styles['success-step']}`}>
           <h1 className={styles['success-title']}>Successful!</h1>
           <p className={styles.subtext}>Your password has been changed</p>
-          <button onClick={() => navigate("/login")} className={styles.button}>Back to Login</button>
+          <button onClick={() => setStep(1)} className={styles.button}>Back to Login</button>
         </div>
       )}
     </div>
@@ -217,6 +149,3 @@ const ForgotPassword = () => {
 };
 
 export default ForgotPassword;
-=======
-export default ForgotPassword;
->>>>>>> origin/develop
