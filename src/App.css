@@ -1,11 +1,3 @@
-@media (max-width: 1000px) {
-    .Advertisement-conteiner {
-        display: flex;
-        justify-content: space-evenly;
-    }
-
-}
-=======
 .App {
   text-align: center;
 }
