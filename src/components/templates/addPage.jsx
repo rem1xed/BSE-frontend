@@ -1,4 +1,5 @@
 import style from '../../styles/AddPage.module.css'
+import Button from '../atoms/Button'
 
 function AddPage() {
   return (
@@ -36,27 +37,26 @@ function AddPage() {
               </h2>
               <p className={style.product_price}>599$</p>
             </div>
-            <button>Message</button>
+            <Button children={"Message"} />
           </div>
 
           <div className={style.user_information}>
             <p className={style.user_title}>User</p>
 
             <div className={style.user_profile}>
-              <img
-                src="https://static-00.iconduck.com/assets.00/user-icon-470x512-joawnpv1.png"
-                alt=""
-                className={style.user_profile_image}
-              />
-              <p className={style.user_name}>Anton</p>
+              <p className={style.user_name}>
+                <i className="fa-solid fa-user"></i>
+                Anton
+              </p>
             </div>
 
             <hr />
 
-            <p className={style.user_ads}>All user's add</p>
+            <p className={style.user_ads}>All user's advertisements</p>
           </div>
         </div>
       </div>
+      
       <div className={style.product_description}>
         <h1>product description</h1>
         <p>
