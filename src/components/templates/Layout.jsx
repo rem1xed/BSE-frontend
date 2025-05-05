@@ -1,18 +1,19 @@
 // src/components/templates/Layout.jsx
 import React from 'react';
-import Header from '../molecules/Header'; // Шлях до вашого компонента Header
-import Footer from '../molecules/Footer'; // Шлях до вашого компонента Footer
+import Header from '../molecules/Header';
+import Footer from '../molecules/Footer';
 import { Outlet } from 'react-router-dom';
+import styles from '../../styles/Layout.module.css'; // Import new styles
 
 const Layout = () => {
   return (
-    <>
+    <div className={styles.layout}>
       <Header />
-      <main>
-        <Outlet /> {/* Тут будуть рендеритися вкладені маршрути */}
+      <main className={styles.mainContent}>
+        <Outlet />
       </main>
       <Footer />
-    </>
+    </div>
   );
 };
 

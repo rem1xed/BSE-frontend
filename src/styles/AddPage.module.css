@@ -1,4 +1,4 @@
-/* Updated main_container CSS */
+/* Updated CSS with responsive breakpoints */
 .main_container {
   padding: 20px;
   min-height: 100vh;
@@ -7,9 +7,9 @@
   width: 100%;
   box-sizing: border-box;
   margin: 0 auto;
-  max-width: 1200px; /* Added to limit width on large screens */
-  position: relative; /* Added for positioning context */
-  padding-bottom: 60px; /* Added space for footer */
+  max-width: 1200px;
+  position: relative;
+  padding-bottom: 60px;
 }
 
 .breadcrumb_navigation {
@@ -28,14 +28,14 @@
 
 .image_wrapper {
   flex: 2;
-  min-width: 300px; /* Added to prevent too narrow display */
+  min-width: 300px;
   background-color: #f5f7ff;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 20px;
   position: relative;
-  border-radius: 10px; /* Added for consistency */
+  border-radius: 10px;
 }
 
 .image_wrapper img {
@@ -46,7 +46,7 @@
 
 .product_info {
   flex: 1;
-  min-width: 250px; /* Added to prevent too narrow display */
+  min-width: 250px;
   background-color: #f5f7ff;
   padding: 20px;
   border-radius: 10px;
@@ -83,7 +83,7 @@
   background-color: #f5f7ff;
   border-radius: 10px;
   font-size: 14px;
-  width: 100%; /* Added to ensure full width */
+  width: 100%;
 }
 
 .user_title {
@@ -127,14 +127,14 @@ hr {
 .product_description {
   display: flex;
   flex-direction: column;
-  gap: 20px; /* Reduced from 70px to avoid excessive space */
+  gap: 20px;
   clear: both;
-  margin-top: 30px; /* Reduced from 50px */
-  margin-bottom: 20px; /* Added some bottom margin */
+  margin-top: 30px;
+  margin-bottom: 20px;
   background-color: #f5f7ff;
   padding: 20px;
   border-radius: 10px;
-  width: 100%; /* Added to ensure full width */
+  width: 100%;
 }
 
 .arrow_left,
@@ -254,4 +254,69 @@ hr {
 
 .arrow_right:active {
   transform: translateY(-50%) scale(0.9);
+}
+
+/* Responsive styles for screens up to 1000px */
+@media (max-width: 1000px) {
+  .page_content {
+    flex-direction: column;
+  }
+  
+  .image_wrapper {
+    margin-bottom: 20px;
+  }
+  
+  .product_info {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  .product_title {
+    font-size: 16px;
+  }
+  
+  .product_price {
+    font-size: 24px;
+  }
+}
+
+/* Responsive styles for screens up to 768px */
+@media (max-width: 768px) {
+  .main_container {
+    padding: 15px;
+  }
+  
+  .image_wrapper {
+    padding: 10px;
+    min-width: auto;
+  }
+  
+  .product_info, .user_information {
+    padding: 15px;
+  }
+  
+  .product_title {
+    font-size: 15px;
+  }
+  
+  .product_price {
+    font-size: 22px;
+  }
+  
+  .arrow_left, .arrow_right {
+    width: 40px;
+    height: 50px;
+  }
+  
+  .breadcrumb_navigation {
+    font-size: 12px;
+  }
+  
+  .product_description h1 {
+    font-size: 20px;
+  }
+  
+  .product_description p {
+    font-size: 14px;
+  }
 }
