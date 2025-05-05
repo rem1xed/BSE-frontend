@@ -11,8 +11,8 @@ const ForgotPassword = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [timer, setTimer] = useState(30);
   const [error, setError] = useState('');
-    const navigate = useNavigate();
-    const location = useLocation();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   // Add regexp email validation
 
