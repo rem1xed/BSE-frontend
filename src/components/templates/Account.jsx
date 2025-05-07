@@ -1,99 +1,180 @@
-import user_png from "../../media/user.png"
-import style from "../../styles/Account.module.css"
-import { useState } from "react";
+import user_png from "../../media/user.png";
+import style from "../../styles/Account.module.css";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { authService } from "../../services/authService"; // Імпортуємо authService
 
-export default function Account(){
+export default function Account() {
   const [activeSection, setActiveSection] = useState('dashboard');
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
-  // Компоненти контейнерів залишаються без змін...
-  const AccountInfoContainer = () => (
-    <>
-      <div className={style.head}>
-          <h3>Welcome, User</h3>
-          <p>Mon 14, April, 2025</p>
-      </div>
-      <div className={style.body}>
-        <div className={style.body_inner}>
-          <div className={style.info_1}>
-            <div className={style.short_info_container}>
-              <div className={style.photo_container}>
-                <img src={user_png} alt="User Photo" className={style.user_photo} />
-              </div>
-              <div className={style.name_and_email_container}>
-                <h3>User User</h3>
-                <p>user@example.com</p>
-              </div>
-            </div>
-            <div className={style.edit_container}>
-              <button className={style.edit_button}>Edit</button>
-            </div>
+  useEffect(() => {
+    // Додаємо флаг для відстеження монтування компонента
+    let isMounted = true;
+
+    const fetchUser = async () => {
+      try {
+        // Спочатку перевіряємо, чи є токен авторизації
+        if (!authService.isAuthenticated()) {
+          navigate('/login');
+          return;
+        }
+
+        // Використовуємо authService замість прямого axios запиту
+        const userData = await authService.getProfile();
+        
+        // Оновлюємо стан лише якщо компонент все ще змонтований
+        if (isMounted) {
+          if (userData.isAuthenticated) {
+            setUser(userData);
+          } else {
+            // Видаляємо дані авторизації, якщо вони недійсні
+            authService.logout();
+            navigate('/login');
+          }
+        }
+      } catch (err) {
+        console.error('Не вдалося отримати дані користувача:', err);
+        // Перенаправляємо тільки якщо це помилка авторизації та компонент ще змонтований
+        if (isMounted && err.response && (err.response.status === 401 || err.response.status === 403)) {
+          authService.logout();
+          navigate('/login');
+        }
+      } finally {
+        // Встановлюємо флаг завершення завантаження
+        if (isMounted) {
+          setLoading(false);
+        }
+      }
+    };
+
+    fetchUser();
+
+    // Функція очистки для useEffect
+    return () => {
+      isMounted = false;
+    };
+  }, [navigate]);
+
+  // Показуємо індикатор завантаження доки отримуємо дані
+  if (loading) {
+    return (
+      <div className={style.outer_container}>
+        <div className={style.container}>
+          <div className="text-center p-8">
+            <p>Завантаження даних профілю...</p>
           </div>
-          <div className={style.info_2}>
-            <div className={style.info_column}>
-              <div className={style.info_row}>
-                <p>Full Name</p>
-                <input
-                  type="text"
-                  name=""
-                  id=""
-                  placeholder="Your full name"
-                />
+        </div>
+      </div>
+    );
+  }
+
+  // Компоненти залишаються тими самими...
+  const AccountInfoContainer = () => {
+    // Перевіряємо, чи є дані користувача перед відображенням
+    if (!user) {
+      return <div>Інформація про користувача недоступна</div>;
+    }
+
+    return (
+      <>
+        <div className={style.head}>
+          <h3>Welcome, {user.firstName || 'User'}</h3>
+          <p>{new Date().toLocaleDateString('uk-UA', {
+            weekday: 'short',
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric'
+          })}</p>
+        </div>
+        <div className={style.body}>
+          <div className={style.body_inner}>
+            <div className={style.info_1}>
+              <div className={style.short_info_container}>
+                <div className={style.photo_container}>
+                  <img src={user_png} alt="User Photo" className={style.user_photo} />
+                </div>
+                <div className={style.name_and_email_container}>
+                  <h3>{user.firstName || ''} {user.lastName || ''}</h3>
+                  <p>{user.email || ''}</p>
+                </div>
               </div>
-              <div className={style.info_row}>
-                <p>Gender</p>
-                <select name="" id="">
-                  <option value="--Choose gender--">
-                    --Choose gender--
-                  </option>
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
-                </select>
-              </div>
-              <div className={style.info_row}>
-                <p>Your Password</p>
-                <input
-                  type="text"
-                  name=""
-                  id=""
-                  placeholder="Your password"
-                />
+              <div className={style.edit_container}>
+                <button className={style.edit_button}>Edit</button>
               </div>
             </div>
-            <div className={style.info_column}>
-              <div className={style.info_row}>
-                <p>Nickname</p>
-                <input
-                  type="text"
-                  name=""
-                  id=""
-                  placeholder="Your nickname"
-                />
+            <div className={style.info_2}>
+              <div className={style.info_column}>
+                <div className={style.info_row}>
+                  <p>Full Name</p>
+                  <input
+                    type="text"
+                    name="fullName"
+                    id="fullName"
+                    defaultValue={user.firstName || ''}
+                    placeholder="Your full name"
+                  />
+                </div>
+                <div className={style.info_row}>
+                  <p>Gender</p>
+                  <select name="gender" id="gender" defaultValue={user.gender || '--Choose gender--'}>
+                    <option value="--Choose gender--">--Choose gender--</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                  </select>
+                </div>
+                <div className={style.info_row}>
+                  <p>Your Password</p>
+                  <input
+                    type="password"
+                    name="password"
+                    id="password"
+                    placeholder="Your password"
+                  />
+                </div>
               </div>
-              <div className={style.info_row}>
-                <p>Email</p>
-                <input
-                  type="text"
-                  name=""
-                  id=""
-                  placeholder="Your email"
-                />
-              </div>
-              <div className={style.info_row}>
-                <p>Phone number</p>
-                <input
-                  type="text"
-                  name=""
-                  id=""
-                  placeholder="Your phone number"
-                />
+              <div className={style.info_column}>
+                <div className={style.info_row}>
+                  <p>Nickname</p>
+                  <input
+                    type="text"
+                    name="nickname"
+                    id="nickname"
+                    defaultValue={user.nickname || ''}
+                    placeholder="Your nickname"
+                  />
+                </div>
+                <div className={style.info_row}>
+                  <p>Email</p>
+                  <input
+                    type="email"
+                    name="email"
+                    id="email"
+                    defaultValue={user.email || ''}
+                    placeholder="Your email"
+                  />
+                </div>
+                <div className={style.info_row}>
+                  <p>Phone number</p>
+                  <input
+                    type="tel"
+                    name="phone"
+                    id="phone"
+                    defaultValue={user.phone || ''}
+                    placeholder="Your phone number"
+                  />
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </>
-  );
+      </>
+    );
+  };
 
+  // Інші компоненти з оригінального коду залишаються без змін...
   const OrdersContainer = () => (
     <div className="p-6 bg-white rounded-lg shadow">
       <h2 className="text-xl font-bold mb-4">Мої замовлення</h2>
@@ -183,7 +264,7 @@ export default function Account(){
             <p className="text-sm text-gray-600">Щотижнева розсилка з новинами та акціями</p>
           </div>
           <div className="flex items-center">
-            <input type="checkbox" id="news" className="mr-2" checked />
+            <input type="checkbox" id="news" className="mr-2" defaultChecked />
             <label htmlFor="news">Підписаний</label>
           </div>
         </div>
@@ -233,15 +314,15 @@ export default function Account(){
       <form>
         <div className="mb-4">
           <label className="block mb-1 font-medium">Ім'я</label>
-          <input type="text" className="w-full p-2 border rounded" value="Користувач" />
+          <input type="text" className="w-full p-2 border rounded" defaultValue={user?.firstName || "Користувач"} />
         </div>
         <div className="mb-4">
           <label className="block mb-1 font-medium">Email</label>
-          <input type="email" className="w-full p-2 border rounded" value="user@example.com" />
+          <input type="email" className="w-full p-2 border rounded" defaultValue={user?.email || "user@example.com"} />
         </div>
         <div className="mb-4">
           <label className="block mb-1 font-medium">Телефон</label>
-          <input type="tel" className="w-full p-2 border rounded" value="+380 XX XXX XX XX" />
+          <input type="tel" className="w-full p-2 border rounded" defaultValue={user?.phone || "+380 XX XXX XX XX"} />
         </div>
         <div className="mb-4">
           <label className="block mb-1 font-medium">Змінити пароль</label>
@@ -256,16 +337,16 @@ export default function Account(){
 
   const DashboardContainer = () => (
     <div className="p-6 bg-white rounded-lg shadow">
-            <h2 className="text-xl font-bold mb-4">Вітаємо у вашому особистому кабінеті!</h2>
-            <p className="mb-4">Будь ласка, виберіть один із розділів меню для перегляду вмісту.</p>
-          </div>
+      <h2 className="text-xl font-bold mb-4">Вітаємо у вашому особистому кабінеті!</h2>
+      <p className="mb-4">Будь ласка, виберіть один із розділів меню для перегляду вмісту.</p>
+    </div>
   );
 
   // Функція для рендерингу відповідного контейнера
   const renderContainer = () => {
     switch (activeSection) {
       case 'dashboard':
-        return <DashboardContainer/>
+        return <DashboardContainer />;
       case 'account':
         return <AccountInfoContainer />;
       case 'orders':
