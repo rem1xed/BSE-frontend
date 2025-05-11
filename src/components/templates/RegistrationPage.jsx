@@ -151,7 +151,7 @@ export default function RegistrationPage() {
     };
 
     return (
-        <div className={styles.registration_container}>
+        <main className={styles.registration_container}>
             <div className={styles.upper_inner_container}>
                 <h1>Register</h1>
                 {apiError && <div className={styles.errorMessage}>{apiError}</div>}
@@ -265,6 +265,6 @@ export default function RegistrationPage() {
                     </div>
                 </div>
             </div>
-        </div>
+        </main>
     );
 }
