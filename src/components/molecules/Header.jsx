@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 import style from "../../styles/Header.module.css";
 
 import logo from "../../assets/photo-header/logo.png";
@@ -9,7 +10,6 @@ import iconHeart from "../../assets/photo-header/Vector-1.png";
 import iconUser from "../../assets/photo-header/Icon.png";
 import iconChat from "../../assets/photo-header/chat-118.png";
 
-// Імпортуємо зображення категорій
 import category1 from "../../assets/photo-header/category1.png";
 import category2 from "../../assets/photo-header/category2.png";
 import category3 from "../../assets/photo-header/category3.png";
@@ -20,10 +20,18 @@ import category7 from "../../assets/photo-header/category7.png";
 import category8 from "../../assets/photo-header/category8.png";
 import category9 from "../../assets/photo-header/category9.png";
 import category10 from "../../assets/photo-header/category10.png";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMoon, faHeart, faUser, faComments } from "@fortawesome/free-regular-svg-icons"; // regular
+// або для деяких з них — solid:
+import { faUser as faUserSolid, faHeart as faHeartSolid, faComments as faCommentsSolid } from "@fortawesome/free-solid-svg-icons";
+
+
 
 function Header() {
   const [openSidebar, setOpenSidebar] = useState(false);
   const [activeCategory, setActiveCategory] = useState("electronics");
+  const [isDarkTheme, setIsDarkTheme] = useState(false);
+
 
   const handleFilterClick = () => {
     setOpenSidebar(!openSidebar);
@@ -32,6 +40,10 @@ function Header() {
   const handleCategoryClick = (categoryKey) => {
     setActiveCategory(categoryKey);
   };
+  const toggleTheme = () => {
+    setIsDarkTheme(!isDarkTheme);
+  };
+  
 
   const subcategories = {
     gamers: {
@@ -107,8 +119,10 @@ function Header() {
   };
 
   return (
-    <header>
-      <div className={style.container}>
+    <header className={isDarkTheme ? style.darkHeader : ""}>
+
+      <div className={`${style.container} ${isDarkTheme ? style.dark : ""}`}>
+
         <div className={style.BasicContent}>
           <a href="#">
             <img src={logo} alt="logo" className={style.logo_header} width="36" height="36" />
@@ -118,13 +132,15 @@ function Header() {
             <input type="text" placeholder="Search the products" />
           </div>
 
-            <div className={style.comunication}>
-              <a href="#"><img src={iconMoon} alt="dark-theme" width="18" height="18" /></a>
-              {/* ADD <i> from AWESOMEFONTS */}
-              <a href="#"><img src={iconHeart} alt="like" width="18" height="18" /></a>
-              <a href="#"><img src={iconUser} alt="cabinet" width="18" height="18" /></a>
-              <a href="#"><img src={iconChat} alt="chat" width="18" height="18" /></a>
-            </div>
+          <div className={style.comunication}>
+  <button onClick={toggleTheme}>
+    <FontAwesomeIcon icon={faMoon} className={style.icon} />
+  </button>
+  <a href="#"><FontAwesomeIcon icon={faHeart} className={style.icon}/></a>
+  <a href="#"><FontAwesomeIcon icon={faUser} className={style.icon}/></a>
+  <a href="#"><FontAwesomeIcon icon={faComments} className={style.icon}/></a>
+</div>
+
         </div>
 
         <div className={style.nav_row}>
