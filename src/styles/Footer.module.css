@@ -6,8 +6,9 @@ footer {
     color: white;
     padding: 40px 0;
     flex-wrap: wrap;
-    position: relative; /* Змінено з absolute на relative */
-    bottom: 0;
+    position: relative; /* Keep as relative */
+    bottom: auto; /* Remove bottom: 0 which was causing overlap */
+    margin-top: 40px; /* Add space between content and footer */
 }
 
 footer ul.list {
@@ -52,7 +53,6 @@ footer li.list_element a.link:focus {
     padding: 0 20px;
 }
 
-/* Адаптивність */
 @media (max-width: 768px) {
     footer {
         flex-direction: column;
