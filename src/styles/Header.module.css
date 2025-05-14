@@ -1,0 +1,335 @@
+body {
+    margin: 0;
+    background-color: #f5f6fa;
+}
+
+header {
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px solid #cacdd8;
+    background-color: white;
+    width: 100%;
+}
+
+.container {
+    width: 80%;
+    max-width: 1200px; /* Обмеження максимальної ширини */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 16px;
+    padding: 15px 0 0 0 ;
+}
+
+/* ----- ВЕРХНІЙ РЯДОК (ЛОГО, ПОШУК, ІКОНКИ) ----- */
+.BasicContent {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Змінено з space-evenly для коректного вирівнювання */
+    gap: 16px;
+}
+
+/* Логотип */
+.logo_header {
+    display: block;
+}
+
+/* Пошук */
+.search_bar {
+    flex: 1; /* Дозволяє елементу розтягуватись */
+    max-width: 60%;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.search_bar input {
+    width: 100%;
+    max-width: 458px;
+    padding: 12px 16px;
+    border-radius: 30px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    margin: 0;
+    outline: none;
+}
+
+.search_bar input:focus {
+    border-color: #2f2f2f;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Блок знижки + іконки */
+.right_block {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+/* Іконки */
+.comunication {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.comunication a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    transition: background-color 0.2s;
+}
+
+.comunication a:hover {
+    background-color: #f1f3f9;
+}
+
+/* ----- НИЖНІЙ РЯДОК (МЕНЮ + ВАЛЮТА) ----- */
+.nav_row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Змінено з space-around */
+    padding: 8px 0 0 0;
+}
+
+/* Меню товарів (Best Sellers, Today's Deals...) */
+.goods {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 0;
+    margin: 0;
+    flex-wrap: wrap; /* Для адаптивності */
+}
+
+.goods a {
+    text-decoration: none;
+    color: black;
+    background: none;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.2s;
+    position: relative;
+}
+
+.goods a:hover {
+    color: #555;
+}
+
+.goods a:after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -3px;
+    left: 0;
+    background-color: #2f2f2f;
+    transition: width 0.3s;
+}
+
+.goods a:hover:after {
+    width: 100%;
+}
+
+/* Кнопка FILTER */
+.dropdown_button_container {
+    position: relative;
+}
+
+.filter {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #2f2f2f;
+    color: white;
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    justify-content: start;
+    padding: 10px 20px;
+    position: relative;
+    transition: background-color 0.2s;
+}
+
+.filter:hover {
+    background-color: #444;
+}
+
+.filter .arrow {
+    margin-left: 8px;
+}
+
+/* ----- САЙДБАР (ЛІВА ПАНЕЛЬ + ПРАВА ПАНЕЛЬ) ----- */
+.sidebar_container {
+    display: flex;
+    flex-direction: row;
+    margin-top: 0; /* Прибрано відступ, який створював пустий простір */
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top:115px;
+    z-index: 1000;
+}
+
+.sidebar {
+    width: 260px;
+    background-color: #f1f3f9;
+    padding: 16px;
+    border-right: 1px solid #ccc;
+    border-bottom-left-radius: 8px;
+}
+
+.sidebar h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    color: #2f2f2f;
+}
+
+/* Список категорій */
+.categories_list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.category_item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 0;
+    color: #333;
+    cursor: pointer;
+    transition: font-weight 0.2s;
+}
+
+.category_item:hover {
+    font-weight: bold;
+}
+
+.category_item img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+
+/* Права панель (підкатегорії) */
+.subcategories {
+    flex: 1;
+    padding: 16px;
+    border-bottom-right-radius: 8px;
+}
+
+.subcategories h3 {
+    margin-top: 0;
+    margin-bottom: 24px;
+}
+
+.subcategories .subcategory_grid {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap; /* Для адаптивності */
+}
+
+.subcategory {
+    width: 160px;
+}
+
+.subcategory h4 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+.subcategory ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.subcategory li {
+    margin-bottom: 8px;
+    color: #333;
+    cursor: pointer;
+    transition: text-decoration 0.2s;
+}
+
+.subcategory li:hover {
+    text-decoration: underline;
+}
+
+/* ----- МОВА ТА ВАЛЮТА ----- */
+.dropdowns {
+    display: flex;
+    gap: 10px;
+}
+
+.dropdowns select {
+    padding: 4px 8px;
+    border-radius: 4px;
+    border: 1px solid #eee;
+    cursor: pointer;
+    transition: border-color 0.2s;
+}
+
+.dropdowns select:focus {
+    outline: none;
+    border-color: #ddd;
+}
+
+/* Медіа-запити для адаптивності */
+@media (max-width: 992px) {
+    .container {
+        width: 90%;
+    }
+    
+    .search_bar {
+        max-width: 50%;
+    }
+}
+
+@media (max-width: 768px) {
+    .BasicContent {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .search_bar {
+        max-width: 100%;
+        width: 100%;
+    }
+    
+    .right_block {
+        width: 100%;
+        justify-content: flex-end;
+    }
+    
+    .nav_row {
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+    
+    .goods {
+        order: 3;
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .sidebar_container {
+        flex-direction: column;
+    }
+    
+    .sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #ccc;
+    }
+}

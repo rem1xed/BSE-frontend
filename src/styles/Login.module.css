@@ -46,10 +46,6 @@
   }
 }
 
-main {
-  height: 100%;
-}
-
 .glass_card {
   background: rgba(194, 207, 255, 0.20);
   border-radius: 16px;
@@ -59,7 +55,7 @@ main {
   border: 1px solid #0156ff14;
 }
 
-.registration_container {
+.login_container {
   /* img size is 50x50 */
   background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAIAAACRXR/mAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAABnSURBVHja7M5RDYAwDEXRDgmvEocnlrQS2SwUFST9uEfBGWs9c97nbGtDcquqiKhOImLs/UpuzVzWEi1atGjRokWLFi1atGjRokWLFi1atGjRokWLFi1af7Ukz8xWp8z8AAAA//8DAJ4LoEAAlL1nAAAAAElFTkSuQmCC") repeat 0 0;
 
@@ -77,7 +73,7 @@ main {
   animation-timing-function: linear;
 }
 
-.registration_container {
+.login_container {
   font-size: 12px;
   font-weight: 700;
   display: flex;
@@ -107,19 +103,16 @@ main {
 .right_container {
   flex: 1;
   border-radius: 8px;
-  /* height: 500px; */
-  /* встановлюємо фіксовану висоту */
+  height: 500px;
   display: flex;
   justify-content: center;
   align-items: center;
-  /* overflow: auto;  для випадку, якщо контент не поміщається */
 }
 
 .left_container form {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
   width: 90%;
   padding: 20px 0;
   gap: 16px;
@@ -147,7 +140,7 @@ main {
   gap: 20px;
 }
 
-/* Додамо стилі для помилок */
+/* Error styles */
 .inputError {
   border-color: red !important;
 }
@@ -163,6 +156,17 @@ main {
   font-weight: 500;
 }
 
+.forgot_password a {
+  color: #0156ff;
+  text-decoration: none;
+  transition: font-weight 0.2s ease;
+  font-weight: 300;
+}
+
+.forgot_password a:hover,
+.forgot_password a:focus {
+  font-weight: bold;
+}
 
 /* For screens between 750px and 1000px */
 @media (max-width: 1000px) {
@@ -174,7 +178,12 @@ main {
     width: 80%;
     gap: 20px;
   }
-
+  
+  .left_container,
+  .right_container {
+    height: 450px;
+  }
+  
   .left_container form {
     width: 85%;
     padding: 15px 0;
@@ -189,32 +198,25 @@ main {
 
 /* For screens 750px and below (mobile) */
 @media (max-width: 750px) {
-  main {
-    height: unset;
-  }
-
   .login_container {
     padding: 15px 0;
   }
-
-  .button_container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
   
   .upper_inner_container {
+    width: 90%;
     margin-bottom: 15px;
     justify-content: center;
   }
   
   .lower_inner_container {
+    width: 90%;
     flex-direction: column;
+    gap: 15px;
   }
   
   .left_container{
-    /* height: auto; */
-    /* min-height: 350px; */
+    height: auto;
+    min-height: 350px;
     width: 100%;
   }
   .right_container {
@@ -227,6 +229,7 @@ main {
     width: 85%;
     padding: 20px 0;
     gap: 12px;
+    align-items: center;
   }
   
   .right_container .inner_container {
@@ -241,9 +244,7 @@ main {
   
   .button_container {
     margin-top: 8px;
-  }
-
-  .registration_container{
-    height: auto;
+    display: flex;
+    justify-content: center;
   }
 }

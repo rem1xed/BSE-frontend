@@ -3,10 +3,12 @@ input{
   border-radius: 4px;
   height: 30px;
   transition: border 0.1s ease-in-out;
+  outline: none;
+  background: rgba(255, 255, 255, 0.6);
+  padding-left: 10px;
 }
 
 input:focus{
-  outline: none;
   border: 3px solid #0156ff;
   transition: border 0.1s ease-in-out;
 }
