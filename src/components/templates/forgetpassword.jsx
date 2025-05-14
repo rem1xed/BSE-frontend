@@ -48,7 +48,7 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div className={styles.password_reset_container}>
+    <main className={styles.password_reset_container}>
       {/* Step 1: Email */}
       {step === 1 && (
         <div className={styles['step-content']}>
@@ -144,7 +144,7 @@ const ForgotPassword = () => {
           <button onClick={() => setStep(1)} className={styles.button}>Back to Login</button>
         </div>
       )}
-    </div>
+    </main>
   );
 };
 

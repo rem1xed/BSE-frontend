@@ -107,7 +107,7 @@ export default function LoginPage () {
   };
 
   return (
-    <div className={style.login_container}>
+    <main className={style.login_container}>
       <div className={style.upper_inner_container}>
         <h1>Sign In</h1>
         {apiError && <div className={style.errorMessage}>{apiError}</div>}
@@ -169,6 +169,6 @@ export default function LoginPage () {
           </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 };

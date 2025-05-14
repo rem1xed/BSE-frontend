@@ -291,7 +291,7 @@ export default function Account(){
   };
 
   return (
-    <div className={style.outer_container}>
+    <main className={style.outer_container}>
       <div className={style.container}>
         <div className={style.left}>
           <div className={style.title_outer}>
@@ -360,6 +360,6 @@ export default function Account(){
           {renderContainer()}
         </div>
       </div>
-    </div>
+    </main>
   );
 }
