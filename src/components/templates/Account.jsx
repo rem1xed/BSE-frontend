@@ -1,9 +1,14 @@
 import user_png from "../../media/user.png"
 import style from "../../styles/Account.module.css"
 import { useState } from "react";
+import Button from "../atoms/Button"
+import Input from "../atoms/Input"
+import { authService } from '../../services/authService';
+import { useNavigate } from "react-router-dom";
 
 export default function Account(){
   const [activeSection, setActiveSection] = useState('dashboard');
+  const navigate = useNavigate();
 
   // Компоненти контейнерів залишаються без змін...
   const AccountInfoContainer = () => (
@@ -25,14 +30,14 @@ export default function Account(){
               </div>
             </div>
             <div className={style.edit_container}>
-              <button className={style.edit_button}>Edit</button>
+              <Button className={style.edit_button}>Edit</Button>
             </div>
           </div>
           <div className={style.info_2}>
             <div className={style.info_column}>
               <div className={style.info_row}>
                 <p>Full Name</p>
-                <input
+                <Input
                   type="text"
                   name=""
                   id=""
@@ -51,7 +56,7 @@ export default function Account(){
               </div>
               <div className={style.info_row}>
                 <p>Your Password</p>
-                <input
+                <Input
                   type="text"
                   name=""
                   id=""
@@ -62,7 +67,7 @@ export default function Account(){
             <div className={style.info_column}>
               <div className={style.info_row}>
                 <p>Nickname</p>
-                <input
+                <Input
                   type="text"
                   name=""
                   id=""
@@ -71,7 +76,7 @@ export default function Account(){
               </div>
               <div className={style.info_row}>
                 <p>Email</p>
-                <input
+                <Input
                   type="text"
                   name=""
                   id=""
@@ -80,7 +85,7 @@ export default function Account(){
               </div>
               <div className={style.info_row}>
                 <p>Phone number</p>
-                <input
+                <Input
                   type="text"
                   name=""
                   id=""
@@ -134,8 +139,8 @@ export default function Account(){
             <h3 className="font-bold">Товар #{item}</h3>
             <p className="text-gray-600">1200 грн</p>
             <div className="flex mt-2">
-              <button className="bg-blue-500 text-white px-3 py-1 rounded mr-2 text-sm">До кошика</button>
-              <button className="border border-red-500 text-red-500 px-3 py-1 rounded text-sm">Видалити</button>
+              <Button className="bg-blue-500 text-white px-3 py-1 rounded mr-2 text-sm">До кошика</Button>
+              <Button className="border border-red-500 text-red-500 px-3 py-1 rounded text-sm">Видалити</Button>
             </div>
           </div>
         ))}
@@ -183,7 +188,7 @@ export default function Account(){
             <p className="text-sm text-gray-600">Щотижнева розсилка з новинами та акціями</p>
           </div>
           <div className="flex items-center">
-            <input type="checkbox" id="news" className="mr-2" checked />
+            <Input type="checkbox" id="news" className="mr-2" checked />
             <label htmlFor="news">Підписаний</label>
           </div>
         </div>
@@ -193,12 +198,12 @@ export default function Account(){
             <p className="text-sm text-gray-600">Спеціальні пропозиції на основі ваших інтересів</p>
           </div>
           <div className="flex items-center">
-            <input type="checkbox" id="personal" className="mr-2" />
+            <Input type="checkbox" id="personal" className="mr-2" />
             <label htmlFor="personal">Підписатися</label>
           </div>
         </div>
       </div>
-      <button className="mt-4 bg-blue-500 text-white px-4 py-2 rounded">Зберегти налаштування</button>
+      <Button className="mt-4 bg-blue-500 text-white px-4 py-2 rounded">Зберегти налаштування</Button>
     </div>
   );
 
@@ -208,7 +213,7 @@ export default function Account(){
       <form>
         <div className="mb-4">
           <label className="block mb-1 font-medium">Назва реклами</label>
-          <input type="text" className="w-full p-2 border rounded" placeholder="Введіть назву реклами" />
+          <Input type="text" className="w-full p-2 border rounded" placeholder="Введіть назву реклами" />
         </div>
         <div className="mb-4">
           <label className="block mb-1 font-medium">Опис</label>
@@ -216,13 +221,13 @@ export default function Account(){
         </div>
         <div className="mb-4">
           <label className="block mb-1 font-medium">Бюджет</label>
-          <input type="number" className="w-full p-2 border rounded" placeholder="Введіть бюджет" />
+          <Input type="number" className="w-full p-2 border rounded" placeholder="Введіть бюджет" />
         </div>
         <div className="mb-4">
           <label className="block mb-1 font-medium">Зображення</label>
-          <input type="file" className="w-full p-2" />
+          <Input type="file" className="w-full p-2" />
         </div>
-        <button className="bg-blue-500 text-white px-4 py-2 rounded">Створити рекламу</button>
+        <Button className="bg-blue-500 text-white px-4 py-2 rounded">Створити рекламу</Button>
       </form>
     </div>
   );
@@ -233,23 +238,23 @@ export default function Account(){
       <form>
         <div className="mb-4">
           <label className="block mb-1 font-medium">Ім'я</label>
-          <input type="text" className="w-full p-2 border rounded" value="Користувач" />
+          <Input type="text" className="w-full p-2 border rounded" value="Користувач" />
         </div>
         <div className="mb-4">
           <label className="block mb-1 font-medium">Email</label>
-          <input type="email" className="w-full p-2 border rounded" value="user@example.com" />
+          <Input type="email" className="w-full p-2 border rounded" value="user@example.com" />
         </div>
         <div className="mb-4">
           <label className="block mb-1 font-medium">Телефон</label>
-          <input type="tel" className="w-full p-2 border rounded" value="+380 XX XXX XX XX" />
+          <Input type="tel" className="w-full p-2 border rounded" value="+380 XX XXX XX XX" />
         </div>
         <div className="mb-4">
           <label className="block mb-1 font-medium">Змінити пароль</label>
-          <input type="password" className="w-full p-2 border rounded mb-2" placeholder="Поточний пароль" />
-          <input type="password" className="w-full p-2 border rounded mb-2" placeholder="Новий пароль" />
-          <input type="password" className="w-full p-2 border rounded" placeholder="Підтвердження паролю" />
+          <Input type="password" className="w-full p-2 border rounded mb-2" placeholder="Поточний пароль" />
+          <Input type="password" className="w-full p-2 border rounded mb-2" placeholder="Новий пароль" />
+          <Input type="password" className="w-full p-2 border rounded" placeholder="Підтвердження паролю" />
         </div>
-        <button className="bg-blue-500 text-white px-4 py-2 rounded">Зберегти зміни</button>
+        <Button className="bg-blue-500 text-white px-4 py-2 rounded">Зберегти зміни</Button>
       </form>
     </div>
   );
@@ -325,47 +330,47 @@ export default function Account(){
               <label className={style.form_label}>Інтереси</label>
               <div className={style.interests_grid}>
                 <div className={style.interest_item}>
-                  <input type="checkbox" id="sports" className={style.interest_checkbox} />
+                  <Input type="checkbox" id="sports" className={style.interest_checkbox} />
                   <label htmlFor="sports" className={style.interest_label}>Спорт</label>
                 </div>
                 <div className={style.interest_item}>
-                  <input type="checkbox" id="tech" className={style.interest_checkbox} />
+                  <Input type="checkbox" id="tech" className={style.interest_checkbox} />
                   <label htmlFor="tech" className={style.interest_label}>Технології</label>
                 </div>
                 <div className={style.interest_item}>
-                  <input type="checkbox" id="extremeSports" className={style.interest_checkbox} />
+                  <Input type="checkbox" id="extremeSports" className={style.interest_checkbox} />
                   <label htmlFor="extremeSports" className={style.interest_label}>Екстрем. спорт</label>
                 </div>
                 <div className={style.interest_item}>
-                  <input type="checkbox" id="auto" className={style.interest_checkbox} />
+                  <Input type="checkbox" id="auto" className={style.interest_checkbox} />
                   <label htmlFor="auto" className={style.interest_label}>Автомобілі</label>
                 </div>
                 <div className={style.interest_item}>
-                  <input type="checkbox" id="film" className={style.interest_checkbox} />
+                  <Input type="checkbox" id="film" className={style.interest_checkbox} />
                   <label htmlFor="film" className={style.interest_label}>Фільми та музика</label>
                 </div>
                 <div className={style.interest_item}>
-                  <input type="checkbox" id="travel" className={style.interest_checkbox} />
+                  <Input type="checkbox" id="travel" className={style.interest_checkbox} />
                   <label htmlFor="travel" className={style.interest_label}>Подорожі</label>
                 </div>
                 <div className={style.interest_item}>
-                  <input type="checkbox" id="cooking" className={style.interest_checkbox} />
+                  <Input type="checkbox" id="cooking" className={style.interest_checkbox} />
                   <label htmlFor="cooking" className={style.interest_label}>Кулінарія</label>
                 </div>
                 <div className={style.interest_item}>
-                  <input type="checkbox" id="education" className={style.interest_checkbox} />
+                  <Input type="checkbox" id="education" className={style.interest_checkbox} />
                   <label htmlFor="education" className={style.interest_label}>Освіта</label>
                 </div>
                 <div className={style.interest_item}>
-                  <input type="checkbox" id="fashion" className={style.interest_checkbox} />
+                  <Input type="checkbox" id="fashion" className={style.interest_checkbox} />
                   <label htmlFor="fashion" className={style.interest_label}>Мода</label>
                 </div>
                 <div className={style.interest_item}>
-                  <input type="checkbox" id="art" className={style.interest_checkbox} />
+                  <Input type="checkbox" id="art" className={style.interest_checkbox} />
                   <label htmlFor="art" className={style.interest_label}>Мистецтво</label>
                 </div>
                 <div className={style.interest_item}>
-                  <input type="checkbox" id="health" className={style.interest_checkbox} />
+                  <Input type="checkbox" id="health" className={style.interest_checkbox} />
                   <label htmlFor="health" className={style.interest_label}>Здоров'я та фітнес</label>
                 </div>
               </div>
@@ -433,18 +438,18 @@ export default function Account(){
               
               <div className={style.social_field}>
                 <label className={style.social_label}>Додайте посилання на ваш Instagram</label>
-                <input type="text" className={style.input_field} placeholder="https://instagram.com/username" />
+                <Input type="text" className={style.input_field} placeholder="https://instagram.com/username" />
               </div>
               
               <div className={style.social_field}>
                 <label className={style.social_label}>Додайте посилання на ваш Facebook</label>
-                <input type="text" className={style.input_field} placeholder="https://facebook.com/username" />
+                <Input type="text" className={style.input_field} placeholder="https://facebook.com/username" />
               </div>
             </div>
             
-            <button className={style.button_save}>
+            <Button className={style.button_save}>
               Зберегти налаштування
-            </button>
+            </Button>
           </div>
         </div>
       </div>
@@ -496,66 +501,69 @@ export default function Account(){
             <div className={style.buttons}>
               <div className={style.button_inner}>
                 <span className={activeSection === 'dashboard' ? style.active_span : ''}></span>
-                <button 
+                <Button 
                   className={style.nav_button}
                   onClick={() => setActiveSection('dashboard')}
                 >
                   Account Dashboard
-                </button>
+                </Button>
               </div>
               <div className={style.button_inner}>
                 <span className={activeSection === 'account' ? style.active_span : ''}></span>
-                <button 
+                <Button 
                   className={style.nav_button}
                   onClick={() => setActiveSection('account')}
                 >
                   Account Information
-                </button>
+                </Button>
               </div>
               <div className={style.button_inner}>
                 <span className={activeSection === 'orders' ? style.active_span : ''}></span>
-                <button 
+                <Button 
                   className={style.nav_button}
                   onClick={() => setActiveSection('orders')}
                 >
                   My Orders
-                </button>
+                </Button>
               </div>
             </div>
             <hr className={style.line}/>
             <div className={style.buttons}>
               <div className={style.button_inner}>
                 <span className={activeSection === 'saved' ? style.active_span : ''}></span>
-                <button 
+                <Button 
                   className={style.nav_button}
                   onClick={() => setActiveSection('saved')}
                 >
                   Saved
-                </button>
+                </Button>
               </div>
             </div>
             <hr className={style.line}/>
             <div className={style.buttons}>
               <div className={style.button_inner}>
                 <span className={activeSection === 'reviews' ? style.active_span : ''}></span>
-                <button 
+                <Button 
                   className={style.nav_button}
                   onClick={() => setActiveSection('reviews')}
                 >
                   My Product Reviews
-                </button>
+                </Button>
               </div>
               <div className={style.button_inner}>
                 <span className={activeSection === 'preferences' ? style.active_span : ''}></span>
-                <button 
+                <Button 
                   className={style.nav_button}
                   onClick={() => setActiveSection('preferences')}
                 >
                   My Preferences
-                </button>
+                </Button>
               </div>
             </div>
           </div>
+          <Button onClick={() => {authService.logout(); navigate("/login")}}>
+            Logout
+          </Button>
         </div>
         <div className={style.right}>
           {renderContainer()}
