@@ -18,7 +18,6 @@ function AdvertismentListPage() {
                     <Advertisement />
                 </div>
             </div>
-            <Footer />
         </div>
     );
 }
