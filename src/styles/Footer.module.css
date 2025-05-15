@@ -8,7 +8,6 @@ footer {
     flex-wrap: wrap;
     position: relative; /* Keep as relative */
     bottom: auto; /* Remove bottom: 0 which was causing overlap */
-    margin-top: 40px; /* Add space between content and footer */
 }
 
 footer ul.list {

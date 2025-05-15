@@ -261,6 +261,196 @@ export default function Account(){
           </div>
   );
 
+  const PreferencesContainer = () => {
+  return (
+    <>
+      <div className={style.preferences_container}>
+        <div className={style.head}>
+          <h3>Мої Уподобання</h3>
+          <p>Налаштуйте свій профіль</p>
+        </div>
+        <div className={style.body}>
+          <div className={style.body_inner}>
+            {/* Personal Information */}
+            <div className={style.form_group}>
+              <div className={style.form_grid}>
+                <div>
+                  <label className={style.form_label}>Ваш вік</label>
+                  <select className={style.select_field}>
+                    <option value="">Виберіть ваш вік</option>
+                    <option value="18-24">18-24</option>
+                    <option value="25-34">25-34</option>
+                    <option value="35-44">35-44</option>
+                    <option value="45+">45+</option>
+                  </select>
+                </div>
+                <div>
+                  <label className={style.form_label}>Ваша країна</label>
+                  <select className={style.select_field}>
+                    <option value="">Виберіть вашу країну</option>
+                    <option value="ukraine">Україна</option>
+                    <option value="poland">Польща</option>
+                    <option value="germany">Німеччина</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            
+            {/* Region and City */}
+            <div className={style.form_group}>
+              <div className={style.form_grid}>
+                <div>
+                  <label className={style.form_label}>Регіон</label>
+                  <select className={style.select_field}>
+                    <option value="">Виберіть ваш регіон</option>
+                    <option value="kyiv">Київська область</option>
+                    <option value="lviv">Львівська область</option>
+                    <option value="odesa">Одеська область</option>
+                  </select>
+                </div>
+                <div>
+                  <label className={style.form_label}>Ваше місто/село</label>
+                  <select className={style.select_field}>
+                    <option value="">Виберіть ваше місто/село</option>
+                    <option value="kyiv">Київ</option>
+                    <option value="lviv">Львів</option>
+                    <option value="odesa">Одеса</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            
+            {/* Interests */}
+            <div className={style.form_group}>
+              <label className={style.form_label}>Інтереси</label>
+              <div className={style.interests_grid}>
+                <div className={style.interest_item}>
+                  <input type="checkbox" id="sports" className={style.interest_checkbox} />
+                  <label htmlFor="sports" className={style.interest_label}>Спорт</label>
+                </div>
+                <div className={style.interest_item}>
+                  <input type="checkbox" id="tech" className={style.interest_checkbox} />
+                  <label htmlFor="tech" className={style.interest_label}>Технології</label>
+                </div>
+                <div className={style.interest_item}>
+                  <input type="checkbox" id="extremeSports" className={style.interest_checkbox} />
+                  <label htmlFor="extremeSports" className={style.interest_label}>Екстрем. спорт</label>
+                </div>
+                <div className={style.interest_item}>
+                  <input type="checkbox" id="auto" className={style.interest_checkbox} />
+                  <label htmlFor="auto" className={style.interest_label}>Автомобілі</label>
+                </div>
+                <div className={style.interest_item}>
+                  <input type="checkbox" id="film" className={style.interest_checkbox} />
+                  <label htmlFor="film" className={style.interest_label}>Фільми та музика</label>
+                </div>
+                <div className={style.interest_item}>
+                  <input type="checkbox" id="travel" className={style.interest_checkbox} />
+                  <label htmlFor="travel" className={style.interest_label}>Подорожі</label>
+                </div>
+                <div className={style.interest_item}>
+                  <input type="checkbox" id="cooking" className={style.interest_checkbox} />
+                  <label htmlFor="cooking" className={style.interest_label}>Кулінарія</label>
+                </div>
+                <div className={style.interest_item}>
+                  <input type="checkbox" id="education" className={style.interest_checkbox} />
+                  <label htmlFor="education" className={style.interest_label}>Освіта</label>
+                </div>
+                <div className={style.interest_item}>
+                  <input type="checkbox" id="fashion" className={style.interest_checkbox} />
+                  <label htmlFor="fashion" className={style.interest_label}>Мода</label>
+                </div>
+                <div className={style.interest_item}>
+                  <input type="checkbox" id="art" className={style.interest_checkbox} />
+                  <label htmlFor="art" className={style.interest_label}>Мистецтво</label>
+                </div>
+                <div className={style.interest_item}>
+                  <input type="checkbox" id="health" className={style.interest_checkbox} />
+                  <label htmlFor="health" className={style.interest_label}>Здоров'я та фітнес</label>
+                </div>
+              </div>
+            </div>
+            
+            {/* Professional Information */}
+            <div className={style.form_group}>
+              <div className={style.form_grid}>
+                <div>
+                  <label className={style.form_label}>Професія / посада</label>
+                  <select className={style.select_field}>
+                    <option value="">Виберіть професію або посаду</option>
+                    <option value="developer">Розробник</option>
+                    <option value="manager">Менеджер</option>
+                    <option value="student">Студент</option>
+                  </select>
+                </div>
+                <div>
+                  <label className={style.form_label}>Галузь</label>
+                  <select className={style.select_field}>
+                    <option value="">Виберіть галузь</option>
+                    <option value="it">Інформаційні технології</option>
+                    <option value="finance">Фінанси</option>
+                    <option value="healthcare">Охорона здоров'я</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            
+            {/* Education */}
+            <div className={style.form_group}>
+              <div className={style.form_grid}>
+                <div>
+                  <label className={style.form_label}>Рівень освіти</label>
+                  <select className={style.select_field}>
+                    <option value="">Виберіть рівень освіти</option>
+                    <option value="highschool">Середня освіта</option>
+                    <option value="bachelor">Бакалавр</option>
+                    <option value="master">Магістр</option>
+                    <option value="phd">Доктор наук</option>
+                  </select>
+                </div>
+                <div>
+                  <label className={style.form_label}>Навчальний заклад (якщо доступно)</label>
+                  <select className={style.select_field}>
+                    <option value="">Виберіть навчальний заклад</option>
+                    <option value="knu">КНУ ім. Шевченка</option>
+                    <option value="kpi">КПІ ім. Сікорського</option>
+                    <option value="lnu">ЛНУ ім. Франка</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            
+            {/* Social Networks */}
+            <div className={style.social_networks}>
+              <label className={style.form_label}>Виберіть соціальну мережу, де ви активні</label>
+              <select className={style.select_field} style={{ marginBottom: '1rem' }}>
+                <option value="">Виберіть соціальну мережу</option>
+                <option value="facebook">Facebook</option>
+                <option value="instagram">Instagram</option>
+                <option value="twitter">Twitter</option>
+                <option value="linkedin">LinkedIn</option>
+              </select>
+              
+              <div className={style.social_field}>
+                <label className={style.social_label}>Додайте посилання на ваш Instagram</label>
+                <input type="text" className={style.input_field} placeholder="https://instagram.com/username" />
+              </div>
+              
+              <div className={style.social_field}>
+                <label className={style.social_label}>Додайте посилання на ваш Facebook</label>
+                <input type="text" className={style.input_field} placeholder="https://facebook.com/username" />
+              </div>
+            </div>
+            
+            <button className={style.button_save}>
+              Зберегти налаштування
+            </button>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+  };
   // Функція для рендерингу відповідного контейнера
   const renderContainer = () => {
     switch (activeSection) {
@@ -280,6 +470,8 @@ export default function Account(){
         return <AdvertisementContainer />;
       case 'settings':
         return <ProfileSettingsContainer />;
+      case 'preferences':
+        return <PreferencesContainer />;
       default:
         return (
           <div className="p-6 bg-white rounded-lg shadow">
@@ -351,6 +543,15 @@ export default function Account(){
                   onClick={() => setActiveSection('reviews')}
                 >
                   My Product Reviews
+                </button>
+              </div>
+              <div className={style.button_inner}>
+                <span className={activeSection === 'preferences' ? style.active_span : ''}></span>
+                <button 
+                  className={style.nav_button}
+                  onClick={() => setActiveSection('preferences')}
+                >
+                  My Preferences
                 </button>
               </div>
             </div>
