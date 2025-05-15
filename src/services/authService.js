@@ -1,4 +1,3 @@
-// services/authService.js
 import axios from 'axios';
 
 // Налаштування Axios
@@ -7,30 +6,53 @@ const api = axios.create({
   withCredentials: true // Важливо для роботи з cookies
 });
 
+// Константи для зберігання токену
+const AUTH_TOKEN_KEY = 'auth_token';
+const USER_EMAIL_KEY = 'userEmail';
+
 // Функції для роботи з локальним зберіганням
-const setAuthData = (token) => {
-  localStorage.setItem('authToken', token);
+const setAuthData = (token, email) => {
+  localStorage.setItem(AUTH_TOKEN_KEY, token);
+  localStorage.setItem(USER_EMAIL_KEY, email);
   console.log('Токен збережено:', token);
+  
+  // Встановлюємо токен для усіх майбутніх запитів
+  api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 };
 
 const getAuthToken = () => {
-  return localStorage.getItem('authToken');
+  return localStorage.getItem(AUTH_TOKEN_KEY);
+};
+
+const getUserEmail = () => {
+  return localStorage.getItem(USER_EMAIL_KEY);
 };
 
 const clearAuthData = () => {
-  localStorage.removeItem('authToken');
+  localStorage.removeItem(AUTH_TOKEN_KEY);
+  localStorage.removeItem(USER_EMAIL_KEY);
+  delete api.defaults.headers.common['Authorization'];
 };
 
-// Перевірка авторизації за допомогою localStorage
-const isAuthenticatedByToken = () => {
-  return !!getAuthToken();
+// Перевірка авторизації
+const isAuthenticated = () => {
+  const token = getAuthToken();
+  return !!token;
 };
 
-// Перевірка авторизації за допомогою cookie
-const isAuthenticatedByCookie = () => {
-  // Перевіряємо, чи є cookie з іменем наприклад "isLoggedIn"
-  return document.cookie.includes('isLoggedIn=true');
-};
+// Налаштовуємо перехоплювач для додавання токена до запитів
+api.interceptors.request.use(
+  (config) => {
+    const token = getAuthToken();
+    if (token) {
+      config.headers['Authorization'] = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
 const authService = {
   // Логін користувача
@@ -39,21 +61,13 @@ const authService = {
       const response = await api.post('/auth/login', { email, password });
       console.log('Відповідь від сервера:', response.data);
       
-      // Оскільки сервер не повертає токен, але логін успішний, 
-      // додаємо власний маркер автентифікації
-      if (response.data && response.data.message === 'Login successful') {
-        // Використовуємо час входу як простий токен
-        const simpleToken = new Date().getTime().toString();
-        setAuthData(simpleToken);
-        
-        // Також встановлюємо cookie для додаткової перевірки
-        document.cookie = `isLoggedIn=true; path=/; max-age=${60*60*24*7}`; // 7 днів
-        
+      // Зберігаємо JWT токен з відповіді сервера
+      if (response.data && response.data.access_token) {
+        setAuthData(response.data.access_token, email);
+        return response.data;
       } else {
-        console.warn('❌ Відповідь не містить очікуваного повідомлення');
+        throw new Error('Відповідь не містить токен авторизації');
       }
-      
-      return response.data;
     } catch (error) {
       console.error('Помилка входу:', error);
       throw error;
@@ -63,41 +77,32 @@ const authService = {
   // Отримання профілю користувача
   getProfile: async () => {
     try {
-      // Якщо немає токену або cookie авторизації
-      if (!isAuthenticatedByToken() && !isAuthenticatedByCookie()) {
+      // Перевіряємо авторизацію
+      if (!isAuthenticated()) {
         throw new Error('Не авторизований');
       }
       
-      // Тут мав би бути запит до сервера, але оскільки він повертає 404,
-      // ми просто повернемо базову інформацію
-      return {
-        email: localStorage.getItem('userEmail') || 'користувач',
-        isAuthenticated: true
-      };
+      // Запит до API для отримання даних профілю
+      const response = await api.get('/auth/me');
+      return response.data;
     } catch (error) {
       console.error('Помилка отримання профілю:', error);
+      
+      // Якщо отримали помилку авторизації, очищаємо локальне сховище
+      if (error.response && error.response.status === 401) {
+        clearAuthData();
+      }
+      
       throw error;
     }
   },
 
-  // Перевірка авторизації (використовуємо і токен, і cookie)
-  isAuthenticated: () => {
-    const byToken = isAuthenticatedByToken();
-    const byCookie = isAuthenticatedByCookie();
-    console.log('Перевірка авторизації - токен:', byToken, 'cookie:', byCookie);
-    
-    // Користувач авторизований, якщо або токен, або cookie присутні
-    return byToken || byCookie;
-  },
+  // Перевірка авторизації
+  isAuthenticated,
 
   // Вихід із системи
   logout: () => {
-    // Видаляємо токен
     clearAuthData();
-    
-    // Видаляємо cookie
-    document.cookie = 'isLoggedIn=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
-    
     console.log('Вихід виконано успішно');
     return true;
   },
