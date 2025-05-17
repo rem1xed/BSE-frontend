@@ -16,6 +16,7 @@ import Account from './components/templates/Account';
 import LoginPage from './components/templates/LoginPage';
 import AddPage from './components/templates/addPage';
 import ForgotPassword from './components/templates/ForgotPasswordPage';
+import AdminLoginPage from './components/templates/AdminLoginPage';
 
 // Елементи з перевіркою авторизації
 const ProtectedAccount = () => (
@@ -53,7 +54,8 @@ const router = createBrowserRouter([
     children: [
       { path: 'login', element: <PublicLogin /> },
       { path: 'register', element: <PublicRegister /> },
-      { path: 'password-reset', element: <ForgotPassword /> }
+      { path: 'password-reset', element: <ForgotPassword /> },
+      { path: 'admin-login', element: <AdminLoginPage /> }, // Сторінка входу для адміністратора
     ]
   }
 ]);
