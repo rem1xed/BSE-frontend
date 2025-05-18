@@ -67,6 +67,7 @@ export default function AdminLoginPage() {
       newErrors.password = "Password is required";
     }
 
+    // Перевірка ключа адміністратора
     if (!formData.adminKey) {
       newErrors.adminKey = "Admin key is required";
     }
@@ -92,7 +93,7 @@ export default function AdminLoginPage() {
 
       const userData = await authService.login(formData.email, formData.password, formData.adminKey);
       console.log('Успішний вхід:', userData);
-      
+
       // Перевіряємо авторизацію після входу
       if (authService.isAuthenticated()) {
         console.log('Перенаправлення на /account після успішного входу');

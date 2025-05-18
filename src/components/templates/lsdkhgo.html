@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+</head>
+
+<body>
+    <div class="main">
+        <!-- Головна -->
+        <section id="home" class="active">
+            <header>
+                <h1>Адмін-Панель BSE — Головна</h1>
+            </header>
+            <div class="container">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>Скарг загалом</h3>
+                        <p>154</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Скарг вирішено</h3>
+                        <p>92</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Скарг за сьогодні</h3>
+                        <p>7</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Активні оголошення</h3>
+                        <p>1 247</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Заблоковані оголошення</h3>
+                        <p>143</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Користувачів всього</h3>
+                        <p>4 582</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Заблокованих користувачів</h3>
+                        <p>37</p>
+                    </div>
+                </div>
+                <div class="chart-block">
+                    <h2>Динаміка скарг за останній тиждень</h2>
+                    <canvas id="reportChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Статистика -->
+        <section id="stats">
+            <h1>Статистика</h1>
+            <ul>
+                <li>Загалом скарг: 102</li>
+                <li>Вирішено: 87</li>
+                <li>Активних користувачів: 5 412</li>
+                <li>Оголошень сьогодні: 120</li>
+            </ul>
+        </section>
+
+        <!-- Користувачі -->
+        <section id="users">
+            <h1>Користувачі</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Логін</th>
+                        <th>Email</th>
+                        <th>Статус</th>
+                        <th>Дата</th>
+                        <th>Дії</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>101</td>
+                        <td>andrii_k</td>
+                        <td>andrii@email.com</td>
+                        <td>Активний</td>
+                        <td>2023-12-01</td>
+                        <td><button class="btn">Переглянути</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Оголошення -->
+        <section id="ads">
+            <h1>Оголошення</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Назва</th>
+                        <th>Користувач</th>
+                        <th>Статус</th>
+                        <th>Дата</th>
+                        <th>Дії</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>2001</td>
+                        <td>Продам велосипед</td>
+                        <td>andrii_k</td>
+                        <td>Активне</td>
+                        <td>2024-11-02</td>
+                        <td>
+                            <button class="btn" onclick="togglePanel('adView')">
+                                Переглянути
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div id="adView" class="panel-view">
+                <h3>Оголошення</h3>
+                <p><strong>ID:</strong> 2001</p>
+                <p><strong>Назва:</strong> Продам велосипед</p>
+                <p><strong>Користувач:</strong> andrii_k</p>
+                <div class="actions">
+                    <button class="btn">Схвалити</button>
+                    <button class="btn">Заблокувати</button>
+                    <button class="btn" onclick="togglePanel('adView')">Назад</button>
+                </div>
+            </div>
+        </section>
+        <!-- Скарги -->
+        <section id="complaints">
+            <h1>Скарги</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Від кого</th>
+                        <th>На кого</th>
+                        <th>Причина</th>
+                        <th>Статус</th>
+                        <th>Дії</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>501</td>
+                        <td>id:101<br />andrii_k</td>
+                        <td>id:102<br />marina12</td>
+                        <td>Шахрайство</td>
+                        <td><span class="badge pending">Очікує</span></td>
+                        <td>
+                            <button class="btn" onclick="togglePanel('compView')">
+                                Переглянути
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div id="compView" class="panel-view">
+                <h3>Скарга</h3>
+                <p><strong>ID:</strong> 501</p>
+                <p><strong>Від:</strong> andrii_k (id:101)</p>
+                <p><strong>На:</strong> marina12 (id:102)</p>
+                <p><strong>Причина:</strong> Шахрайство</p>
+                <p>
+                    <strong>Опис:</strong> Користувач не надіслав товар після оплати.
+                </p>
+                <div class="actions">
+                    <button class="btn">Позначити як виконане</button>
+                    <button class="btn">Архівувати</button>
+                    <button class="btn" onclick="togglePanel('compView')">Назад</button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Підключення Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        function switchTab(e, tabId) {
+            document
+                .querySelectorAll('section')
+                .forEach((s) => s.classList.remove('active'))
+            document.getElementById(tabId).classList.add('active')
+            document
+                .querySelectorAll('.tab-btn')
+                .forEach((b) => b.classList.remove('active'))
+            e.target.classList.add('active')
+        }
+
+        function togglePanel(id) {
+            const el = document.getElementById(id)
+            el.style.display = el.style.display === 'block' ? 'none' : 'block'
+        }
+
+        const ctx = document.getElementById('reportChart').getContext('2d')
+        const reportChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Нд'],
+                datasets: [
+                    {
+                        label: 'Кількість скарг',
+                        data: [4, 6, 3, 7, 5, 8, 2],
+                        borderColor: '#007bff',
+                        backgroundColor: 'rgba(0,123,255,0.1)',
+                        tension: 0.4,
+                    },
+                ],
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false },
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: { stepSize: 2 },
+                    },
+                },
+            },
+        })
+    </script>
+</body>
+
+</html>
+</body>
+
+</html>
