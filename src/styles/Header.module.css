@@ -7,7 +7,7 @@ header {
     display: flex;
     justify-content: center;
     border-bottom: 1px solid #cacdd8;
-    background-color: white;
+    background-color: #A5A5A5;
     width: 100%;
 }
 a {
@@ -31,8 +31,12 @@ a {
     gap: 16px;
 }
 
-.logo_header {
-    display: block;
+.logo {
+    text-decoration: none;
+    font-size: 32px;
+    line-height: 18px;
+    letter-spacing: 0em;
+    font-weight: 300;
 }
 
 .search_bar {
@@ -48,7 +52,8 @@ a {
     max-width: 458px;
     padding: 12px 16px;
     border-radius: 30px;
-    border: 1px solid #ccc;
+    border: 1.5px solid #ccc;
+    background-color: #A5A5A5;
     font-size: 14px;
     margin: 0;
     outline: none;
@@ -161,7 +166,7 @@ a {
     cursor: pointer;
     border: none;
     justify-content: start;
-    padding: 10px 20px;
+    padding: 10px 15px;
     position: relative;
     transition: background-color 0.2s;
 }
@@ -171,7 +176,7 @@ a {
 }
 
 .filter .arrow {
-    margin-left: 8px;
+    margin-left: 20px;
 }
 
 .sidebar_container {
@@ -280,22 +285,23 @@ a {
 .dropdowns select {
     padding: 4px 8px;
     border-radius: 4px;
-    border: 1px solid #eee;
+    border: none;
     cursor: pointer;
     transition: border-color 0.2s;
+    background-color: #A5A5A5;
 }
 
 .dropdowns select:focus {
     outline: none;
-    border-color: #ddd;
+    border-color: none;
 }
  /* чорна тема */
 .dark {
-    background-color: #1c1c1c;
+    background-color: #222934;
     color: white;
 }
 .darkHeader {
-    background-color: #1c1c1c;
+    background-color: #222934;
 }
 .dark a {
     color: white;
@@ -308,14 +314,17 @@ a {
     background-color: #333333;
 }
 .dark input {
-    background-color: #333;
+    background-color: #222934;
     color: white;
     border: 1px solid #666;
 }
+
+.dark .filter {
+    background-color: #333D4C;
+}
 .dark select {
-    background-color: #333;
+    background-color: #222934;
     color: white;
-    border: 1px solid #555;
 }
 
 .dark option {

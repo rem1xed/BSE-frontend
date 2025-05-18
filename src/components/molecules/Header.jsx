@@ -124,8 +124,8 @@ function Header() {
       <div className={`${style.container} ${isDarkTheme ? style.dark : ""}`}>
 
         <div className={style.BasicContent}>
-          <a href="#">
-            <img src={logo} alt="logo" className={style.logo_header} width="36" height="36" />
+          <a href="#" className={style.logo}> BSE
+            {/* <img src={logo} alt="logo" className={style.logo_header} width="36" height="36" /> */}
           </a>
 
           <div className={style.search_bar}>
@@ -147,17 +147,12 @@ function Header() {
 
           <div className={style.dropdown_button_container}>
             <button className={style.filter} onClick={handleFilterClick}>
-              <img src={iconFilter} alt="filter icon" width="18" height="18" />
-              Filter <span className={style.arrow}>{openSidebar ? "▲" : "▼"}</span>
+              <img src={iconFilter}  alt="filter icon" width="18" height="18" />
+              Categories <span className={style.arrow}>{openSidebar ? "^" : "v"}</span>
             </button>
           </div>
           
-          <div className={style.goods}>
-            <a href="#">Best Sellers</a>
-            <a href="#">Today’s Deals</a>
-            <a href="#">New Arrivals</a>
-            <a href="#">Gift Cards</a>
-          </div>
+          
 
           <div className={style.dropdowns}>
             <select>
