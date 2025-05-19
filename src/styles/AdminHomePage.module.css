@@ -48,6 +48,7 @@
 .main_conteiner {
     flex: 1;
     overflow-y: auto;
+    margin: 0;
 }
 
 .header {
@@ -60,9 +61,7 @@
     color: white;
 }
 
-.section {
-    padding: 1rem 0;
-}
+
 
 .container {
     display: flex;

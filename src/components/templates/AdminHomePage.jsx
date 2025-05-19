@@ -106,7 +106,9 @@ const AdminHomePage = () => {
                 {/* Статистика */}
                 {activeTab === 'stats' && (
                     <section className={styles.section}>
-                        <h1>Статистика</h1>
+                        <header className={styles.header}>
+                            <h1>Статистика</h1>
+                        </header>
                         <ul>
                             <li>Загалом скарг: 102</li>
                             <li>Вирішено: 87</li>
@@ -119,7 +121,9 @@ const AdminHomePage = () => {
                 {/* Користувачі */}
                 {activeTab === 'users' && (
                     <section className={styles.section}>
-                        <h1>Користувачі</h1>
+                        <header className={styles.header}>
+                            <h1>Користувачі</h1>
+                        </header>
                         <table className={styles.table}>
                             <thead>
                                 <tr>
@@ -148,7 +152,9 @@ const AdminHomePage = () => {
                 {/* Оголошення */}
                 {activeTab === 'ads' && (
                     <section className={styles.section}>
-                        <h1>Оголошення</h1>
+                        <header className={styles.header}>
+                            <h1>Оголошення</h1>
+                        </header>
                         <table className={styles.table}>
                             <thead>
                                 <tr>
@@ -195,7 +201,9 @@ const AdminHomePage = () => {
                 {/* Скарги */}
                 {activeTab === 'complaints' && (
                     <section className={styles.section}>
-                        <h1>Скарги</h1>
+                        <header className={styles.header}>
+                            <h1>Скарги</h1>
+                        </header>
                         <table className={styles.table}>
                             <thead>
                                 <tr>
