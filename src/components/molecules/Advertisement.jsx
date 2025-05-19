@@ -1,28 +1,28 @@
 import React from 'react';
 import classes from '../../styles/Advertisement.module.css';
 
-function Advertisement() {
+function Advertisement({ image, description, condition, location, price }) {
     return (
         <div className={classes.Advertisement}>
             <div className={classes.Advertisement_Image}>
-                <img src="https://uastore.com.ua/files/resized/products/fujitsue734merchtitul.1800x1800w.jpg" alt="" />
+                <img src={image} alt="product" />
             </div>
             <div className={classes.Advertisement_Info}>
                 <div className={classes.Advertisement_Text_Conteiner}>
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptates, voluptatum?
+                    {description}
                 </div>
                 <div className={classes.current_Item_Condition}>
-                    <p>New</p>
+                    <p>{condition}</p>
                 </div>
                 <div className={classes.item_Location}>
-                    <p>location</p>
+                    <p>{location}</p>
                 </div>
             </div>
-            <div className={classes.Advertisement_Cost}> 
-                <p>499$</p>
+            <div className={classes.Advertisement_Cost}>
+                <p>{price}</p>
             </div>
         </div>
-    )
+    );
 }
 
 export default Advertisement;
