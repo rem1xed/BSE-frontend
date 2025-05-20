@@ -3,7 +3,7 @@ import Button from '../atoms/Button'
 
 function AddPage() {
   return (
-    <div className={style.main_container}>
+    <main className={style.main_container}>
       <nav className={style.breadcrumb_navigation}>
         <span>Home</span>
         <span>&rarr;</span>
@@ -64,7 +64,7 @@ function AddPage() {
           entertainment – includes charger and works flawlessly.
         </p>
       </div>
-    </div>
+    </main>
   )
 }
 
