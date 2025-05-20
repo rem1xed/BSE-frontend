@@ -5,45 +5,114 @@ body {
 
 header {
     display: flex;
-    justify-content: center;
-    border-bottom: 1px solid #cacdd8;
-    background-color: #A5A5A5;
-    width: 100%;
+    flex-direction: column;
+    background-color: white;
+    background-color: #222934;
 }
-a {
-    color: black;
-        
+.mobile_header {
+    display: flex;
+    margin: 0 16px;
+    padding: 7px 0;
+    justify-content: space-between;
+    align-items: center;
 }
-.container {
-    width: 80%;
-    max-width: 1200px; 
+.phone_left_mobile {
+    display: flex;
+    gap: 24px;
+}
+.burger {
+    width: 18px;
+    height: 12.6px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    gap: 16px;
-    padding: 15px 0 0 0 ;
+    justify-content: space-between;
+    cursor: pointer;
+    margin: 4.7px 1.95px;
+    z-index: 999;
 }
 
+.logo_header_mobile {
+    font-weight: 400;
+        font-size: 20px;
+        line-height: 0.9;
+        color: #fff;
+        text-decoration: none;
+}
+
+.filter_mobile {
+    display: flex;
+        align-items: center;
+        gap: 8px;
+        background-color: #333d4c;
+        color: #000;
+        font-weight: bold;
+        cursor: pointer;
+        border: none;
+        justify-content: start;
+        padding: 11px ;
+        position: relative;
+}
+.burger_item {
+    margin-left: 9px;
+    font-weight: 200;
+        font-size: 16px;
+        line-height: 1.5;
+        color: rgba(0, 0, 0, 0.8);
+}
+.line {
+    height: 2px;
+    background-color: #e0e5eb;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+.openTop {
+    transform: rotate(45deg) translateY(8px);
+}
+
+.openMiddle {
+    opacity: 0;
+}
+
+.openBottom {
+    transform: rotate(-45deg) translateY(-8px);
+}
+
+.burgerMenu {
+    position: absolute;
+    top: 69px;
+    left: 0;
+background: #f7f4f4;
+    width: 153px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 998;
+}
+.phone_moon {
+    height: 48px;
+}
+
+/* ----- ВЕРХНІЙ РЯДОК (ЛОГО, ПОШУК, ІКОНКИ) ----- */
 .BasicContent {
     display: flex;
     align-items: center;
-    justify-content: space-between; 
-    gap: 16px;
+    justify-content: center;
 }
-
-.logo {
-    text-decoration: none;
-    font-size: 32px;
-    line-height: 18px;
-    letter-spacing: 0em;
-    font-weight: 300;
+/* Логотип */
+.logo_header {
+    display: none;
+    margin-top: 26px;
+    margin-bottom: 26px;
 }
 
 .search_bar {
     flex: 1; 
     max-width: 60%;
     padding: 0;
-    display: flex;
+    flex-grow: 1;
+    display: none;
+
     justify-content: center;
 }
 
@@ -70,14 +139,19 @@ a {
     gap: 24px;
 }
 
-.comunication {
-    display: flex;
-    gap: 20px;
+.discount_block {
+    display: none;
     align-items: center;
 }
 
-.comunication a {
-    display: flex;
+.discount_block p {
+    margin: 0;
+    font-size: 14px;
+}
+/* Іконки */
+.comunication {
+    display: none;
+    gap: 20px;
     align-items: center;
     justify-content: center;
     width: 36px;
@@ -107,12 +181,12 @@ a {
 .nav_row {
     display: flex;
     align-items: center;
-    justify-content: space-between; 
-    padding: 8px 0 0 0;
+    justify-content: space-between;
+    margin: 0 170px 0 150px;
 }
 
 .goods {
-    display: flex;
+    display: none;
     align-items: center;
     gap: 20px;
     padding: 0;
@@ -278,7 +352,7 @@ a {
 }
 
 .dropdowns {
-    display: flex;
+    display: none;
     gap: 10px;
 }
 
@@ -295,87 +369,43 @@ a {
     outline: none;
     border-color: none;
 }
- /* чорна тема */
-.dark {
-    background-color: #222934;
-    color: white;
-}
-.darkHeader {
-    background-color: #222934;
-}
-.dark a {
-    color: white;
+.sidebar_container {
+    z-index: 1000;
+    position: relative;
 }
 
-.dark .icon {
-    color: white; }
-.dark .comunication a:hover,
-.dark .comunication button:hover {
-    background-color: #333333;
-}
-.dark input {
-    background-color: #222934;
-    color: white;
-    border: 1px solid #666;
-}
+@media (min-width: 768px) {
 
-.dark .filter {
-    background-color: #333D4C;
-}
-.dark select {
-    background-color: #222934;
-    color: white;
-}
+    header {
+        background-color: #fff;
+            border-bottom: 1px solid #cacdd8;
 
-.dark option {
-    background-color: #333;
-    color: white;
-}
-
-@media (max-width: 992px) {
-    .container {
-        width: 90%;
     }
-    
+    .phone_left_mobile {
+        display: none;
+    }
+    .logo_header {
+        display: inline;
+    }
+
     .search_bar {
-        max-width: 50%;
+        display: flex;
     }
-}
 
-@media (max-width: 768px) {
-    .BasicContent {
-        flex-direction: column;
-        align-items: flex-start;
+    .discount_block {
+        display: flex;
     }
-    
-    .search_bar {
-        max-width: 100%;
-        width: 100%;
+
+    .phone_moon {
+        display: none;
     }
-    
-    .right_block {
-        width: 100%;
-        justify-content: flex-end;
+    .comunication {
+        display: flex;
     }
-    
-    .nav_row {
-        flex-wrap: wrap;
-        gap: 16px;
-    }
-    
     .goods {
-        order: 3;
-        width: 100%;
-        justify-content: center;
+        display: flex;
     }
-    
-    .sidebar_container {
-        flex-direction: column;
-    }
-    
-    .sidebar {
-        width: 100%;
-        border-right: none;
-        border-bottom: 1px solid #ccc;
+    .dropdowns {
+        display: flex;
     }
 }

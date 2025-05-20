@@ -9,6 +9,9 @@ import iconMoon from "../../assets/photo-header/Vector.png";
 import iconHeart from "../../assets/photo-header/Vector-1.png";
 import iconUser from "../../assets/photo-header/Icon.png";
 import iconChat from "../../assets/photo-header/chat-118.png";
+import phoneMoon from "../../assets/photo-header/moon-phone.png";
+import phoneSearch from "../../assets/photo-header/search.png";
+import phoneShopCart from "../../assets/photo-header/shopping-cart.png";
 
 import category1 from "../../assets/photo-header/category1.png";
 import category2 from "../../assets/photo-header/category2.png";
@@ -29,6 +32,7 @@ import { faUser as faUserSolid, faHeart as faHeartSolid, faComments as faComment
 
 function Header() {
   const [openSidebar, setOpenSidebar] = useState(false);
+  const [isBurgerOpen, setIsBurgerOpen] = useState(false);
   const [activeCategory, setActiveCategory] = useState("electronics");
   const [isDarkTheme, setIsDarkTheme] = useState(false);
 
@@ -44,6 +48,10 @@ function Header() {
     setIsDarkTheme(!isDarkTheme);
   };
   
+
+  const toggleBurger = () => {
+    setIsBurgerOpen(!isBurgerOpen);
+  };
 
   const subcategories = {
     gamers: {
@@ -119,27 +127,59 @@ function Header() {
   };
 
   return (
-    <header className={isDarkTheme ? style.darkHeader : ""}>
+    <header>
+      <div className={style.mobile_header}>
 
-      <div className={`${style.container} ${isDarkTheme ? style.dark : ""}`}>
+      <div className={style.phone_left_mobile}>
+      <div className={style.burger} onClick={toggleBurger}>
+        <div className={`${style.line} ${isBurgerOpen ? style.openTop : ""}`}></div>
+        <div className={`${style.line} ${isBurgerOpen ? style.openMiddle : ""}`}></div>
+        <div className={`${style.line} ${isBurgerOpen ? style.openBottom : ""}`}></div>
+      </div>
+      <a href="" className={style.logo_header_mobile}>BSE</a>
+      </div>
+        {isBurgerOpen && (
+            <div className={style.burgerMenu}>
+          <button className={style.filter_mobile} onClick={handleFilterClick}>
+            <img src={iconFilter} alt="filter icon" width="18" height="18" />
+            Filter 
+            </button>
+            <a className={style.burger_item}>New Arrivals</a>
+            <a className={style.burger_item}>Best Sellers</a>
+            <a className={style.burger_item}>Today’s Deals</a>
+            <a className={style.burger_item}>Gift Cards</a>
+            </div>
+      )}
+      <div className={style.phone_right_mobile}>
+            <a href="#" className={style.phone_moon}><img src={phoneMoon} alt="dark-theme" width="48" height="48" /></a>
+            <a href="#" className={style.phone_moon}><img src={phoneSearch} alt="dark-theme" width="48" height="48" /></a>
+            <a href="#" className={style.phone_moon}><img src={phoneShopCart} alt="dark-theme" width="48" height="48" /></a>
+      </div>
+      </div>
 
-        <div className={style.BasicContent}>
-          <a href="#" className={style.logo}> BSE
-            {/* <img src={logo} alt="logo" className={style.logo_header} width="36" height="36" /> */}
-          </a>
+      <div className={style.BasicContent}>
+        <a href="#">
+          <img src={logo} alt="logo" className={style.logo_header} width="36" height="36" />
+        </a>
+
+        <div className={style.search_bar}>
+          <input type="text" placeholder="Search the products" />
+        </div>
 
           <div className={style.search_bar}>
             <input type="text" placeholder="Search the products" />
           </div>
 
           <div className={style.comunication}>
-  <button onClick={toggleTheme}>
-    <FontAwesomeIcon icon={faMoon} className={style.icon} />
-  </button>
-  <a href="#"><FontAwesomeIcon icon={faHeart} className={style.icon}/></a>
-  <a href="#"><FontAwesomeIcon icon={faUser} className={style.icon}/></a>
-  <a href="#"><FontAwesomeIcon icon={faComments} className={style.icon}/></a>
-</div>
+
+            <button href="#"><img src={iconMoon} alt="dark-theme" width="18" height="18" /></button>
+            <a href="#"><img src={iconHeart} alt="like" width="18" height="18" /></a>
+            <a href="#"><img src={iconUser} alt="cabinet" width="18" height="18" /></a>
+            <a href="#"><img src={iconChat} alt="chat" width="18" height="18" /></a>
+          </div>
+          
+        </div>
+      </div>
 
         </div>
 
