@@ -10,7 +10,7 @@ footer {
     bottom: auto; /* Remove bottom: 0 which was causing overlap */
 }
 
-footer ul.list {
+footer ul.list, footer ul.list_left{
     padding: 0;                  
     padding-inline: 5em;
     list-style: none;
@@ -30,20 +30,21 @@ footer a.link {
     transition: all 0.2s ease;
 }
 
-footer li.list_element {
+footer li.list_element, footer li.list_element_left{
     margin: 16px 0;
     color: #aaa;
     line-height: 1.5;
 }
 
 footer li.list_element a.link:hover, 
-footer li.list_element a.link:focus {
+footer li.list_element a.link:focus, footer li.list_element_left a.link:hover,
+footer li.list_element_left a.link:focus {
     color: white;
     font-weight: bold;
     outline: none;
 }
 
-.side {
+.side, .side_left {
     display: flex;
     justify-content: flex-start;
     flex-direction: column;
@@ -52,16 +53,65 @@ footer li.list_element a.link:focus {
     padding: 0 20px;
 }
 
+
+.span_footer {
+    color: #01A4FF;
+}
+
 @media (max-width: 768px) {
     footer {
         flex-direction: column;
         padding: 30px 10px;
     }
     
-    footer ul.list {
-        padding-inline: 2em;
-    }
+        footer ul.list {
+            padding-inline: unset;
+        }
+
+        .side_left {
+            margin-bottom: 16px;
+        }
     
+
+        .list_element_left {
+            width: calc((100% - 20px) / 3);
+        }
+        footer li.list_element_left {
+         line-height: 1.2;
+        }
+        footer ul.list_left {
+            padding-inline: unset;
+        }
+                footer a.link {
+                    color: #fff;
+                }
+
+        .list_left {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+
+                footer li.list_element_left {
+                    margin: unset;
+                }
+        
+        .link {
+            font-size: 10px;
+        }
+         .footer_header {
+            color: #aaa;
+         }
+         
+        footer li.list_element {
+           color: #fff;
+           margin: 6px 0;
+        }
+
+         .list_element {
+            font-size: 8px;
+         }
+}
     .side {
         margin-bottom: 30px;
     }
