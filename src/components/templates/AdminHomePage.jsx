@@ -8,6 +8,27 @@ const AdminHomePage = () => {
     const [activeTab, setActiveTab] = useState('home');
     const [visiblePanel, setVisiblePanel] = useState(null);
 
+    // Дані (можна пізніше витягувати з API)
+    const stats = {
+        totalComplaints: 154,
+        resolvedComplaints: 92,
+        todayComplaints: 7,
+        activeAds: 1247,
+        blockedAds: 143,
+        totalUsers: 4582,
+        blockedUsers: 37,
+    };
+
+    const weeklyComplaintsData = [4, 6, 3, 7, 5, 8, 2];
+    const weeklyLabels = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Нд'];
+
+    const statsTabData = {
+        allComplaints: 102,
+        resolved: 87,
+        activeUsers: 5412,
+        adsToday: 120,
+    };
+
     useEffect(() => {
         if (activeTab === 'home' && chartRef.current) {
             if (chartInstance.current) chartInstance.current.destroy();
@@ -16,11 +37,11 @@ const AdminHomePage = () => {
             chartInstance.current = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Нд'],
+                    labels: weeklyLabels,
                     datasets: [
                         {
                             label: 'Кількість скарг',
-                            data: [4, 6, 3, 7, 5, 8, 2],
+                            data: weeklyComplaintsData,
                             borderColor: '#007bff',
                             backgroundColor: 'rgba(0,123,255,0.1)',
                             tension: 0.4,
@@ -65,7 +86,6 @@ const AdminHomePage = () => {
             <div className={styles.sidebar}>
                 <h2>Адмін</h2>
                 {renderTabButton('Головна', 'home', '🏠')}
-                {renderTabButton('Статистика', 'stats', '📊')}
                 {renderTabButton('Користувачі', 'users', '👤')}
                 {renderTabButton('Оголошення', 'ads', '📦')}
                 {renderTabButton('Скарги', 'complaints', '🚨')}
@@ -81,13 +101,13 @@ const AdminHomePage = () => {
                         <div className={styles.container}>
                             <div className={styles.stats_grid}>
                                 {[
-                                    ['Скарг загалом', '154'],
-                                    ['Скарг вирішено', '92'],
-                                    ['Скарг за сьогодні', '7'],
-                                    ['Активні оголошення', '1 247'],
-                                    ['Заблоковані оголошення', '143'],
-                                    ['Користувачів всього', '4 582'],
-                                    ['Заблокованих користувачів', '37'],
+                                    ['Скарг загалом', stats.totalComplaints],
+                                    ['Скарг вирішено', stats.resolvedComplaints],
+                                    ['Скарг за сьогодні', stats.todayComplaints],
+                                    ['Активні оголошення', stats.activeAds],
+                                    ['Заблоковані оголошення', stats.blockedAds],
+                                    ['Користувачів всього', stats.totalUsers],
+                                    ['Заблокованих користувачів', stats.blockedUsers],
                                 ].map(([label, value]) => (
                                     <div className={styles.stat_card} key={label}>
                                         <h3>{label}</h3>
@@ -102,22 +122,6 @@ const AdminHomePage = () => {
                         </div>
                     </section>
                 )}
-
-                {/* Статистика */}
-                {activeTab === 'stats' && (
-                    <section className={styles.section}>
-                        <header className={styles.header}>
-                            <h1>Статистика</h1>
-                        </header>
-                        <ul>
-                            <li>Загалом скарг: 102</li>
-                            <li>Вирішено: 87</li>
-                            <li>Активних користувачів: 5 412</li>
-                            <li>Оголошень сьогодні: 120</li>
-                        </ul>
-                    </section>
-                )}
-
                 {/* Користувачі */}
                 {activeTab === 'users' && (
                     <section className={styles.section}>
