@@ -7,13 +7,16 @@ header {
     display: flex;
     justify-content: center;
     border-bottom: 1px solid #cacdd8;
-    background-color: white;
+    background-color: #A5A5A5;
     width: 100%;
 }
-
+a {
+    color: black;
+        
+}
 .container {
     width: 80%;
-    max-width: 1200px; /* Обмеження максимальної ширини */
+    max-width: 1200px; 
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -21,22 +24,23 @@ header {
     padding: 15px 0 0 0 ;
 }
 
-/* ----- ВЕРХНІЙ РЯДОК (ЛОГО, ПОШУК, ІКОНКИ) ----- */
 .BasicContent {
     display: flex;
     align-items: center;
-    justify-content: space-between; /* Змінено з space-evenly для коректного вирівнювання */
+    justify-content: space-between; 
     gap: 16px;
 }
 
-/* Логотип */
-.logo_header {
-    display: block;
+.logo {
+    text-decoration: none;
+    font-size: 32px;
+    line-height: 18px;
+    letter-spacing: 0em;
+    font-weight: 300;
 }
 
-/* Пошук */
 .search_bar {
-    flex: 1; /* Дозволяє елементу розтягуватись */
+    flex: 1; 
     max-width: 60%;
     padding: 0;
     display: flex;
@@ -48,7 +52,8 @@ header {
     max-width: 458px;
     padding: 12px 16px;
     border-radius: 30px;
-    border: 1px solid #ccc;
+    border: 1.5px solid #ccc;
+    background-color: #A5A5A5;
     font-size: 14px;
     margin: 0;
     outline: none;
@@ -59,14 +64,12 @@ header {
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
 }
 
-/* Блок знижки + іконки */
 .right_block {
     display: flex;
     align-items: center;
     gap: 24px;
 }
 
-/* Іконки */
 .comunication {
     display: flex;
     gap: 20px;
@@ -83,26 +86,38 @@ header {
     transition: background-color 0.2s;
 }
 
+.comunication button {
+    width: 36px;
+    height: 36px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: background-color 0.2s;
+}
+
+.comunication button:hover {
+    background-color: #f1f3f9;
+}
+
 .comunication a:hover {
     background-color: #f1f3f9;
 }
 
-/* ----- НИЖНІЙ РЯДОК (МЕНЮ + ВАЛЮТА) ----- */
 .nav_row {
     display: flex;
     align-items: center;
-    justify-content: space-between; /* Змінено з space-around */
+    justify-content: space-between; 
     padding: 8px 0 0 0;
 }
 
-/* Меню товарів (Best Sellers, Today's Deals...) */
 .goods {
     display: flex;
     align-items: center;
     gap: 20px;
     padding: 0;
     margin: 0;
-    flex-wrap: wrap; /* Для адаптивності */
+    flex-wrap: wrap;
 }
 
 .goods a {
@@ -135,7 +150,6 @@ header {
     width: 100%;
 }
 
-/* Кнопка FILTER */
 .dropdown_button_container {
     position: relative;
 }
@@ -152,7 +166,7 @@ header {
     cursor: pointer;
     border: none;
     justify-content: start;
-    padding: 10px 20px;
+    padding: 10px 15px;
     position: relative;
     transition: background-color 0.2s;
 }
@@ -162,14 +176,13 @@ header {
 }
 
 .filter .arrow {
-    margin-left: 8px;
+    margin-left: 20px;
 }
 
-/* ----- САЙДБАР (ЛІВА ПАНЕЛЬ + ПРАВА ПАНЕЛЬ) ----- */
 .sidebar_container {
     display: flex;
     flex-direction: row;
-    margin-top: 0; /* Прибрано відступ, який створював пустий простір */
+    margin-top: 0; 
     background-color: white;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
@@ -194,7 +207,6 @@ header {
     color: #2f2f2f;
 }
 
-/* Список категорій */
 .categories_list {
     list-style: none;
     padding: 0;
@@ -221,7 +233,6 @@ header {
     object-fit: contain;
 }
 
-/* Права панель (підкатегорії) */
 .subcategories {
     flex: 1;
     padding: 16px;
@@ -236,7 +247,7 @@ header {
 .subcategories .subcategory_grid {
     display: flex;
     gap: 40px;
-    flex-wrap: wrap; /* Для адаптивності */
+    flex-wrap: wrap; 
 }
 
 .subcategory {
@@ -266,7 +277,6 @@ header {
     text-decoration: underline;
 }
 
-/* ----- МОВА ТА ВАЛЮТА ----- */
 .dropdowns {
     display: flex;
     gap: 10px;
@@ -275,17 +285,53 @@ header {
 .dropdowns select {
     padding: 4px 8px;
     border-radius: 4px;
-    border: 1px solid #eee;
+    border: none;
     cursor: pointer;
     transition: border-color 0.2s;
+    background-color: #A5A5A5;
 }
 
 .dropdowns select:focus {
     outline: none;
-    border-color: #ddd;
+    border-color: none;
+}
+ /* чорна тема */
+.dark {
+    background-color: #222934;
+    color: white;
+}
+.darkHeader {
+    background-color: #222934;
+}
+.dark a {
+    color: white;
 }
 
-/* Медіа-запити для адаптивності */
+.dark .icon {
+    color: white; }
+.dark .comunication a:hover,
+.dark .comunication button:hover {
+    background-color: #333333;
+}
+.dark input {
+    background-color: #222934;
+    color: white;
+    border: 1px solid #666;
+}
+
+.dark .filter {
+    background-color: #333D4C;
+}
+.dark select {
+    background-color: #222934;
+    color: white;
+}
+
+.dark option {
+    background-color: #333;
+    color: white;
+}
+
 @media (max-width: 992px) {
     .container {
         width: 90%;
