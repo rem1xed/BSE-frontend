@@ -93,3 +93,7 @@ main .registration_container, main .upper_inner_container, main .lower_inner_con
     font-style: normal;
   } */
 }
+
+main{
+  padding: 20px 0;
+}

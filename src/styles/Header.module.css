@@ -105,41 +105,45 @@ background: #f7f4f4;
     margin-top: 26px;
     margin-bottom: 26px;
 }
-/* Пошук */
+
 .search_bar {
-    max-width: 490px;
-    margin-left: 200px;
-    margin-right: 49px;
+    flex: 1; 
+    max-width: 60%;
     padding: 0;
     flex-grow: 1;
     display: none;
-    /* display: flex; */
+
     justify-content: center;
 }
+
 .search_bar input {
     width: 100%;
     max-width: 458px;
-    padding: 15px 16px;
+    padding: 12px 16px;
     border-radius: 30px;
-    border: 1px solid #ccc;
+    border: 1.5px solid #ccc;
+    background-color: #A5A5A5;
     font-size: 14px;
     margin: 0;
+    outline: none;
 }
-/* Блок знижки + іконки */
+
+.search_bar input:focus {
+    border-color: #2f2f2f;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+}
+
 .right_block {
     display: flex;
     align-items: center;
-    gap: 48px;
+    gap: 24px;
 }
+
 .discount_block {
     display: none;
     align-items: center;
-    gap: 8px;
 }
-.discount_button {
-    width: 48px;
-    height: 48px;
-}
+
 .discount_block p {
     margin: 0;
     font-size: 14px;
@@ -149,22 +153,47 @@ background: #f7f4f4;
     display: none;
     gap: 20px;
     align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    transition: background-color 0.2s;
 }
-/* ----- НИЖНІЙ РЯДОК (МЕНЮ + ВАЛЮТА) ----- */
+
+.comunication button {
+    width: 36px;
+    height: 36px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: background-color 0.2s;
+}
+
+.comunication button:hover {
+    background-color: #f1f3f9;
+}
+
+.comunication a:hover {
+    background-color: #f1f3f9;
+}
+
 .nav_row {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin: 0 170px 0 150px;
 }
-/* Меню товарів (Best Sellers, Today's Deals...) */
+
 .goods {
     display: none;
     align-items: center;
     gap: 20px;
     padding: 0;
     margin: 0;
+    flex-wrap: wrap;
 }
+
 .goods a {
     text-decoration: none;
     color: black;
@@ -172,8 +201,33 @@ background: #f7f4f4;
     border: none;
     font-weight: bold;
     cursor: pointer;
+    transition: color 0.2s;
+    position: relative;
 }
-/* Кнопка FILTER */
+
+.goods a:hover {
+    color: #555;
+}
+
+.goods a:after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -3px;
+    left: 0;
+    background-color: #2f2f2f;
+    transition: width 0.3s;
+}
+
+.goods a:hover:after {
+    width: 100%;
+}
+
+.dropdown_button_container {
+    position: relative;
+}
+
 .filter {
     display: flex;
     align-items: center;
@@ -186,43 +240,53 @@ background: #f7f4f4;
     cursor: pointer;
     border: none;
     justify-content: start;
-    padding: 11px 20px;
+    padding: 10px 15px;
     position: relative;
+    transition: background-color 0.2s;
 }
+
+.filter:hover {
+    background-color: #444;
+}
+
 .filter .arrow {
-    margin-left: auto;
-    /* стрілка праворуч */
+    margin-left: 20px;
 }
-/* ----- САЙДБАР (ЛІВА ПАНЕЛЬ + ПРАВА ПАНЕЛЬ) ----- */
+
 .sidebar_container {
     display: flex;
     flex-direction: row;
-    margin-top: 20px;
-    /* відступ під хедером */
-    margin-left: 112px;
-    margin-right: 112px;
+    margin-top: 0; 
     background-color: white;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top:115px;
+    z-index: 1000;
 }
+
 .sidebar {
     width: 260px;
     background-color: #f1f3f9;
-    /* Лівий блок (категорії) */
     padding: 16px;
     border-right: 1px solid #ccc;
+    border-bottom-left-radius: 8px;
 }
+
 .sidebar h3 {
     margin-top: 0;
     margin-bottom: 16px;
     color: #2f2f2f;
 }
-/* Список категорій */
+
 .categories_list {
     list-style: none;
     padding: 0;
     margin: 0;
 }
+
 .category_item {
     display: flex;
     align-items: center;
@@ -230,64 +294,80 @@ background: #f7f4f4;
     padding: 8px 0;
     color: #333;
     cursor: pointer;
+    transition: font-weight 0.2s;
 }
+
 .category_item:hover {
     font-weight: bold;
 }
+
 .category_item img {
     width: 20px;
     height: 20px;
     object-fit: contain;
 }
-/* Права панель (підкатегорії) */
+
 .subcategories {
     flex: 1;
     padding: 16px;
+    border-bottom-right-radius: 8px;
 }
+
 .subcategories h3 {
     margin-top: 0;
     margin-bottom: 24px;
 }
+
 .subcategories .subcategory_grid {
     display: flex;
     gap: 40px;
+    flex-wrap: wrap; 
 }
+
 .subcategory {
     width: 160px;
 }
+
 .subcategory h4 {
     margin-top: 0;
     margin-bottom: 10px;
     font-size: 16px;
 }
+
 .subcategory ul {
     list-style: none;
     padding: 0;
     margin: 0;
 }
+
 .subcategory li {
     margin-bottom: 8px;
     color: #333;
     cursor: pointer;
+    transition: text-decoration 0.2s;
 }
+
 .subcategory li:hover {
     text-decoration: underline;
 }
-/* ----- МОВА ТА ВАЛЮТА ----- */
+
 .dropdowns {
     display: none;
     gap: 10px;
-    justify-content: end;
 }
+
 .dropdowns select {
     padding: 4px 8px;
     border-radius: 4px;
     border: none;
+    cursor: pointer;
+    transition: border-color 0.2s;
+    background-color: #A5A5A5;
 }
+
 .dropdowns select:focus {
     outline: none;
-    box-shadow: none;
-    border: none;
+    border-color: none;
 }
 .sidebar_container {
     z-index: 1000;

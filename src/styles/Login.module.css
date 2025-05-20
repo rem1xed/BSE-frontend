@@ -104,18 +104,15 @@
   flex: 1;
   border-radius: 8px;
   height: 500px;
-  /* встановлюємо фіксовану висоту */
   display: flex;
   justify-content: center;
   align-items: center;
-  /* overflow: auto;  для випадку, якщо контент не поміщається */
 }
 
 .left_container form {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  /* align-items: center; */
   width: 90%;
   padding: 20px 0;
   gap: 16px;
@@ -143,7 +140,7 @@
   gap: 20px;
 }
 
-/* Додамо стилі для помилок */
+/* Error styles */
 .inputError {
   border-color: red !important;
 }
@@ -167,7 +164,87 @@
 }
 
 .forgot_password a:hover,
-.forgot_password a:focus
-{
+.forgot_password a:focus {
   font-weight: bold;
+}
+
+/* For screens between 750px and 1000px */
+@media (max-width: 1000px) {
+  .upper_inner_container {
+    width: 80%;
+  }
+  
+  .lower_inner_container {
+    width: 80%;
+    gap: 20px;
+  }
+  
+  .left_container,
+  .right_container {
+    height: 450px;
+  }
+  
+  .left_container form {
+    width: 85%;
+    padding: 15px 0;
+    gap: 14px;
+  }
+  
+  .right_container .inner_container {
+    width: 85%;
+    gap: 15px;
+  }
+}
+
+/* For screens 750px and below (mobile) */
+@media (max-width: 750px) {
+  .login_container {
+    padding: 15px 0;
+  }
+  
+  .upper_inner_container {
+    width: 90%;
+    margin-bottom: 15px;
+    justify-content: center;
+  }
+  
+  .lower_inner_container {
+    width: 90%;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .left_container{
+    height: auto;
+    min-height: 350px;
+    width: 100%;
+  }
+  .right_container {
+    height: auto;
+    min-height: 250px;
+    width: 100%;
+  }
+  
+  .left_container form {
+    width: 85%;
+    padding: 20px 0;
+    gap: 12px;
+    align-items: center;
+  }
+  
+  .right_container .inner_container {
+    width: 85%;
+    padding: 20px 0;
+    gap: 15px;
+  }
+  
+  .input_container {
+    gap: 6px;
+  }
+  
+  .button_container {
+    margin-top: 8px;
+    display: flex;
+    justify-content: center;
+  }
 }

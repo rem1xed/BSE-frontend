@@ -107,7 +107,7 @@ export default function LoginPage () {
   };
 
   return (
-    <div className={style.login_container}>
+    <main className={style.login_container}>
       <div className={style.upper_inner_container}>
         <h1>Sign In</h1>
         {apiError && <div className={style.errorMessage}>{apiError}</div>}
@@ -121,6 +121,7 @@ export default function LoginPage () {
               <Input 
                 type="email" 
                 name="email"
+                placeholder="Enter your email"
                 value={formData.email}
                 onChange={handleChange}
                 required
@@ -134,6 +135,7 @@ export default function LoginPage () {
               <Input 
                 type="password" 
                 name="password"
+                placeholder="Enter your password"
                 value={formData.password}
                 onChange={handleChange}
                 required
@@ -167,6 +169,6 @@ export default function LoginPage () {
           </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 };

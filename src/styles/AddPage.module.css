@@ -1,5 +1,15 @@
+/* Updated CSS with responsive breakpoints */
 .main_container {
   padding: 20px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0 auto;
+  max-width: 1200px;
+  position: relative;
+  padding-bottom: 60px;
 }
 
 .breadcrumb_navigation {
@@ -18,12 +28,14 @@
 
 .image_wrapper {
   flex: 2;
+  min-width: 300px;
   background-color: #f5f7ff;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 20px;
   position: relative;
+  border-radius: 10px;
 }
 
 .image_wrapper img {
@@ -34,10 +46,10 @@
 
 .product_info {
   flex: 1;
+  min-width: 250px;
   background-color: #f5f7ff;
   padding: 20px;
   border-radius: 10px;
-  height: 50%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -71,6 +83,7 @@
   background-color: #f5f7ff;
   border-radius: 10px;
   font-size: 14px;
+  width: 100%;
 }
 
 .user_title {
@@ -110,14 +123,18 @@ hr {
   text-align: center;
   font-weight: 500;
 }
+
 .product_description {
   display: flex;
   flex-direction: column;
-  gap: 70px;
+  gap: 20px;
   clear: both;
-  margin-top: 50px;
-  margin-bottom: 0;
+  margin-top: 30px;
+  margin-bottom: 20px;
   background-color: #f5f7ff;
+  padding: 20px;
+  border-radius: 10px;
+  width: 100%;
 }
 
 .arrow_left,
@@ -133,11 +150,11 @@ hr {
 }
 
 .arrow_left {
-  left: 20px;
+  left: 0;
 }
 
 .arrow_right {
-  right: 20px;
+  right: 0;
 }
 
 .arrow_top_left,
@@ -162,7 +179,8 @@ hr {
   top: 0;
   transition: all 0.15s;
 }
-.arrow-top_left {
+
+.arrow_top_left {
   transform: rotate(-45deg);
   transform-origin: bottom left;
   left: 5px;
@@ -210,7 +228,7 @@ hr {
   transition-delay: 0.15s;
 }
 
-.arrow_left:hover .arrow-top_left:after {
+.arrow_left:hover .arrow_top_left:after {
   left: 0;
   transition-delay: 0.15s;
 }
@@ -236,4 +254,69 @@ hr {
 
 .arrow_right:active {
   transform: translateY(-50%) scale(0.9);
+}
+
+/* Responsive styles for screens up to 1000px */
+@media (max-width: 1000px) {
+  .page_content {
+    flex-direction: column;
+  }
+  
+  .image_wrapper {
+    margin-bottom: 20px;
+  }
+  
+  .product_info {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  .product_title {
+    font-size: 16px;
+  }
+  
+  .product_price {
+    font-size: 24px;
+  }
+}
+
+/* Responsive styles for screens up to 768px */
+@media (max-width: 768px) {
+  .main_container {
+    padding: 15px;
+  }
+  
+  .image_wrapper {
+    padding: 10px;
+    min-width: auto;
+  }
+  
+  .product_info, .user_information {
+    padding: 15px;
+  }
+  
+  .product_title {
+    font-size: 15px;
+  }
+  
+  .product_price {
+    font-size: 22px;
+  }
+  
+  .arrow_left, .arrow_right {
+    width: 40px;
+    height: 50px;
+  }
+  
+  .breadcrumb_navigation {
+    font-size: 12px;
+  }
+  
+  .product_description h1 {
+    font-size: 20px;
+  }
+  
+  .product_description p {
+    font-size: 14px;
+  }
 }

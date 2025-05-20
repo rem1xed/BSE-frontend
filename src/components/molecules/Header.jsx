@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 import style from "../../styles/Header.module.css";
 
 import logo from "../../assets/photo-header/logo.png";
@@ -12,7 +13,6 @@ import phoneMoon from "../../assets/photo-header/moon-phone.png";
 import phoneSearch from "../../assets/photo-header/search.png";
 import phoneShopCart from "../../assets/photo-header/shopping-cart.png";
 
-// Імпортуємо зображення категорій
 import category1 from "../../assets/photo-header/category1.png";
 import category2 from "../../assets/photo-header/category2.png";
 import category3 from "../../assets/photo-header/category3.png";
@@ -23,11 +23,19 @@ import category7 from "../../assets/photo-header/category7.png";
 import category8 from "../../assets/photo-header/category8.png";
 import category9 from "../../assets/photo-header/category9.png";
 import category10 from "../../assets/photo-header/category10.png";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMoon, faHeart, faUser, faComments } from "@fortawesome/free-regular-svg-icons"; // regular
+// або для деяких з них — solid:
+import { faUser as faUserSolid, faHeart as faHeartSolid, faComments as faCommentsSolid } from "@fortawesome/free-solid-svg-icons";
+
+
 
 function Header() {
   const [openSidebar, setOpenSidebar] = useState(false);
   const [isBurgerOpen, setIsBurgerOpen] = useState(false);
   const [activeCategory, setActiveCategory] = useState("electronics");
+  const [isDarkTheme, setIsDarkTheme] = useState(false);
+
 
   const handleFilterClick = () => {
     setOpenSidebar(!openSidebar);
@@ -36,6 +44,10 @@ function Header() {
   const handleCategoryClick = (categoryKey) => {
     setActiveCategory(categoryKey);
   };
+  const toggleTheme = () => {
+    setIsDarkTheme(!isDarkTheme);
+  };
+  
 
   const toggleBurger = () => {
     setIsBurgerOpen(!isBurgerOpen);
@@ -154,16 +166,13 @@ function Header() {
           <input type="text" placeholder="Search the products" />
         </div>
 
-        <div className={style.right_block}>
-          <div className={style.discount_block}>
-            <a href="#">
-              <img src={secondaryButton} alt="discount" className={style.discount_button} />
-            </a>
-            <p>Only this month</p>
+          <div className={style.search_bar}>
+            <input type="text" placeholder="Search the products" />
           </div>
 
           <div className={style.comunication}>
-            <a href="#"><img src={iconMoon} alt="dark-theme" width="18" height="18" /></a>
+
+            <button href="#"><img src={iconMoon} alt="dark-theme" width="18" height="18" /></button>
             <a href="#"><img src={iconHeart} alt="like" width="18" height="18" /></a>
             <a href="#"><img src={iconUser} alt="cabinet" width="18" height="18" /></a>
             <a href="#"><img src={iconChat} alt="chat" width="18" height="18" /></a>
@@ -172,85 +181,87 @@ function Header() {
         </div>
       </div>
 
-      <div className={style.nav_row}>
-        <div className={style.goods}>
-          <button className={style.filter} onClick={handleFilterClick}>
-            <img src={iconFilter} alt="filter icon" width="18" height="18" />
-            Filter <span className={style.arrow}>{openSidebar ? "▲" : "▼"}</span>
-          </button>
-          <a href="#">Best Sellers</a>
-          <a href="#">Today’s Deals</a>
-          <a href="#">New Arrivals</a>
-          <a href="#">Gift Cards</a>
         </div>
 
-        <div className={style.dropdowns}>
-          <select>
-            <option>Eng</option>
-            <option>Ukr</option>
-          </select>
-          <select>
-            <option>USD ($)</option>
-            <option>EUR (€)</option>
-          </select>
-        </div>
-      </div>
+        <div className={style.nav_row}>
 
-      {openSidebar && (
-        <div className={style.sidebar_container}>
-          <div className={style.sidebar}>
-            <h3>Categories</h3>
-            <ul className={style.categories_list}>
-              <li className={style.category_item} onClick={() => handleCategoryClick("gamers")}>
-                <img src={category1} alt="gamers" /> products for gamers
-              </li>
-              <li className={style.category_item} onClick={() => handleCategoryClick("electronics")}>
-                <img src={category2} alt="electronic" /> electronic
-              </li>
-              <li className={style.category_item} onClick={() => handleCategoryClick("children")}>
-                <img src={category3} alt="children" /> children's goods
-              </li>
-              <li className={style.category_item} onClick={() => handleCategoryClick("business")}>
-                <img src={category4} alt="business" /> business services
-              </li>
-              <li className={style.category_item} onClick={() => handleCategoryClick("animals")}>
-                <img src={category5} alt="animals" /> animals
-              </li>
-              <li className={style.category_item} onClick={() => handleCategoryClick("transport")}>
-                <img src={category6} alt="transport" /> spare parts for transport
-              </li>
-              <li className={style.category_item} onClick={() => handleCategoryClick("furniture")}>
-                <img src={category7} alt="furniture" /> furniture
-              </li>
-              <li className={style.category_item} onClick={() => handleCategoryClick("realestate")}>
-                <img src={category8} alt="real-estate" /> real estate
-              </li>
-              <li className={style.category_item} onClick={() => handleCategoryClick("clothing")}>
-                <img src={category9} alt="clothing" /> clothing
-              </li>
-              <li className={style.category_item} onClick={() => handleCategoryClick("sport")}>
-                <img src={category10} alt="sport" /> sport goods
-              </li>
-            </ul>
+          <div className={style.dropdown_button_container}>
+            <button className={style.filter} onClick={handleFilterClick}>
+              <img src={iconFilter}  alt="filter icon" width="18" height="18" />
+              Categories <span className={style.arrow}>{openSidebar ? "^" : "v"}</span>
+            </button>
           </div>
+          
+          
 
-          <div className={style.subcategories}>
-            <h3>{subcategories[activeCategory].title}</h3>
-            <div className={style.subcategory_grid}>
-              {subcategories[activeCategory].data.map((group, index) => (
-                <div className={style.subcategory} key={index}>
-                  <h4>{group.title}</h4>
-                  <ul>
-                    {group.items.map((item, i) => (
-                      <li key={i}>{item}</li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
+          <div className={style.dropdowns}>
+            <select>
+              <option>Eng</option>
+              <option>Ukr</option>
+            </select>
+            <select>
+              <option>USD ($)</option>
+              <option>EUR (€)</option>
+            </select>
+          </div>
+        </div>
+
+        {openSidebar && (
+          <div className={style.sidebar_container}>
+            <div className={style.sidebar}>
+              <h3>Categories</h3>
+              <ul className={style.categories_list}>
+                <li className={style.category_item} onClick={() => handleCategoryClick("gamers")}>
+                  <img src={category1} alt="gamers" /> products for gamers
+                </li>
+                <li className={style.category_item} onClick={() => handleCategoryClick("electronics")}>
+                  <img src={category2} alt="electronic" /> electronic
+                </li>
+                <li className={style.category_item} onClick={() => handleCategoryClick("children")}>
+                  <img src={category3} alt="children" /> children's goods
+                </li>
+                <li className={style.category_item} onClick={() => handleCategoryClick("business")}>
+                  <img src={category4} alt="business" /> business services
+                </li>
+                <li className={style.category_item} onClick={() => handleCategoryClick("animals")}>
+                  <img src={category5} alt="animals" /> animals
+                </li>
+                <li className={style.category_item} onClick={() => handleCategoryClick("transport")}>
+                  <img src={category6} alt="transport" /> spare parts for transport
+                </li>
+                <li className={style.category_item} onClick={() => handleCategoryClick("furniture")}>
+                  <img src={category7} alt="furniture" /> furniture
+                </li>
+                <li className={style.category_item} onClick={() => handleCategoryClick("realestate")}>
+                  <img src={category8} alt="real-estate" /> real estate
+                </li>
+                <li className={style.category_item} onClick={() => handleCategoryClick("clothing")}>
+                  <img src={category9} alt="clothing" /> clothing
+                </li>
+                <li className={style.category_item} onClick={() => handleCategoryClick("sport")}>
+                  <img src={category10} alt="sport" /> sport goods
+                </li>
+              </ul>
+            </div>
+
+            <div className={style.subcategories}>
+              <h3>{subcategories[activeCategory].title}</h3>
+              <div className={style.subcategory_grid}>
+                {subcategories[activeCategory].data.map((group, index) => (
+                  <div className={style.subcategory} key={index}>
+                    <h4>{group.title}</h4>
+                    <ul>
+                      {group.items.map((item, i) => (
+                        <li key={i}>{item}</li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </header>
   );
 }
