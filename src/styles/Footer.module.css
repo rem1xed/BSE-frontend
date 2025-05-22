@@ -111,8 +111,8 @@ footer li.list_element_left a.link:focus {
          .list_element {
             font-size: 8px;
          }
+         .side {
+             margin-bottom: 30px;
+         }
 }
-    .side {
-        margin-bottom: 30px;
-    }
-}
+

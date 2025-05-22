@@ -6,8 +6,7 @@ body {
 header {
     display: flex;
     flex-direction: column;
-    background-color: white;
-    background-color: #222934;
+    background-color: #A5A5A5;
 }
 .mobile_header {
     display: flex;
@@ -15,10 +14,20 @@ header {
     padding: 7px 0;
     justify-content: space-between;
     align-items: center;
+
+    
+}
+.darkTheme .mobile_header {
+    background-color: #222934;
 }
 .phone_left_mobile {
     display: flex;
     gap: 24px;
+}
+
+.phone_right_mobile {
+    display: flex;
+    gap: 10px;
 }
 .burger {
     width: 18px;
@@ -31,14 +40,25 @@ header {
     z-index: 999;
 }
 
+.logo {
+    text-decoration: none;
+    font-size: 28px;
+    font-weight: 400;
+    margin-right: px;
+    line-height: 18px;
+    color: #000;
+}
+
 .logo_header_mobile {
     font-weight: 400;
         font-size: 20px;
         line-height: 0.9;
-        color: #fff;
+        color: #000;
         text-decoration: none;
 }
-
+.darkTheme .logo_header_mobile {
+    color: #fff;
+}
 .filter_mobile {
     display: flex;
         align-items: center;
@@ -61,9 +81,12 @@ header {
 }
 .line {
     height: 2px;
-    background-color: #e0e5eb;
+    background-color: #000;
     border-radius: 2px;
     transition: all 0.3s ease;
+}
+.darkTheme .line {
+    background-color: #fff;
 }
 
 .openTop {
@@ -76,6 +99,38 @@ header {
 
 .openBottom {
     transform: rotate(-45deg) translateY(-8px);
+}
+
+.icon_com_mob {
+    height: 20px;
+    width: 20px;
+    background-color: transparent;
+    color: #000;
+}
+
+.darkTheme .icon_com_mob{
+    color: #fff;
+}
+
+.icon_com_mob_btn {
+    background-color: transparent;
+        border: none;
+        cursor: pointer;
+        height: 20px;
+            width: 20px;
+            color: #000;
+}
+
+.darkTheme .icon_com_mob_btn {
+    color: #fff;
+}
+
+.iconButton_mob {
+    background-color: transparent;
+        border: none;
+        cursor: pointer;
+        height: 20px;
+        width: 20px;
 }
 
 .burgerMenu {
@@ -108,21 +163,21 @@ background: #f7f4f4;
 
 .search_bar {
     flex: 1; 
-    max-width: 60%;
+    max-width: 50%;
     padding: 0;
     flex-grow: 1;
     display: none;
-
+    margin: 10px 0 10px 0;
     justify-content: center;
 }
 
 .search_bar input {
-    width: 100%;
     max-width: 458px;
     padding: 12px 16px;
-    border-radius: 30px;
+    border-radius: 10px;
+    
     border: 1.5px solid #ccc;
-    background-color: #A5A5A5;
+    background-color: #d0cfcf;
     font-size: 14px;
     margin: 0;
     outline: none;
@@ -151,6 +206,7 @@ background: #f7f4f4;
 /* Іконки */
 .comunication {
     display: none;
+    position: relative;
     gap: 20px;
     align-items: center;
     justify-content: center;
@@ -158,11 +214,12 @@ background: #f7f4f4;
     height: 36px;
     border-radius: 50%;
     transition: background-color 0.2s;
+    margin-left: 75px;
 }
 
 .comunication button {
-    width: 36px;
-    height: 36px;
+    width: 50px;
+    height: 50px;
     background-color: transparent;
     border: none;
     cursor: pointer;
@@ -170,12 +227,22 @@ background: #f7f4f4;
     transition: background-color 0.2s;
 }
 
-.comunication button:hover {
-    background-color: #f1f3f9;
+.icon_com {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    text-decoration: none;
+    color: #000;
 }
 
-.comunication a:hover {
-    background-color: #f1f3f9;
+.comunication .icon_com:hover{
+    background-color: #c7c7c5;
+    border-radius: 50%;
+}
+
+.comunication .icon_com:hover{
+    background-color: #c7c7c5;
+    border-radius: 50%;
 }
 
 .nav_row {
@@ -234,14 +301,14 @@ background: #f7f4f4;
     gap: 8px;
     background-color: #2f2f2f;
     color: white;
-    border-top-right-radius: 8px;
-    border-top-left-radius: 8px;
+    border-radius: 8px;
     font-weight: bold;
     cursor: pointer;
     border: none;
     justify-content: start;
     padding: 10px 15px;
     position: relative;
+        margin-left: 25px;
     transition: background-color 0.2s;
 }
 
@@ -263,7 +330,7 @@ background: #f7f4f4;
     width: 100%;
     position: absolute;
     left: 0;
-    top:115px;
+    top:1px;
     z-index: 1000;
 }
 
@@ -357,8 +424,10 @@ background: #f7f4f4;
 }
 
 .dropdowns select {
-    padding: 4px 8px;
+    /* padding: 4px 8px; */
     border-radius: 4px;
+    font-size: 18px;
+    font-weight: 500;
     border: none;
     cursor: pointer;
     transition: border-color 0.2s;
@@ -373,16 +442,229 @@ background: #f7f4f4;
     z-index: 1000;
     position: relative;
 }
+.mobile_header {
+    display: flex;
+}
 
+.logo {
+    display: none;
+}
+.filter {
+    display: none;
+}
+.darkTheme .sidebar {
+    background-color: #1e1e1e;
+    color: #eee;
+  }
+
+  .darkTheme {
+    background-color: #222934;
+  }
+  
+  /* Заголовки */
+  .darkTheme .sidebar h3 {
+    color: #ffffff;
+  }
+
+  .darkTheme .subcategory h4, .darkTheme .subcategories h3 {
+    color: #111;
+  }
+  
+  /* Пункти списку категорій */
+  .darkTheme .category_item {
+    color: #ddd;
+  }
+  
+  /* Пункти списку підкатегорій */
+  .darkTheme .subcategory ul li {
+    color: #ccc;
+  }
+  
+  /* При наведенні */
+  .darkTheme .category_item:hover {
+    background-color: #333;
+    color: #fff;
+    cursor: pointer;
+  }
+
+  .userMenu {
+      position: absolute;
+      top: 40px;
+      right: -15;
+      background-color: white;
+      border: 1px solid #ccc;
+      padding: 10px 15px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      z-index: 1000;
+      border-radius: 5px;
+      min-width: 160px;
+      user-select: none;
+      z-index: 999999;
+  }
+
+  .userMenuHeader {
+      cursor: pointer;
+      margin-bottom: 10px;
+      font-weight: bold;
+  }
+
+  .userMenuButton {
+      margin-top: 10px;
+      padding: 8px;
+      width: 100%;
+      background: #f44336;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background-color 0.2s ease;
+  }
+
+  .userMenuButton:hover {
+      background: #d32f2f;
+  }
+
+  .userMenuList {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+  }
+
+  .userMenuListItem {
+      margin: 8px 0;
+  }
+
+  .userMenuLink {
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+      transition: color 0.2s ease;
+  }
+
+  .userMenuLink:hover {
+      color: #007bff;
+  }
+
+  .darkTheme .userMenu {
+      background-color: #2c2f36;
+      border: 1px solid #555;
+      color: #eee;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+  }
+
+  .darkTheme .userMenuHeader {
+      color: #eee;
+  }
+
+  .darkTheme .userMenuButton {
+      background: #d9534f;
+      color: #fff;
+  }
+
+  .darkTheme .userMenuButton:hover {
+      background: #b52b27;
+  }
+
+  .darkTheme .userMenuListItem a {
+      color: #ccc;
+  }
+
+  .darkTheme .userMenuListItem a:hover {
+      color: #80bdff;
+  }
+
+  .userMenuMobile {
+      position: absolute;
+      top: 40px;
+      right: 0;
+      background-color: white;
+      border: 1px solid #ccc;
+      padding: 10px 15px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      z-index: 1000;
+      border-radius: 5px;
+      min-width: 160px;
+      user-select: none;
+      width: 90vw;
+      max-width: 200px;
+  }
+
+  .darkTheme .userMenuMobile {
+      background-color: #2c2f36;
+      border: 1px solid #555;
+      color: #eee;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+  }
+
+  /* Використай ті ж класи, що і в десктопі для заголовку, кнопки і посилань */
+  .userMenuHeader {
+      cursor: pointer;
+      margin-bottom: 10px;
+      font-weight: bold;
+  }
+
+  .userMenuButton {
+      margin-top: 10px;
+      padding: 8px;
+      width: 100%;
+      background: #f44336;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background-color 0.2s ease;
+  }
+
+  .userMenuButton:hover {
+      background: #d32f2f;
+  }
+
+  .userMenuList {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+  }
+
+  .userMenuListItem {
+      margin: 8px 0;
+  }
+
+  .userMenuLink {
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+      transition: color 0.2s ease;
+  }
+
+  .darkTheme .userMenuListItem a {
+      color: #ccc;
+  }
+
+  .userMenuLink:hover {
+      color: #007bff;
+  }
 @media (min-width: 768px) {
+    .filter {
+        display: flex;
+    }
 
     header {
-        background-color: #fff;
-            border-bottom: 1px solid #cacdd8;
+        background-color: #A5A5A5;
+                border-bottom: 1px solid #cacdd8;
 
     }
+
+            .mobile_header {
+                display: none;
+            }
     .phone_left_mobile {
         display: none;
+    }
+
+    .logo {
+        display: unset;
     }
     .logo_header {
         display: inline;
@@ -408,4 +690,30 @@ background: #f7f4f4;
     .dropdowns {
         display: flex;
     }
+
+        .darkTheme {
+            background-color: #222934;
+            color: #ffffff;
+        }
+
+        .darkTheme .search_bar input {
+            background-color: #343f4f;
+        }
+
+        .darkTheme .dropdowns select{
+            background-color: #222934;
+            color: #fff;
+        }
+
+        .darkTheme .logo{
+            color: #fff;
+        }
+
+        .darkTheme .icon_com {
+            color: #fff;
+        }
+        
+        .darkTheme .comunication .icon_com:hover {
+            background-color: #222;
+        }
 }
