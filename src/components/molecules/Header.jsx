@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 import style from "../../styles/Header.module.css";
 
@@ -25,6 +25,15 @@ import category9 from "../../assets/photo-header/category9.png";
 import category10 from "../../assets/photo-header/category10.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMoon, faHeart, faUser, faComments } from "@fortawesome/free-regular-svg-icons"; // regular
+import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+
+
+
+// ...
+
+
 // або для деяких з них — solid:
 import { faUser as faUserSolid, faHeart as faHeartSolid, faComments as faCommentsSolid } from "@fortawesome/free-solid-svg-icons";
 
@@ -35,20 +44,70 @@ function Header() {
   const [isBurgerOpen, setIsBurgerOpen] = useState(false);
   const [activeCategory, setActiveCategory] = useState("electronics");
   const [isDarkTheme, setIsDarkTheme] = useState(false);
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const userMenuRef = useRef(null);
+  const [user, setUser] = useState(null); 
+  // null — гість (не залогінений)
+  // { username: "Імʼя" } — залогінений користувач
+  const [isUserMenuMobileOpen, setIsUserMenuMobileOpen] = useState(false);
+const userMenuMobileRef = useRef(null);
 
-
+  
+  
+  
   const handleFilterClick = () => {
     setOpenSidebar(!openSidebar);
   };
+  
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (userMenuRef.current && !userMenuRef.current.contains(event.target)) {
+        setIsUserMenuOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
+  useEffect(() => {
+    function handleClickOutsideMobile(event) {
+      if (userMenuMobileRef.current && !userMenuMobileRef.current.contains(event.target)) {
+        setIsUserMenuMobileOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutsideMobile);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutsideMobile);
+    };
+  }, []);
+  
+  
+  
+  const navigate = useNavigate();
+  
+  const goToAccount = () => {
+    navigate("/account");
+    setIsUserMenuOpen(false);
+  };
+  const toggleUserMenuMobile = () => {
+    setIsUserMenuMobileOpen(prev => !prev);
+  };
+  
   const handleCategoryClick = (categoryKey) => {
     setActiveCategory(categoryKey);
   };
   const toggleTheme = () => {
     setIsDarkTheme(!isDarkTheme);
   };
-  
-
+  const toggleUserMenu = () => {
+    setIsUserMenuOpen(prev => !prev);
+  };
+  const handleLogout = () => {
+    setUser(null);
+    setIsUserMenuOpen(false);
+  };  
   const toggleBurger = () => {
     setIsBurgerOpen(!isBurgerOpen);
   };
@@ -127,7 +186,8 @@ function Header() {
   };
 
   return (
-    <header>
+    <header className={isDarkTheme ? style.darkTheme : ""}>
+
       <div className={style.mobile_header}>
 
       <div className={style.phone_left_mobile}>
@@ -150,40 +210,147 @@ function Header() {
             <a className={style.burger_item}>Gift Cards</a>
             </div>
       )}
-      <div className={style.phone_right_mobile}>
-            <a href="#" className={style.phone_moon}><img src={phoneMoon} alt="dark-theme" width="48" height="48" /></a>
-            <a href="#" className={style.phone_moon}><img src={phoneSearch} alt="dark-theme" width="48" height="48" /></a>
-            <a href="#" className={style.phone_moon}><img src={phoneShopCart} alt="dark-theme" width="48" height="48" /></a>
-      </div>
+        <div className={style.phone_right_mobile} style={{ position: "relative" }}>
+  <button onClick={toggleTheme} className={style.iconButton_mob}>
+    <FontAwesomeIcon icon={faMoon} className={style.icon_com_mob_btn} />
+  </button>
+
+  <a href="#"><FontAwesomeIcon icon={faCartShopping} className={style.icon_com_mob} /></a>
+  <a href="#"><FontAwesomeIcon icon={faHeart} className={style.icon_com_mob} /></a>
+
+  <button onClick={toggleUserMenuMobile} className={style.iconButton_mob}>
+    <FontAwesomeIcon icon={user ? faUserSolid : faUser} className={style.icon_com_mob_btn} />
+  </button>
+
+  {isUserMenuMobileOpen && (
+    <div ref={userMenuMobileRef} className={style.userMenuMobile}>
+      {user ? (
+        <>
+          <div
+            className={style.userMenuHeader}
+            onClick={() => {
+              goToAccount();
+              setIsUserMenuMobileOpen(false);
+            }}
+          >
+            Welcome back, {user.username}
+          </div>
+          <button
+            onClick={() => {
+              handleLogout();
+              setIsUserMenuMobileOpen(false);
+            }}
+            className={style.userMenuButton}
+          >
+            Logout
+          </button>
+        </>
+      ) : (
+        <>
+          <div className={style.userMenuHeader}>
+            <FontAwesomeIcon icon={faUser} /> Not signed In
+          </div>
+          <ul className={style.userMenuList}>
+            <li className={style.userMenuListItem}>
+              <Link to="/login" className={style.userMenuLink} onClick={() => setIsUserMenuMobileOpen(false)}>
+                Sign In
+              </Link>
+            </li>
+            <li className={style.userMenuListItem}>
+              <Link to="/register" className={style.userMenuLink} onClick={() => setIsUserMenuMobileOpen(false)}>
+                Sign Up
+              </Link>
+            </li>
+          </ul>
+        </>
+      )}
+    </div>
+  )}
+</div>
+
       </div>
 
       <div className={style.BasicContent}>
-        <a href="#">
-          <img src={logo} alt="logo" className={style.logo_header} width="36" height="36" />
+        <a href="#" className={style.logo}>BSE
         </a>
 
-        <div className={style.search_bar}>
-          <input type="text" placeholder="Search the products" />
-        </div>
+        <div className={style.dropdown_button_container}>
+            <button className={style.filter} onClick={handleFilterClick}>
+              <img src={iconFilter}  alt="filter icon" width="18" height="18" />
+              Categories <span className={style.arrow}>{openSidebar ? "^" : "v"}</span>
+            </button>
+          </div>
 
           <div className={style.search_bar}>
             <input type="text" placeholder="Search the products" />
           </div>
-
-          <div className={style.comunication}>
-
-            <button href="#"><img src={iconMoon} alt="dark-theme" width="18" height="18" /></button>
-            <a href="#"><img src={iconHeart} alt="like" width="18" height="18" /></a>
-            <a href="#"><img src={iconUser} alt="cabinet" width="18" height="18" /></a>
-            <a href="#"><img src={iconChat} alt="chat" width="18" height="18" /></a>
+          <div className={style.dropdowns}>
+            <select>
+              <option>Eng</option>
+              <option>Ukr</option>
+            </select>
+            <select>
+              <option>USD ($)</option>
+              <option>EUR (€)</option>
+            </select>
           </div>
+          <div className={style.comunication} style={{ position: "relative" }}>
+  <button onClick={toggleTheme} className={style.iconButton}>
+    <FontAwesomeIcon icon={faMoon} className={style.icon_com} />
+  </button>
+  <a href="#"><FontAwesomeIcon icon={faHeart} className={style.icon_com} /></a>
+
+  <button onClick={toggleUserMenu} className={style.iconButton}>
+    <FontAwesomeIcon icon={user ? faUserSolid : faUser} className={style.icon_com} />
+  </button>
+
+  {/* Меню користувача */}
+  {isUserMenuOpen && (
+  <div ref={userMenuRef} className={style.userMenu}>
+    {user ? (
+      <>
+        <div
+          className={style.userMenuHeader}
+          onClick={goToAccount}
+        >
+          Welcome back, {user.username}
+        </div>
+        <button
+          onClick={handleLogout}
+          className={style.userMenuButton}
+        >
+          Logout
+        </button>
+      </>
+    ) : (
+      <>
+        <div className={style.userMenuHeader}>
+          <FontAwesomeIcon icon={faUser} /> Not signed In
+        </div>
+        <ul className={style.userMenuList}>
+          <li className={style.userMenuListItem}>
+            <Link to="/login" className={style.userMenuLink} onClick={() => setIsUserMenuOpen(false)}>
+              Sign In
+            </Link>
+          </li>
+          <li className={style.userMenuListItem}>
+            <Link to="/register" className={style.userMenuLink} onClick={() => setIsUserMenuOpen(false)}>
+              Sign Up
+            </Link>
+          </li>
+        </ul>
+      </>
+    )}
+  </div>
+)}
+
+</div>
+
           
         </div>
-      </div>
+      
 
-        </div>
-
-        <div className={style.nav_row}>
+        {/* <div className={style.nav_row}>
 
           <div className={style.dropdown_button_container}>
             <button className={style.filter} onClick={handleFilterClick}>
@@ -204,7 +371,7 @@ function Header() {
               <option>EUR (€)</option>
             </select>
           </div>
-        </div>
+        </div> */}
 
         {openSidebar && (
           <div className={style.sidebar_container}>
@@ -261,7 +428,6 @@ function Header() {
             </div>
           </div>
         )}
-      </div>
     </header>
   );
 }
