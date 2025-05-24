@@ -23,20 +23,26 @@ import SupportPage from './components/templates/supportPage';
 
 // Елементи з перевіркою авторизації
 const ProtectedAccount = () => (
-  <ProtectedRoute>
+  <ProtectedRoute link={"/login"}>
     <Account />
   </ProtectedRoute>
 );
 
 const PublicLogin = () => (
-  <PublicOnlyRoute>
+  <PublicOnlyRoute link={"/"}>
     <LoginPage />
   </PublicOnlyRoute>
 );
 
 const PublicRegister = () => (
-  <PublicOnlyRoute>
+  <PublicOnlyRoute link={"/"}>
     <RegistrationPage />
+  </PublicOnlyRoute>
+);
+
+const PublicForgotPassword = () => (
+  <PublicOnlyRoute link={"/"}>
+    <ForgotPassword />
   </PublicOnlyRoute>
 );
 
@@ -49,8 +55,8 @@ const router = createBrowserRouter([
       { path: 'account', element: <ProtectedAccount /> },
       { path: 'add', element: <AddPage /> },
       { path: '*', element: <NotFoundPage /> },
-      { path: 'About-us', element: <AboutUsPage /> },
-      { path: 'Support', element: <SupportPage /> },
+      { path: 'about-us', element: <AboutUsPage /> },
+      { path: 'support', element: <SupportPage /> },
     ]
   },
   {
@@ -62,6 +68,10 @@ const router = createBrowserRouter([
       { path: 'password-reset', element: <ForgotPassword /> },
       { path: 'admin-login', element: <AdminLoginPage /> }, 
       { path: 'admin-Home', element: <AdminHomePage /> }, 
+
+      { path: 'password-reset', element: <PublicForgotPassword /> },
+      { path: 'admin-login', element: <AdminLoginPage /> }, // Сторінка входу для адміністратора
+      { path: 'admin-home', element: <AdminHomePage /> }, // Головна сторінка адміністратора
     ]
   }
 ]);

@@ -16,20 +16,6 @@ const ForgotPassword = () => {
 
   // Add regexp email validation
 
-
-  useEffect(() => {
-    if (authService.isAuthenticated()) {
-      console.log('Користувач уже авторизований, перенаправлення на /account');
-      navigate('/account');
-    }
-    if (step === 2 && timer > 0) {
-      const interval = setInterval(() => {
-        setTimer(prev => prev - 1);
-      }, 1000);
-      return () => clearInterval(interval);
-    }
-  }, [step, timer]);
-
   const handleNext = () => {
     setError('');
     if (step === 1 && !email) {
@@ -119,7 +105,7 @@ const ForgotPassword = () => {
     <main className={styles.password_reset_container}>
       {/* Step 1: Email */}
       {step === 1 && (
-        <div className={styles['step-content']}>
+        <div className={`${styles['step-content']} ${styles.glass_card}`}>
           <h1 className={styles.title}>Forgot password</h1>
           <p className={styles.subtext}>Please enter your email to reset password</p>
           <input
