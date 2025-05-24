@@ -19,6 +19,7 @@ import ForgotPassword from './components/templates/ForgotPasswordPage';
 import AdminLoginPage from './components/templates/AdminLoginPage';
 import AdminHomePage from './components/templates/AdminHomePage';
 import AboutUsPage from './components/templates/AboutUsPage';
+import SupportPage from './components/templates/supportPage';
 
 // Елементи з перевіркою авторизації
 const ProtectedAccount = () => (
@@ -48,7 +49,8 @@ const router = createBrowserRouter([
       { path: 'account', element: <ProtectedAccount /> },
       { path: 'add', element: <AddPage /> },
       { path: '*', element: <NotFoundPage /> },
-      { path: 'About-us', element: <AboutUsPage /> }
+      { path: 'About-us', element: <AboutUsPage /> },
+      { path: 'Support', element: <SupportPage /> },
     ]
   },
   {

@@ -1,10 +1,10 @@
 import React from 'react';
 import classes from '../../styles/Advertisement.module.css';
 
-function Advertisement({ image, description, condition, location, price }) {
+function Advertisement({ image, description, condition, location, price, link = "#" }) {
     return (
         <div className={classes.Advertisement}>
-            <a href="#" className={classes.link}>
+            <a href={link} className={classes.link}>
                 <div className={classes.Advertisement_Image}>
                     <img src={image} alt="product" />
                 </div>
