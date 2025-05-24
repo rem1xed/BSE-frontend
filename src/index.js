@@ -9,7 +9,7 @@ import AuthLayout from './components/templates/AuthLayout';
 
 import ProtectedRoute, { PublicOnlyRoute } from './components/molecules/ProtectedRoute';
 
-import App from './App';
+import Home from './Home';
 import NotFoundPage from './components/templates/NotFoundPage';
 import RegistrationPage from './components/templates/RegistrationPage';
 import Account from './components/templates/Account';
@@ -43,7 +43,7 @@ const router = createBrowserRouter([
     path: '/',
     element: <Layout />,
     children: [
-      { index: true, element: <App /> }, // Головна сторінка з повним макетом
+      { index: true, element: <Home /> }, // Головна сторінка з повним макетом
       { path: 'account', element: <ProtectedAccount /> },
       { path: 'add', element: <AddPage /> },
       { path: '*', element: <NotFoundPage /> }
