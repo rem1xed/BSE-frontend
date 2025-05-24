@@ -137,13 +137,14 @@ header {
     position: absolute;
     top: 69px;
     left: 0;
-background: #f7f4f4;
+    background: #f7f4f4;
     width: 153px;
     display: flex;
     flex-direction: column;
     gap: 10px;
     z-index: 998;
 }
+
 .phone_moon {
     height: 48px;
 }

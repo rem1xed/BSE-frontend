@@ -189,24 +189,24 @@ const userMenuMobileRef = useRef(null);
     <header className={isDarkTheme ? style.darkTheme : ""}>
 
       <div className={style.mobile_header}>
-
-      <div className={style.phone_left_mobile}>
-      <div className={style.burger} onClick={toggleBurger}>
-        <div className={`${style.line} ${isBurgerOpen ? style.openTop : ""}`}></div>
-        <div className={`${style.line} ${isBurgerOpen ? style.openMiddle : ""}`}></div>
-        <div className={`${style.line} ${isBurgerOpen ? style.openBottom : ""}`}></div>
-      </div>
-      <a href="" className={style.logo_header_mobile}>BSE</a>
-      </div>
+        <div className={style.phone_left_mobile}>
+          <div className={style.burger} onClick={toggleBurger}>
+            <div className={`${style.line} ${isBurgerOpen ? style.openTop : ""}`}></div>
+            <div className={`${style.line} ${isBurgerOpen ? style.openMiddle : ""}`}></div>
+            <div className={`${style.line} ${isBurgerOpen ? style.openBottom : ""}`}></div>
+          </div>
+          <a href="" className={style.logo_header_mobile}>BSE</a>
+        </div>
+        
         {isBurgerOpen && (
-            <div className={style.burgerMenu}>
-          <button className={style.filter_mobile} onClick={handleFilterClick}>
-            <img src={iconFilter} alt="filter icon" width="18" height="18" />
-            Filter 
+          <div className={style.burgerMenu}>
+            <button className={style.filter_mobile} onClick={handleFilterClick}>
+              <img src={iconFilter} alt="filter icon" width="18" height="18" />
+              Filter 
             </button>
             <a className={style.burger_item}>New Arrivals</a>
             <a className={style.burger_item}>Best Sellers</a>
-            <a className={style.burger_item}>Today’s Deals</a>
+            <a className={style.burger_item}>Today's Deals</a>
             <a className={style.burger_item}>Gift Cards</a>
             </div>
       )}
@@ -373,43 +373,43 @@ const userMenuMobileRef = useRef(null);
           </div>
         </div> */}
 
-        {openSidebar && (
-          <div className={style.sidebar_container}>
-            <div className={style.sidebar}>
-              <h3>Categories</h3>
-              <ul className={style.categories_list}>
-                <li className={style.category_item} onClick={() => handleCategoryClick("gamers")}>
-                  <img src={category1} alt="gamers" /> products for gamers
-                </li>
-                <li className={style.category_item} onClick={() => handleCategoryClick("electronics")}>
-                  <img src={category2} alt="electronic" /> electronic
-                </li>
-                <li className={style.category_item} onClick={() => handleCategoryClick("children")}>
-                  <img src={category3} alt="children" /> children's goods
-                </li>
-                <li className={style.category_item} onClick={() => handleCategoryClick("business")}>
-                  <img src={category4} alt="business" /> business services
-                </li>
-                <li className={style.category_item} onClick={() => handleCategoryClick("animals")}>
-                  <img src={category5} alt="animals" /> animals
-                </li>
-                <li className={style.category_item} onClick={() => handleCategoryClick("transport")}>
-                  <img src={category6} alt="transport" /> spare parts for transport
-                </li>
-                <li className={style.category_item} onClick={() => handleCategoryClick("furniture")}>
-                  <img src={category7} alt="furniture" /> furniture
-                </li>
-                <li className={style.category_item} onClick={() => handleCategoryClick("realestate")}>
-                  <img src={category8} alt="real-estate" /> real estate
-                </li>
-                <li className={style.category_item} onClick={() => handleCategoryClick("clothing")}>
-                  <img src={category9} alt="clothing" /> clothing
-                </li>
-                <li className={style.category_item} onClick={() => handleCategoryClick("sport")}>
-                  <img src={category10} alt="sport" /> sport goods
-                </li>
-              </ul>
-            </div>
+      {openSidebar && (
+        <div className={style.sidebar_container}>
+          <div className={style.sidebar}>
+            <h3>Categories</h3>
+            <ul className={style.categories_list}>
+              <li className={style.category_item} onClick={() => handleCategoryClick("gamers")}>
+                <img src={category1} alt="gamers" /> products for gamers
+              </li>
+              <li className={style.category_item} onClick={() => handleCategoryClick("electronics")}>
+                <img src={category2} alt="electronic" /> electronic
+              </li>
+              <li className={style.category_item} onClick={() => handleCategoryClick("children")}>
+                <img src={category3} alt="children" /> children's goods
+              </li>
+              <li className={style.category_item} onClick={() => handleCategoryClick("business")}>
+                <img src={category4} alt="business" /> business services
+              </li>
+              <li className={style.category_item} onClick={() => handleCategoryClick("animals")}>
+                <img src={category5} alt="animals" /> animals
+              </li>
+              <li className={style.category_item} onClick={() => handleCategoryClick("transport")}>
+                <img src={category6} alt="transport" /> spare parts for transport
+              </li>
+              <li className={style.category_item} onClick={() => handleCategoryClick("furniture")}>
+                <img src={category7} alt="furniture" /> furniture
+              </li>
+              <li className={style.category_item} onClick={() => handleCategoryClick("realestate")}>
+                <img src={category8} alt="real-estate" /> real estate
+              </li>
+              <li className={style.category_item} onClick={() => handleCategoryClick("clothing")}>
+                <img src={category9} alt="clothing" /> clothing
+              </li>
+              <li className={style.category_item} onClick={() => handleCategoryClick("sport")}>
+                <img src={category10} alt="sport" /> sport goods
+              </li>
+            </ul>
+          </div>
 
             <div className={style.subcategories}>
               <h3>{subcategories[activeCategory].title}</h3>
