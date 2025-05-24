@@ -40,12 +40,6 @@ const PublicRegister = () => (
   </PublicOnlyRoute>
 );
 
-const PublicForgotPassword = () => (
-  <PublicOnlyRoute link={"/"}>
-    <ForgotPassword />
-  </PublicOnlyRoute>
-);
-
 const router = createBrowserRouter([
   {
     path: '/',
@@ -66,9 +60,6 @@ const router = createBrowserRouter([
       { path: 'login', element: <PublicLogin /> },
       { path: 'register', element: <PublicRegister /> },
       { path: 'password-reset', element: <ForgotPassword /> },
-      { path: 'admin-login', element: <AdminLoginPage /> }, 
-      { path: 'admin-Home', element: <AdminHomePage /> }, 
-
       { path: 'password-reset', element: <PublicForgotPassword /> },
       { path: 'admin-login', element: <AdminLoginPage /> }, // Сторінка входу для адміністратора
       { path: 'admin-home', element: <AdminHomePage /> }, // Головна сторінка адміністратора
