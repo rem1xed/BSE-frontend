@@ -23,7 +23,7 @@ export default function AdminLoginPage() {
   useEffect(() => {
     if (authService.isAuthenticated()) {
       console.log('Користувач уже авторизований, перенаправлення на /account');
-      navigate('/account');
+      navigate('/admin-home');
     }
     // Відображаємо повідомлення після реєстрації, якщо воно є
     if (location.state?.message) {

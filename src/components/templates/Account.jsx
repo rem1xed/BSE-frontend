@@ -26,6 +26,15 @@ export default function Account(){
     facebookLink: '',
   });
 
+  const [userData, setUserData] = useState({
+        fullname : '',
+        nickname : '',
+        gender : '',
+        email : '',
+        password : '',
+        phoneNumber : '',
+    });
+
 const handleChange = (e) => {
   const { name, value, type, checked, id } = e.target;
 
@@ -49,7 +58,29 @@ const handleChange = (e) => {
 
 
   // Компоненти контейнерів залишаються без змін...
-  const AccountInfoContainer = () => (
+  const AccountInfoContainer = () => {
+    useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const data = await authService.getProfile();
+        console.log(data); // подивитись, що приходить
+
+        setUserData({
+          fullname: `${data.firstName} ${data.lastName}`,
+          nickname: '', // якщо є в data — додай
+          email: data.email,
+          phoneNumber: data.phone,
+        });
+      } catch (error) {
+        console.error('Помилка отримання профілю:', error);
+      }
+    };
+
+    fetchUser();
+  }, []);
+
+
+    return(
     <>
       <div className={style.head}>
           <h3>Welcome, User</h3>
@@ -79,6 +110,7 @@ const handleChange = (e) => {
                   type="text"
                   name=""
                   id=""
+                  value={userData.fullname}
                   placeholder="Your full name"
                 />
               </div>
@@ -98,6 +130,7 @@ const handleChange = (e) => {
                   type="text"
                   name=""
                   id=""
+                  value="********"
                   placeholder="Your password"
                 />
               </div>
@@ -118,6 +151,7 @@ const handleChange = (e) => {
                   type="text"
                   name=""
                   id=""
+                  value={userData.email}
                   placeholder="Your email"
                 />
               </div>
@@ -127,6 +161,7 @@ const handleChange = (e) => {
                   type="text"
                   name=""
                   id=""
+                  value={userData.phoneNumber}
                   placeholder="Your phone number"
                 />
               </div>
@@ -136,6 +171,7 @@ const handleChange = (e) => {
       </div>
     </>
   );
+}
 
   const OrdersContainer = () => (
     <div className="p-6 bg-white rounded-lg shadow">
@@ -153,13 +189,13 @@ const handleChange = (e) => {
           <tr className="border-b border-gray-200">
             <td className="p-2">#1001</td>
             <td className="p-2">15.04.2025</td>
-            <td className="p-2 text-green-500">Доставлено</td>
+            <td className={style.text_green_500}>Доставлено</td>
             <td className="p-2">1250 грн</td>
           </tr>
           <tr className="border-b border-gray-200">
             <td className="p-2">#1002</td>
             <td className="p-2">10.04.2025</td>
-            <td className="p-2 text-yellow-500">В обробці</td>
+            <td className={style.text_yellow_500}>В обробці</td>
             <td className="p-2">450 грн</td>
           </tr>
         </tbody>
@@ -170,15 +206,15 @@ const handleChange = (e) => {
   const SavedContainer = () => (
     <div className="p-6 bg-white rounded-lg shadow">
       <h2 className="text-xl font-bold mb-4">Збережені товари</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className={style.space_y_4}>
         {[1, 2, 3].map((item) => (
-          <div key={item} className="border rounded-lg p-4">
+          <div key={item} className={style.pb_4}>
             <div className="bg-gray-200 h-32 rounded mb-2"></div>
             <h3 className="font-bold">Товар #{item}</h3>
             <p className="text-gray-600">1200 грн</p>
-            <div className="flex mt-2">
-              <Button className="bg-blue-500 text-white px-3 py-1 rounded mr-2 text-sm">До кошика</Button>
-              <Button className="border border-red-500 text-red-500 px-3 py-1 rounded text-sm">Видалити</Button>
+            <div className={style.mt_2}>
+              <Button className={style.buyButton}>Buy</Button>
+              <Button className={style.buyButton}>Delete</Button>
             </div>
           </div>
         ))}
@@ -189,24 +225,24 @@ const handleChange = (e) => {
   const ReviewsContainer = () => (
     <div className="p-6 bg-white rounded-lg shadow">
       <h2 className="text-xl font-bold mb-4">Мої відгуки</h2>
-      <div className="space-y-4">
-        <div className="border-b pb-4">
+      <div className={style.space_y_4}>
+        <div className={style.pb_4}>
           <div className="flex items-center mb-2">
             <div className="bg-gray-200 w-12 h-12 rounded mr-2"></div>
             <div>
               <h3 className="font-bold">Товар #1</h3>
-              <div className="flex text-yellow-500">★★★★☆</div>
+              <div className={style.text_yellow_500}>★★★★☆</div>
             </div>
           </div>
           <p className="text-gray-700">Дуже задоволений покупкою. Хороша якість, швидка доставка.</p>
           <p className="text-sm text-gray-500 mt-1">Додано: 05.04.2025</p>
         </div>
-        <div className="border-b pb-4">
+        <div className={style.pb_4}>
           <div className="flex items-center mb-2">
             <div className="bg-gray-200 w-12 h-12 rounded mr-2"></div>
             <div>
               <h3 className="font-bold">Товар #2</h3>
-              <div className="flex text-yellow-500">★★★☆☆</div>
+              <div className={style.text_yellow_500}>★★★☆☆</div>
             </div>
           </div>
           <p className="text-gray-700">Нормальний товар, але є невеликі недоліки.</p>
@@ -365,20 +401,6 @@ const PreferencesContainer = () => {
       console.error("Error stack:", error.stack);
     }
     
-    setPrefData({
-      age: "",
-      city: "",
-      country: "",
-      educationInstitution: "",
-      educationLevel: "",
-      facebookLink: "",
-      industry: "",
-      instagramLink: "",
-      interests: [],
-      profession: "",
-      region: "",
-      socialNetwork: ""
-    });
   } finally {
     setIsLoading(false);
   }
