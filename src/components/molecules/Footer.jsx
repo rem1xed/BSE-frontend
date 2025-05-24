@@ -10,7 +10,7 @@ const Footer = function () {
                     <li className={style.list_element_left}><a className={style.link} href="About-Us">About Us</a></li>
                     <li className={style.list_element_left}><a className={style.link} href="#">About Zip</a></li>
                     <li className={style.list_element_left}><a className={style.link} href="#">Privacy Policy</a></li>
-                    <li className={style.list_element_left}><a className={style.link} href="Support">Buy a Coffee for Us :)</a></li>
+                    <li className={style.list_element_left}><a className={style.link} href="Support">Buy a Coffee for Us :{')'}</a></li>
                     <li className={style.list_element_left}><a className={style.link} href="#">Teams</a></li>
                     <li className={style.list_element_left}><a className={style.link} href="#">Orders and Returns</a></li>
                     <li className={style.list_element_left}><a className={style.link} href="#">Contact Us</a></li>
