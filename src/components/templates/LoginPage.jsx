@@ -15,20 +15,6 @@ export default function LoginPage () {
   const [apiError, setApiError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const location = useLocation();
-  
-  // Перевіряємо авторизацію при завантаженні сторінки
-  useEffect(() => {
-    if (authService.isAuthenticated()) {
-      console.log('Користувач уже авторизований, перенаправлення на /account');
-      navigate('/account');
-    }
-    
-    // Відображаємо повідомлення після реєстрації, якщо воно є
-    if (location.state?.message) {
-      setApiError(location.state.message);
-    }
-  }, [navigate, location]);
 
   // Обробник змін полів форми
   const handleChange = (e) => {
@@ -93,7 +79,7 @@ export default function LoginPage () {
       // Перевіряємо авторизацію після входу
       if (authService.isAuthenticated()) {
         console.log('Перенаправлення на /account після успішного входу');
-        navigate('/account');
+        navigate('/');
       } else {
         console.error('❌ Токен не збережено після входу');
         setApiError('Помилка авторизації: не вдалося зберегти дані сесії');

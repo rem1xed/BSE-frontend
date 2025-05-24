@@ -21,20 +21,26 @@ import AdminHomePage from './components/templates/AdminHomePage';
 
 // Елементи з перевіркою авторизації
 const ProtectedAccount = () => (
-  <ProtectedRoute>
+  <ProtectedRoute link={"/login"}>
     <Account />
   </ProtectedRoute>
 );
 
 const PublicLogin = () => (
-  <PublicOnlyRoute>
+  <PublicOnlyRoute link={"/"}>
     <LoginPage />
   </PublicOnlyRoute>
 );
 
 const PublicRegister = () => (
-  <PublicOnlyRoute>
+  <PublicOnlyRoute link={"/"}>
     <RegistrationPage />
+  </PublicOnlyRoute>
+);
+
+const PublicForgotPassword = () => (
+  <PublicOnlyRoute link={"/"}>
+    <ForgotPassword />
   </PublicOnlyRoute>
 );
 
@@ -55,9 +61,9 @@ const router = createBrowserRouter([
     children: [
       { path: 'login', element: <PublicLogin /> },
       { path: 'register', element: <PublicRegister /> },
-      { path: 'password-reset', element: <ForgotPassword /> },
+      { path: 'password-reset', element: <PublicForgotPassword /> },
       { path: 'admin-login', element: <AdminLoginPage /> }, // Сторінка входу для адміністратора
-      { path: 'admin-Home', element: <AdminHomePage /> }, // Головна сторінка адміністратора
+      { path: 'admin-home', element: <AdminHomePage /> }, // Головна сторінка адміністратора
     ]
   }
 ]);
