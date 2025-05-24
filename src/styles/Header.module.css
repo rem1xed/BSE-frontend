@@ -82,13 +82,14 @@ header {
     position: absolute;
     top: 69px;
     left: 0;
-background: #f7f4f4;
+    background: #f7f4f4;
     width: 153px;
     display: flex;
     flex-direction: column;
     gap: 10px;
     z-index: 998;
 }
+
 .phone_moon {
     height: 48px;
 }
@@ -112,7 +113,6 @@ background: #f7f4f4;
     padding: 0;
     flex-grow: 1;
     display: none;
-
     justify-content: center;
 }
 
@@ -263,7 +263,6 @@ background: #f7f4f4;
     width: 100%;
     position: absolute;
     left: 0;
-    top:115px;
     z-index: 1000;
 }
 

@@ -90,15 +90,16 @@ a:focus {
 
 body .button_inner {
   flex-direction: row;
-  gap: 3px;
+  gap: 10px;
 }
 
 
 .button_inner .active_span {
-  transition: all 0.2s ease;
+  transition: all 0.5s ease;
   background-color: #0156ff;
-  width: 1.5%;
-  height: 100%;
+  width: 2%;
+  border-radius: 16px;
+  /* height: 100%; */
 }
 
 .nav_button {
@@ -117,6 +118,7 @@ body .button_inner {
 .nav_button:focus {
   color: #212121;
   outline: none;
+  transform: scale(1.05);
 }
 
 .button_inner:has(.active_span) .nav_button {
@@ -395,6 +397,7 @@ tbody tr:nth-child(even) {
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
   padding: 0.5rem;
   background-color: #f5f7ff;
   border-radius: 4px;
@@ -447,4 +450,63 @@ tbody tr:nth-child(even) {
   border: 2px solid #0156ff;
   padding: calc(0.75rem - 2px) calc(1.5rem - 2px);
   outline: none;
+}
+
+
+.space_y_4 {
+  margin-top: 16px;
+  display: grid;
+  /* flex-direction: column; */
+  gap: 16px;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.pb_4 {
+  background: linear-gradient(to right, #c47437, #3069c5);
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.text_yellow_500{
+  color: #e8dd0c;
+  font-weight: 500;
+}
+
+
+.text_green_500{
+  font-weight: 500;
+  color: #06ce1a;
+}
+
+.buyButton{
+  background-color: #42b1e5;
+  border: 1px solid #81caeb;
+  border-radius: 8px;
+  min-width: 50px;
+}
+
+.mt_2{
+  display: flex;
+  gap: 16px;
+}
+
+
+/* Визначаємо анімацію */
+.fade-enter {
+  opacity: 0;
+  transform: translateY(20px);
+}
+.fade-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 300ms ease-in-out, transform 300ms ease-in-out;
+}
+.fade-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+.fade-exit-active {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 300ms ease-in-out, transform 300ms ease-in-out;
 }
