@@ -1,9 +1,10 @@
-import {api, AUTH_TOKEN_KEY} from "./api"
+// settingsService.js
+import { api, AUTH_TOKEN_KEY } from "./api";
+import { getCookie } from "./cookie";
 
-const getAuthToken = () => {
-  return localStorage.getItem(AUTH_TOKEN_KEY);
-};
+const getAuthToken = () => getCookie(AUTH_TOKEN_KEY);
 
+// Додавання токена до кожного запиту
 api.interceptors.request.use(
   (config) => {
     const token = getAuthToken();
@@ -12,19 +13,16 @@ api.interceptors.request.use(
     }
     return config;
   },
-  (error) => {
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error)
 );
 
 const settings = {
   save_targeting_parameters: async (formData) => {
     try {
-      // Simply pass through the formData without modifying the age field
       const response = await api.patch('/user/settings', formData);
       return response.data;
     } catch (error) {
-      console.error('Error saving targeting parameters:', error);
+      console.error('Помилка збереження параметрів:', error);
       throw error;
     }
   },
@@ -34,8 +32,7 @@ const settings = {
       const response = await api.get("/user/settings");
       return response.data;
     } catch (error) {
-      console.error('Error getting targeting parameters:', error);
-      // Return default empty values in case of error
+      console.error('Помилка отримання параметрів:', error);
       return {
         age: '',
         country: '',
@@ -54,4 +51,4 @@ const settings = {
   }
 };
 
-export {settings};
+export { settings };
