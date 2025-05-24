@@ -18,6 +18,8 @@ import AddPage from './components/templates/addPage';
 import ForgotPassword from './components/templates/ForgotPasswordPage';
 import AdminLoginPage from './components/templates/AdminLoginPage';
 import AdminHomePage from './components/templates/AdminHomePage';
+import AboutUsPage from './components/templates/AboutUsPage';
+import SupportPage from './components/templates/supportPage';
 
 // Елементи з перевіркою авторизації
 const ProtectedAccount = () => (
@@ -52,7 +54,9 @@ const router = createBrowserRouter([
       { index: true, element: <App /> }, // Головна сторінка з повним макетом
       { path: 'account', element: <ProtectedAccount /> },
       { path: 'add', element: <AddPage /> },
-      { path: '*', element: <NotFoundPage /> }
+      { path: '*', element: <NotFoundPage /> },
+      { path: 'About-us', element: <AboutUsPage /> },
+      { path: 'Support', element: <SupportPage /> },
     ]
   },
   {
@@ -61,6 +65,10 @@ const router = createBrowserRouter([
     children: [
       { path: 'login', element: <PublicLogin /> },
       { path: 'register', element: <PublicRegister /> },
+      { path: 'password-reset', element: <ForgotPassword /> },
+      { path: 'admin-login', element: <AdminLoginPage /> }, 
+      { path: 'admin-Home', element: <AdminHomePage /> }, 
+
       { path: 'password-reset', element: <PublicForgotPassword /> },
       { path: 'admin-login', element: <AdminLoginPage /> }, // Сторінка входу для адміністратора
       { path: 'admin-home', element: <AdminHomePage /> }, // Головна сторінка адміністратора
