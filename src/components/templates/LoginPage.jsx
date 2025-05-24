@@ -1,7 +1,6 @@
-// components/templates/LoginPage.jsx
-import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { authService } from '../../services/authService';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { authService } from '../../api/authService';
 import style from '../../styles/Login.module.css';
 import Input from '../atoms/Input';
 import Button from '../atoms/Button';
@@ -16,44 +15,28 @@ export default function LoginPage () {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  // Обробник змін полів форми
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-    
-    // Очищаємо помилку поля при редагуванні
+    setFormData(prev => ({ ...prev, [name]: value }));
+
     if (errors[name]) {
-      setErrors(prev => ({
-        ...prev,
-        [name]: null
-      }));
+      setErrors(prev => ({ ...prev, [name]: null }));
     }
-    
-    // Очищаємо загальну помилку API при будь-яких змінах
     if (apiError) {
       setApiError('');
     }
   };
 
-  // Валідація форми
   const validateForm = () => {
     const newErrors = {};
-    
-    // Перевірка email
     if (!formData.email) {
       newErrors.email = "Email is required";
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = "Email is invalid";
     }
-    
-    // Перевірка пароля
     if (!formData.password) {
       newErrors.password = "Password is required";
     }
-    
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -61,31 +44,29 @@ export default function LoginPage () {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setApiError('');
-    
-    // Валідуємо форму перед відправкою
+
     if (!validateForm()) {
       return;
     }
-    
+
     setLoading(true);
 
     try {
-      // Зберігаємо email для можливого використання в профілі
-      localStorage.setItem('userEmail', formData.email);
-      
+      // Логін
       const userData = await authService.login(formData.email, formData.password);
-      console.log('Успішний вхід:', userData);
-      
-      // Перевіряємо авторизацію після входу
-      if (authService.isAuthenticated()) {
-        console.log('Перенаправлення на /account після успішного входу');
-        navigate('/');
+
+      // Після логіну authService має автоматично зберегти email у cookie
+      // Якщо ні — можна викликати окремо setUserEmail(formData.email)
+
+      // Перевірка авторизації через cookie / API
+      const authenticated = await authService.isAuthenticated();
+
+      if (authenticated) {
+        navigate('/'); // Або '/account', залежно від логіки
       } else {
-        console.error('❌ Токен не збережено після входу');
         setApiError('Помилка авторизації: не вдалося зберегти дані сесії');
       }
     } catch (err) {
-      console.error('Помилка входу:', err);
       setApiError(err.response?.data?.message || 'Невірний логін або пароль');
     } finally {
       setLoading(false);

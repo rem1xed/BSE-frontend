@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styles from '../../styles/ForgotPassword.module.css';
-import { authService } from '../../services/authService';
+import { authService } from '../../api/authService';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 const ForgotPassword = () => {

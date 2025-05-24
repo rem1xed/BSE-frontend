@@ -7,7 +7,8 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Layout from './components/templates/Layout';
 import AuthLayout from './components/templates/AuthLayout';
 
-import ProtectedRoute, { PublicOnlyRoute } from './components/molecules/ProtectedRoute';
+import ProtectedRoute  from './components/molecules/ProtectedRoute';
+import PublicOnlyRoute  from './components/molecules/PublicOnlyRoute';
 
 import Home from './Home';
 import NotFoundPage from './components/templates/NotFoundPage';

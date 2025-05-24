@@ -3,9 +3,9 @@ import style from "../../styles/Account.module.css"
 import { useEffect, useState } from "react";
 import Button from "../atoms/Button"
 import Input from "../atoms/Input"
-import { authService } from '../../services/authService';
+import { authService } from '../../api/authService';
 import { useNavigate } from "react-router-dom";
-import { settings } from "../../services/settingsService";
+import { settings } from "../../api/settingsService";
 
 export default function Account(){
   const [activeSection, setActiveSection] = useState('dashboard');
@@ -808,7 +808,7 @@ const PreferencesContainer = () => {
               </div>
             </div>
           </div>
-          <Button onClick={() => {authService.logout(); navigate("/login")}}>
+          <Button onClick={() => {authService.logout(); }}>
             Logout
           </Button>
         </div>
