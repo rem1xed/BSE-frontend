@@ -118,16 +118,11 @@ footer li.list_element_left a.link:focus {
         margin: 6px 0;
     }
 
-    .list_element {
-        font-size: 8px;
-    }
-
-    .side {
-        margin-bottom: 30px;
-    }
+         .list_element {
+            font-size: 8px;
+         }
+         .side {
+             margin-bottom: 30px;
+         }
 }
 
-footer a{
-    text-decoration: none;
-    color: #01A4FF;
-}
