@@ -2,30 +2,11 @@ import React, { useState, useRef, useEffect } from "react";
 
 import style from "../../styles/Header.module.css";
 
-import logo from "../../assets/photo-header/logo.png";
-import secondaryButton from "../../assets/photo-header/Secondary Button.png";
 import iconFilter from "../../assets/photo-header/icon-filter.png";
-import iconMoon from "../../assets/photo-header/Vector.png";
-import iconHeart from "../../assets/photo-header/Vector-1.png";
-import iconUser from "../../assets/photo-header/Icon.png";
-import iconChat from "../../assets/photo-header/chat-118.png";
-import phoneMoon from "../../assets/photo-header/moon-phone.png";
-import phoneSearch from "../../assets/photo-header/search.png";
-import phoneShopCart from "../../assets/photo-header/shopping-cart.png";
 
-import category1 from "../../assets/photo-header/category1.png";
-import category2 from "../../assets/photo-header/category2.png";
-import category3 from "../../assets/photo-header/category3.png";
-import category4 from "../../assets/photo-header/category4.png";
-import category5 from "../../assets/photo-header/category5.png";
-import category6 from "../../assets/photo-header/category6.png";
-import category7 from "../../assets/photo-header/category7.png";
-import category8 from "../../assets/photo-header/category8.png";
-import category9 from "../../assets/photo-header/category9.png";
-import category10 from "../../assets/photo-header/category10.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMoon, faHeart, faUser, faComments } from "@fortawesome/free-regular-svg-icons"; // regular
-import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
+import { faMoon, faHeart, faUser } from "@fortawesome/free-regular-svg-icons"; // regular
+import { faLaptop, faMobileScreen, faBabyCarriage, faSuitcase, faDog, faCouch, faScrewdriverWrench, faKey, faShirt, faVolleyball } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
@@ -46,7 +27,17 @@ function Header() {
   const [isDarkTheme, setIsDarkTheme] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const userMenuRef = useRef(null);
+ const userButtonRef = useRef(null);
+
   const [user, setUser] = useState(null); 
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
+  
   // null — гість (не залогінений)
   // { username: "Імʼя" } — залогінений користувач
   const [isUserMenuMobileOpen, setIsUserMenuMobileOpen] = useState(false);
@@ -61,15 +52,24 @@ const userMenuMobileRef = useRef(null);
   
   useEffect(() => {
     function handleClickOutside(event) {
-      if (userMenuRef.current && !userMenuRef.current.contains(event.target)) {
+      console.log("clicked:", event.target);
+      console.log(
+        "insideMenu?", userMenuRef.current?.contains(event.target),
+        "insideBtn?", userButtonRef.current?.contains(event.target)
+      );
+      if (
+        userMenuRef.current &&
+        !userMenuRef.current.contains(event.target) &&
+        userButtonRef.current &&
+        !userButtonRef.current.contains(event.target)
+      ) {
         setIsUserMenuOpen(false);
       }
     }
     document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+  
 
   useEffect(() => {
     function handleClickOutsideMobile(event) {
@@ -98,16 +98,27 @@ const userMenuMobileRef = useRef(null);
   const handleCategoryClick = (categoryKey) => {
     setActiveCategory(categoryKey);
   };
-  const toggleTheme = () => {
-    setIsDarkTheme(!isDarkTheme);
+
+    
+    const toggleTheme = () => {
+          setIsDarkTheme(!isDarkTheme);
+    const html = document.body;
+    const current = html.classList.contains('dark') ? 'light' : 'dark';
+    html.className = current;
+  
+    window.dispatchEvent(new CustomEvent('themeChange', { detail: current }));
   };
+  
+  
   const toggleUserMenu = () => {
     setIsUserMenuOpen(prev => !prev);
   };
   const handleLogout = () => {
-    setUser(null);
-    setIsUserMenuOpen(false);
-  };  
+  localStorage.removeItem("user"); // Очистити localStorage
+  setUser(null);                   // Скинути стейт користувача
+  setIsUserMenuOpen(false);
+};
+
   const toggleBurger = () => {
     setIsBurgerOpen(!isBurgerOpen);
   };
@@ -189,24 +200,24 @@ const userMenuMobileRef = useRef(null);
     <header className={isDarkTheme ? style.darkTheme : ""}>
 
       <div className={style.mobile_header}>
-        <div className={style.phone_left_mobile}>
-          <div className={style.burger} onClick={toggleBurger}>
-            <div className={`${style.line} ${isBurgerOpen ? style.openTop : ""}`}></div>
-            <div className={`${style.line} ${isBurgerOpen ? style.openMiddle : ""}`}></div>
-            <div className={`${style.line} ${isBurgerOpen ? style.openBottom : ""}`}></div>
-          </div>
-          <a href="" className={style.logo_header_mobile}>BSE</a>
-        </div>
-        
+
+      <div className={style.phone_left_mobile}>
+      <div className={style.burger} onClick={toggleBurger}>
+        <div className={`${style.line} ${isBurgerOpen ? style.openTop : ""}`}></div>
+        <div className={`${style.line} ${isBurgerOpen ? style.openMiddle : ""}`}></div>
+        <div className={`${style.line} ${isBurgerOpen ? style.openBottom : ""}`}></div>
+      </div>
+      <a href="" className={style.logo_header_mobile}>BSE</a>
+      </div>
         {isBurgerOpen && (
-          <div className={style.burgerMenu}>
-            <button className={style.filter_mobile} onClick={handleFilterClick}>
-              <img src={iconFilter} alt="filter icon" width="18" height="18" />
-              Filter 
+            <div className={`${style.burgerMenu} ${style.fadeIn}`}>
+          <button className={style.filter_mobile} onClick={handleFilterClick}>
+            <img src={iconFilter} alt="filter icon" width="18" height="18" />
+            Filter 
             </button>
             <a className={style.burger_item}>New Arrivals</a>
             <a className={style.burger_item}>Best Sellers</a>
-            <a className={style.burger_item}>Today's Deals</a>
+            <a className={style.burger_item}>Today’s Deals</a>
             <a className={style.burger_item}>Gift Cards</a>
             </div>
       )}
@@ -215,15 +226,14 @@ const userMenuMobileRef = useRef(null);
     <FontAwesomeIcon icon={faMoon} className={style.icon_com_mob_btn} />
   </button>
 
-  <a href="#"><FontAwesomeIcon icon={faCartShopping} className={style.icon_com_mob} /></a>
-  <a href="#"><FontAwesomeIcon icon={faHeart} className={style.icon_com_mob} /></a>
+  <button className={style.iconButton_mob}><FontAwesomeIcon icon={faHeart} className={style.icon_com_mob} /></button>
 
   <button onClick={toggleUserMenuMobile} className={style.iconButton_mob}>
     <FontAwesomeIcon icon={user ? faUserSolid : faUser} className={style.icon_com_mob_btn} />
   </button>
 
   {isUserMenuMobileOpen && (
-    <div ref={userMenuMobileRef} className={style.userMenuMobile}>
+    <div ref={userMenuMobileRef} className={`${style.userMenuMobile} ${style.fadeIn}`}>
       {user ? (
         <>
           <div
@@ -298,15 +308,20 @@ const userMenuMobileRef = useRef(null);
   <button onClick={toggleTheme} className={style.iconButton}>
     <FontAwesomeIcon icon={faMoon} className={style.icon_com} />
   </button>
-  <a href="#"><FontAwesomeIcon icon={faHeart} className={style.icon_com} /></a>
+  <button><FontAwesomeIcon icon={faHeart} className={style.icon_com} /></button>
 
-  <button onClick={toggleUserMenu} className={style.iconButton}>
+  <button
+         ref={userButtonRef}
+         onClick={toggleUserMenu}
+         className={style.iconButton}
+         aria-expanded={isUserMenuOpen}
+       >
     <FontAwesomeIcon icon={user ? faUserSolid : faUser} className={style.icon_com} />
   </button>
 
   {/* Меню користувача */}
   {isUserMenuOpen && (
-  <div ref={userMenuRef} className={style.userMenu}>
+  <div ref={userMenuRef} className={`${style.userMenu} ${style.fadeIn}`}>
     {user ? (
       <>
         <div
@@ -348,68 +363,44 @@ const userMenuMobileRef = useRef(null);
 
           
         </div>
-      
 
-        {/* <div className={style.nav_row}>
-
-          <div className={style.dropdown_button_container}>
-            <button className={style.filter} onClick={handleFilterClick}>
-              <img src={iconFilter}  alt="filter icon" width="18" height="18" />
-              Categories <span className={style.arrow}>{openSidebar ? "^" : "v"}</span>
-            </button>
-          </div>
-          
-          
-
-          <div className={style.dropdowns}>
-            <select>
-              <option>Eng</option>
-              <option>Ukr</option>
-            </select>
-            <select>
-              <option>USD ($)</option>
-              <option>EUR (€)</option>
-            </select>
-          </div>
-        </div> */}
-
-      {openSidebar && (
-        <div className={style.sidebar_container}>
-          <div className={style.sidebar}>
-            <h3>Categories</h3>
-            <ul className={style.categories_list}>
-              <li className={style.category_item} onClick={() => handleCategoryClick("gamers")}>
-                <img src={category1} alt="gamers" /> products for gamers
-              </li>
-              <li className={style.category_item} onClick={() => handleCategoryClick("electronics")}>
-                <img src={category2} alt="electronic" /> electronic
-              </li>
-              <li className={style.category_item} onClick={() => handleCategoryClick("children")}>
-                <img src={category3} alt="children" /> children's goods
-              </li>
-              <li className={style.category_item} onClick={() => handleCategoryClick("business")}>
-                <img src={category4} alt="business" /> business services
-              </li>
-              <li className={style.category_item} onClick={() => handleCategoryClick("animals")}>
-                <img src={category5} alt="animals" /> animals
-              </li>
-              <li className={style.category_item} onClick={() => handleCategoryClick("transport")}>
-                <img src={category6} alt="transport" /> spare parts for transport
-              </li>
-              <li className={style.category_item} onClick={() => handleCategoryClick("furniture")}>
-                <img src={category7} alt="furniture" /> furniture
-              </li>
-              <li className={style.category_item} onClick={() => handleCategoryClick("realestate")}>
-                <img src={category8} alt="real-estate" /> real estate
-              </li>
-              <li className={style.category_item} onClick={() => handleCategoryClick("clothing")}>
-                <img src={category9} alt="clothing" /> clothing
-              </li>
-              <li className={style.category_item} onClick={() => handleCategoryClick("sport")}>
-                <img src={category10} alt="sport" /> sport goods
-              </li>
-            </ul>
-          </div>
+        {openSidebar && (
+          <div className={`${style.sidebar_container} ${style.fadeIn}`}>
+            <div className={style.sidebar}>
+              <h3>Categories</h3>
+              <ul className={style.categories_list}>
+                <li className={style.category_item} onClick={() => handleCategoryClick("gamers")}>
+                <FontAwesomeIcon icon={faLaptop} /> products for gamers
+                </li>
+                <li className={style.category_item} onClick={() => handleCategoryClick("electronics")}>
+                <FontAwesomeIcon icon={faMobileScreen} /> electronic
+                </li>
+                <li className={style.category_item} onClick={() => handleCategoryClick("children")}>
+                <FontAwesomeIcon icon={faBabyCarriage} /> children's goods
+                </li>
+                <li className={style.category_item} onClick={() => handleCategoryClick("business")}>
+                <FontAwesomeIcon icon={faSuitcase} /> business services
+                </li>
+                <li className={style.category_item} onClick={() => handleCategoryClick("animals")}>
+                <FontAwesomeIcon icon={faDog} /> animals
+                </li>
+                <li className={style.category_item} onClick={() => handleCategoryClick("transport")}>
+                <FontAwesomeIcon icon={faScrewdriverWrench} /> spare parts for transport
+                </li>
+                <li className={style.category_item} onClick={() => handleCategoryClick("furniture")}>
+                <FontAwesomeIcon icon={faCouch} /> furniture
+                </li>
+                <li className={style.category_item} onClick={() => handleCategoryClick("realestate")}>
+                <FontAwesomeIcon icon={faKey} /> real estate
+                </li>
+                <li className={style.category_item} onClick={() => handleCategoryClick("clothing")}>
+                <FontAwesomeIcon icon={faShirt} /> clothing
+                </li>
+                <li className={style.category_item} onClick={() => handleCategoryClick("sport")}>
+                <FontAwesomeIcon icon={faVolleyball} /> sport goods
+                </li>
+              </ul>
+            </div>
 
             <div className={style.subcategories}>
               <h3>{subcategories[activeCategory].title}</h3>
