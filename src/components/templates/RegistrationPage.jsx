@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from "../../styles/RegistrationPage.module.css";
 import Input from "../atoms/Input";
-import api from "../../api/axios";
+import api from "../../api/api";
 import Button from '../atoms/Button';
+import { authService } from '../../api/authService';
 
 export default function RegistrationPage() {
     const [formData, setFormData] = useState({
@@ -105,14 +106,16 @@ export default function RegistrationPage() {
             
             console.log('Sending data:', userData); // Додаємо для дебагу
             
-            // Явно вказуємо заголовки для цього запиту
-            const response = await api.post('/auth/register', userData, {
-                headers: {
-                    'Content-Type': 'application/json'
+            try {
+                await authService.registerUser(userData);
+                // Далі логіка успішної реєстрації (редірект, повідомлення тощо)
+                } catch (error) {
+                if (error.response?.status === 409) {
+                    throw('Користувач з таким email вже існує.');
+                } else {
+                    throw('Сталася помилка під час реєстрації.');
                 }
-            });
-            
-            console.log('Response:', response.data); // Додаємо для дебагу
+            }
             
             // Перенаправляємо на сторінку логіну після успішної реєстрації
             navigate('/login', { 
