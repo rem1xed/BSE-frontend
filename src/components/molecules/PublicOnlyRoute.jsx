@@ -2,26 +2,24 @@ import React, { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import axios from 'axios';
 
-const ProtectedRoute = ({ children, redirectTo = '/login' }) => {
+const PublicOnlyRoute = ({ children, redirectTo = '/' }) => {
   const [isAuth, setIsAuth] = useState(null);
 
   useEffect(() => {
-    // Запит до бекенду перевірити токен (передаємо cookie)
     axios.get('http://localhost:1488/auth/me', { withCredentials: true })
       .then(() => setIsAuth(true))
       .catch(() => setIsAuth(false));
   }, []);
 
   if (isAuth === null) {
-    // Поки чекаємо відповідь, можна показати спінер або порожній блок
     return <div>Loading...</div>;
   }
 
-  if (!isAuth) {
+  if (isAuth) {
     return <Navigate to={redirectTo} replace />;
   }
 
   return children;
 };
 
-export default ProtectedRoute;
+export default PublicOnlyRoute;

@@ -1,7 +1,7 @@
 // components/templates/LoginPage.jsx
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { authService } from '../../services/authService';
+import { authService } from '../../api/authService';
 import style from '../../styles/Login.module.css';
 import Input from '../atoms/Input';
 import Button from '../atoms/Button';
