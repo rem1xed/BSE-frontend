@@ -1,4 +1,5 @@
 import axios from 'axios';
+// import proccess from 
 
 // Налаштування Axios
 const api = axios.create({
@@ -6,8 +7,7 @@ const api = axios.create({
   withCredentials: true // Важливо для роботи з cookies
 });
 
-const AUTH_TOKEN_KEY = 'auth_token';
-const AUTH_ADMIN_TOKEN_KEY = "auth_admin_token";
-const USER_EMAIL_KEY = 'userEmail';
+const AUTH_TOKEN_KEY = process.env.AUTH_TOKEN_KEY;
+const AUTH_ADMIN_TOKEN_KEY = process.env.AUTH_ADMIN_TOKEN_KEY;
 
-export { api, AUTH_TOKEN_KEY, USER_EMAIL_KEY };
+export { api, AUTH_TOKEN_KEY, AUTH_ADMIN_TOKEN_KEY };

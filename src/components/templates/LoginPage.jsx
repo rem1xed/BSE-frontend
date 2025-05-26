@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { authService } from '../../api/authService';
+import { authService, isUserAuthenticated } from '../../api/authService';
 import style from '../../styles/Login.module.css';
 import Input from '../atoms/Input';
 import Button from '../atoms/Button';
@@ -59,7 +59,7 @@ export default function LoginPage () {
       // Якщо ні — можна викликати окремо setUserEmail(formData.email)
 
       // Перевірка авторизації через cookie / API
-      const authenticated = await authService.isAuthenticated();
+      const authenticated = await isUserAuthenticated();
 
       if (authenticated) {
         navigate('/'); // Або '/account', залежно від логіки
@@ -112,7 +112,7 @@ export default function LoginPage () {
             </div>
 
             <div className={style.forgot_password}>
-              <a href="/password-reset">Forgot Password?</a>
+              <a onClick={() => {navigate("/password-reset")}}>Forgot Password?</a>
             </div>
 
             <div className={style.button_container}>

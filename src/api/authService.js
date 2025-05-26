@@ -1,19 +1,17 @@
-import { api, USER_EMAIL_KEY } from "./api";
-import { setCookie, getCookie, deleteCookie } from "./cookie";
+import { api } from "./api";
 
-const setUserEmail = (email) => {
-  setCookie(USER_EMAIL_KEY, email);
-};
-
-const getUserEmail = () => getCookie(USER_EMAIL_KEY);
-
-const clearAuthData = () => {
-  deleteCookie(USER_EMAIL_KEY);
-};
-
-const isAuthenticated = async () => {
+export const isUserAuthenticated = async () => {
   try {
-    await api.get('http://localhost:1488/auth/me', { withCredentials: true });
+    await api.get('/auth/me/user', { withCredentials: true });
+    return true;
+  } catch {
+    return false;
+  }
+};
+
+export const isAdminAuthenticated = async () => {
+  try {
+    await api.get('/admin/me', { withCredentials: true });
     return true;
   } catch {
     return false;
@@ -21,17 +19,39 @@ const isAuthenticated = async () => {
 };
 
 const authService = {
+  // === АДМІН ===
+  adminLogin: async (email, password, key) => {
+    const response = await api.post('/admin/login', { email, password, key }, { withCredentials: true });
+    return response.data;
+  },
+
+  registerAdmin: async (userData) => {
+    const response = await api.post('/admin/register', userData, {
+      headers: { 'Content-Type': 'application/json' }
+    });
+    return response.data;
+  },
+
+  getAdmin: async () => {
+    const response = await api.get('/admin/me', { withCredentials: true });
+    return response.data;
+  },
+
+  // === КОРИСТУВАЧ ===
   login: async (email, password) => {
-  const response = await api.post('/auth/login', { email, password }, { withCredentials: true });
-  // Збереження email у cookie (якщо потрібно)
-  setUserEmail(email); // якщо ця функція є у authService
-  return response.data;
-},
+    const response = await api.post('/auth/login', { email, password }, { withCredentials: true });
+    return response.data;
+  },
 
   registerUser: async (userData) => {
     const response = await api.post('/auth/register', userData, {
       headers: { 'Content-Type': 'application/json' }
     });
+    return response.data;
+  },
+
+  getUser: async () => {
+    const response = await api.get('/auth/me/user', { withCredentials: true });
     return response.data;
   },
 
@@ -41,22 +61,21 @@ const authService = {
     } catch (err) {
       console.warn('Logout error:', err);
     }
-    clearAuthData();
     console.log('Вихід виконано успішно');
     return true;
   },
 
-  getProfile: async () => {
+  adminLogout: async () => {
     try {
-      const response = await api.get('http://localhost:1488/auth/me', { withCredentials: true });
-      return response.data;
-    } catch (error) {
-      if (error.response?.status === 401) clearAuthData();
-      throw error;
+      await api.post('/admin/logout', {}, { withCredentials: true });
+    } catch (err) {
+      console.warn('Logout error:', err);
     }
+    console.log('Вихід виконано успішно');
+    return true;
   },
 
-  isAuthenticated,
+  isUserAuthenticated,
 
   requestPasswordReset: (email) => api.post('/auth/forgot-password', { email }),
   verifyResetCode: (email, code) => api.post('/auth/verify-code', { email, code }),

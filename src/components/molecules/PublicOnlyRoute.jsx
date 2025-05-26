@@ -1,25 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
-import axios from 'axios';
+import { isAdminAuthenticated, isUserAuthenticated } from '../../api/authService';
 
-const PublicOnlyRoute = ({ children, redirectTo = '/' }) => {
+const PublicOnlyRoute = ({ children, linkPart, redirectTo }) => {
   const [isAuth, setIsAuth] = useState(null);
 
   useEffect(() => {
-    axios.get('http://localhost:1488/auth/me', { withCredentials: true })
-      .then(() => setIsAuth(true))
-      .catch(() => setIsAuth(false));
+    const checkAuth = async () => {
+      try {
+        let res = false;
+        if (linkPart === "user") {
+          res = await isUserAuthenticated();
+        } else if (linkPart === "admin") {
+          res = await isAdminAuthenticated();
+        }
+        setIsAuth(res);
+      } catch (err) {
+        console.log("Користувач не авторизований");
+        setIsAuth(false);
+      }
+    };
+
+    checkAuth();
   }, []);
 
-  if (isAuth === null) {
-    return <div>Loading...</div>;
-  }
+  if (isAuth === null) return <></>; // Або <Spinner />
 
-  if (isAuth) {
-    return <Navigate to={redirectTo} replace />;
-  }
-
-  return children;
+  return isAuth ? <Navigate to={redirectTo} replace /> : children;
 };
 
 export default PublicOnlyRoute;

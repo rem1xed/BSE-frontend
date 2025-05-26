@@ -19,31 +19,53 @@ import AddPage from './components/templates/addPage';
 import ForgotPassword from './components/templates/ForgotPasswordPage';
 import AdminLoginPage from './components/templates/AdminLoginPage';
 import AdminHomePage from './components/templates/AdminHomePage';
+import HashLoader from './components/molecules/HashLoader';
 
-// Елементи з перевіркою авторизації
+
+// USER ELEMENTS
+
+
 const ProtectedAccount = () => (
-  <ProtectedRoute link={"/login"}>
+  <ProtectedRoute linkPart={'user'} redirectTo={"/login"}>
     <Account />
   </ProtectedRoute>
 );
 
 const PublicLogin = () => (
-  <PublicOnlyRoute link={"/"}>
+  <PublicOnlyRoute linkPart={'user'} redirectTo={"/"}>
     <LoginPage />
   </PublicOnlyRoute>
 );
 
 const PublicRegister = () => (
-  <PublicOnlyRoute link={"/"}>
+  <PublicOnlyRoute linkPart={'user'} redirectTo={"/"}>
     <RegistrationPage />
   </PublicOnlyRoute>
 );
 
 const PublicForgotPassword = () => (
-  <PublicOnlyRoute link={"/"}>
+  <PublicOnlyRoute linkPart={'user'} redirectTo={"/"}>
     <ForgotPassword />
   </PublicOnlyRoute>
 );
+
+
+// ADMIN ELEMENTS
+
+
+const ProtectedAdmin = () => (
+  <ProtectedRoute linkPart={'admin'} redirectTo={"/"}>
+    <AdminHomePage />
+  </ProtectedRoute>
+);
+
+const PublicAdminLogin = () => (
+  <PublicOnlyRoute linkPart={'admin'} redirectTo={"/admin-home"}>
+    <AdminLoginPage />
+  </PublicOnlyRoute>
+);
+
+
 
 const router = createBrowserRouter([
   {
@@ -53,7 +75,8 @@ const router = createBrowserRouter([
       { index: true, element: <Home /> }, // Головна сторінка з повним макетом
       { path: 'account', element: <ProtectedAccount /> },
       { path: 'add', element: <AddPage /> },
-      { path: '*', element: <NotFoundPage /> }
+      { path: '*', element: <NotFoundPage /> },
+      { path: "loader", element: <HashLoader/>}
     ]
   },
   {
@@ -63,8 +86,8 @@ const router = createBrowserRouter([
       { path: 'login', element: <PublicLogin /> },
       { path: 'register', element: <PublicRegister /> },
       { path: 'password-reset', element: <PublicForgotPassword /> },
-      { path: 'admin-login', element: <AdminLoginPage /> }, // Сторінка входу для адміністратора
-      { path: 'admin-home', element: <AdminHomePage /> }, // Головна сторінка адміністратора
+      { path: 'admin-home', element: <ProtectedAdmin /> }, // Головна сторінка адміністратора
+      { path: 'admin-login', element: <PublicAdminLogin /> }, // Сторінка входу для адміністратора
     ]
   }
 ]);
