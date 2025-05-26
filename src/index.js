@@ -19,7 +19,8 @@ import AddPage from './components/templates/addPage';
 import ForgotPassword from './components/templates/ForgotPasswordPage';
 import AdminLoginPage from './components/templates/AdminLoginPage';
 import AdminHomePage from './components/templates/AdminHomePage';
-import HashLoader from './components/molecules/HashLoader';
+import AboutUsPage from './components/templates/AboutUsPage';
+import SupportPage from './components/templates/supportPage';
 
 
 // USER ELEMENTS
@@ -75,8 +76,9 @@ const router = createBrowserRouter([
       { index: true, element: <Home /> }, // Головна сторінка з повним макетом
       { path: 'account', element: <ProtectedAccount /> },
       { path: 'add', element: <AddPage /> },
+      { path: 'about-us', element: <AboutUsPage /> },
+      { path: 'support', element: <SupportPage /> },
       { path: '*', element: <NotFoundPage /> },
-      { path: "loader", element: <HashLoader/>}
     ]
   },
   {

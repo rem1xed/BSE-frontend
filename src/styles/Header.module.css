@@ -152,8 +152,8 @@ header {
 /* ----- ВЕРХНІЙ РЯДОК (ЛОГО, ПОШУК, ІКОНКИ) ----- */
 .BasicContent {
     display: flex;
-    align-items: center;
-    justify-content: center;
+        align-items: center;
+        justify-content: center;
 }
 /* Логотип */
 .logo_header {
@@ -211,16 +211,17 @@ header {
     gap: 20px;
     align-items: center;
     justify-content: center;
-    width: 36px;
-    height: 36px;
+    margin-left: 20px;
+    
     border-radius: 50%;
     transition: background-color 0.2s;
-    margin-left: 75px;
+        align-items: center;
+        gap: 12px;
 }
 
 .comunication button {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     background-color: transparent;
     border: none;
     cursor: pointer;
@@ -331,7 +332,7 @@ header {
     width: 100%;
     position: absolute;
     left: 0;
-    top:1px;
+    top:60px;
     z-index: 1000;
 }
 
@@ -441,7 +442,7 @@ header {
 }
 .sidebar_container {
     z-index: 1000;
-    position: relative;
+    /* position: relative; */
 }
 .mobile_header {
     display: flex;
@@ -717,4 +718,21 @@ header {
         .darkTheme .comunication .icon_com:hover {
             background-color: #222;
         }
+}
+
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fadeIn {
+    animation: fadeIn 0.25s ease-out forwards;
 }
