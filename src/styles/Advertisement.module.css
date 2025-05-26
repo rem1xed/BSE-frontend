@@ -3,7 +3,17 @@
     padding: 0;
     box-sizing: border-box;
   }
-.Advertisement {
+
+.link {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.Advertisement{
     display: flex;
     align-items: center;
     justify-content: flex-start;

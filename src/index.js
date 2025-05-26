@@ -19,6 +19,8 @@ import AddPage from './components/templates/addPage';
 import ForgotPassword from './components/templates/ForgotPasswordPage';
 import AdminLoginPage from './components/templates/AdminLoginPage';
 import AdminHomePage from './components/templates/AdminHomePage';
+import AboutUsPage from './components/templates/AboutUsPage';
+import SupportPage from './components/templates/supportPage';
 
 // Елементи з перевіркою авторизації
 const ProtectedAccount = () => (
@@ -53,7 +55,9 @@ const router = createBrowserRouter([
       { index: true, element: <Home /> }, // Головна сторінка з повним макетом
       { path: 'account', element: <ProtectedAccount /> },
       { path: 'add', element: <AddPage /> },
-      { path: '*', element: <NotFoundPage /> }
+      { path: '*', element: <NotFoundPage /> },
+      { path: 'about-us', element: <AboutUsPage /> },
+      { path: 'support', element: <SupportPage /> },
     ]
   },
   {
