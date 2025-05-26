@@ -1,9 +1,9 @@
 footer {
     display: flex;
     justify-content: space-between;
-    background-color: rgb(0, 0, 0);
+    background-color: #A5A5A5;
     width: 100%;
-    color: white;
+    color: #111;
     padding: 40px 0;
     flex-wrap: wrap;
     position: relative;
@@ -21,23 +21,25 @@ footer ul.list_left {
 }
 
 .footer_header {
-    color: #fff;
+    color: #111;
     margin-top: 0;
     font-size: 22px;
     margin-bottom: 20px;
+    transition: all 0.2s ease;
 }
 
 footer a.link {
     text-decoration: none;
-    color: #aaa;
+    color: #111;
     transition: all 0.2s ease;
 }
 
 footer li.list_element,
 footer li.list_element_left {
     margin: 16px 0;
-    color: #aaa;
+    color: #111;
     line-height: 1.5;
+    transition: all 0.2s ease;
 }
 
 footer li.list_element a.link:hover,
@@ -61,9 +63,26 @@ footer li.list_element_left a.link:focus {
 
 
 .span_footer {
-    color: #01A4FF;
+    color: #007ec2;
+}
+.dark {
+    background-color: #222934;
 }
 
+.dark .footer_header {
+    color: #fff;
+}
+
+.dark .link {
+    color: #fff;
+}
+
+.dark .list_element {
+    color: #fff;
+}
+.dark .span_footer {
+    color: #01A4FF;
+}
 @media (max-width: 768px) {
     footer {
         flex-direction: column;
@@ -91,9 +110,7 @@ footer li.list_element_left a.link:focus {
         padding-inline: unset;
     }
 
-    footer a.link {
-        color: #fff;
-    }
+    
 
     .list_left {
         display: flex;
@@ -109,12 +126,9 @@ footer li.list_element_left a.link:focus {
         font-size: 10px;
     }
 
-    .footer_header {
-        color: #aaa;
-    }
+    
 
     footer li.list_element {
-        color: #fff;
         margin: 6px 0;
     }
 

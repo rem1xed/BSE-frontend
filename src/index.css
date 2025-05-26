@@ -14,6 +14,15 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+body.light {
+  background-color: #f5f6fa;
+  /* color: black; */
+}
+
+body.dark {
+  background-color: #858c98;
+  /* color: white; */
+}
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
