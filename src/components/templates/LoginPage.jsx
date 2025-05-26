@@ -54,24 +54,12 @@ export default function LoginPage () {
     try {
       // Логін
       const userData = await authService.login(formData.email, formData.password);
-<<<<<<< HEAD
       console.log('Успішний вхід:', userData);
       
       // Перевіряємо авторизацію після входу
       if (authService.isAuthenticated()) {
         console.log('Перенаправлення на /account після успішного входу');
         navigate('/');
-=======
-
-      // Після логіну authService має автоматично зберегти email у cookie
-      // Якщо ні — можна викликати окремо setUserEmail(formData.email)
-
-      // Перевірка авторизації через cookie / API
-      const authenticated = await authService.isAuthenticated();
-
-      if (authenticated) {
-        navigate('/'); // Або '/account', залежно від логіки
->>>>>>> 27eacecc1f52596ce432a1f7f207ce0a48d2b8e5
       } else {
         setApiError('Помилка авторизації: не вдалося зберегти дані сесії');
       }

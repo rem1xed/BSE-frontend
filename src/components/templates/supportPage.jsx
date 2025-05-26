@@ -1,6 +1,6 @@
 import React from "react";
 import "../../styles/supportPage.css"; // або використай CSS-модулі, якщо так заведено в тебе
-import QACode from "../../assets/photo-QA-code/QA-code.png";
+import QRCode from "../../assets/photo-QR-code/QR-code.png";
 function SupportPage() {
     return (
         <div className="support-page">
@@ -14,7 +14,7 @@ function SupportPage() {
                 <p>|</p>
                 <p>V</p>
                 <img
-                    src={QACode} // Замініть на URL вашого QR-коду
+                    src={QRCode} // Замініть на URL вашого QR-коду
                     alt="QR Code for Support"
                     className="support-qr-code">
                 </img>
