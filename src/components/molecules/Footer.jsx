@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import style from '../../styles/Footer.module.css';
+import { useNavigate } from 'react-router-dom';
 import Button from '../atoms/Button';
 
 const Footer = function () {
   const [theme, setTheme] = useState(document.body.className || 'light');
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleThemeChange = (e) => {
@@ -19,12 +21,12 @@ const Footer = function () {
       <div className={style.side_left}>
         <h2 className={style.footer_header}>Information</h2>
         <ul className={style.list_left}>
-          <li className={style.list_element_left}><a className={style.link} href="#">About Us</a></li>
+          <li className={style.list_element_left}><a className={style.link} onClick={() => navigate("/about-us")}>About Us</a></li>
           <li className={style.list_element_left}><a className={style.link} href="#">Privacy Policy</a></li>
-          <li className={style.list_element_left}><a className={style.link} href="#">Search</a></li>
+          <li className={style.list_element_left}><a className={style.link} onClick={() => navigate("/support")}>buy a coffe for us:{")"}</a></li>
           <li className={style.list_element_left}><a className={style.link} href="#">Orders and Returns</a></li>
           <li className={style.list_element_left}><a className={style.link} href="#">Contact Us</a></li>
-          <li className={style.list_element_left}><a className={style.link} href="#">Advanced Search</a></li>
+          <li className={style.list_element_left}><a className={style.link} onClick={() => navigate("/advanced-search")}>Advanced Search</a></li>
         </ul>
       </div>
       <div className={style.side}>
