@@ -21,10 +21,7 @@ import AdminLoginPage from './components/templates/AdminLoginPage';
 import AdminHomePage from './components/templates/AdminHomePage';
 import AboutUsPage from './components/templates/AboutUsPage';
 import SupportPage from './components/templates/supportPage';
-
-
-// USER ELEMENTS
-
+import AdvancedSearchPage from './components/templates/AdvancedSearchPage';
 
 const ProtectedAccount = () => (
   <ProtectedRoute linkPart={'user'} redirectTo={"/login"}>
@@ -78,6 +75,7 @@ const router = createBrowserRouter([
       { path: 'add', element: <AddPage /> },
       { path: 'about-us', element: <AboutUsPage /> },
       { path: 'support', element: <SupportPage /> },
+      { path: 'advanced-search', element: <AdvancedSearchPage /> },
       { path: '*', element: <NotFoundPage /> },
     ]
   },
