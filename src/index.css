@@ -16,12 +16,12 @@ body {
 
 body.light {
   background-color: #f5f6fa;
-  /* color: black; */
+  color: black;
 }
 
 body.dark {
   background-color: #858c98;
-  /* color: white; */
+  color: rgb(246, 230, 230);
 }
 
 code {
