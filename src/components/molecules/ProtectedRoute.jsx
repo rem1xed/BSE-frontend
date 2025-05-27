@@ -1,27 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
-import axios from 'axios';
+import { isAdminAuthenticated, isUserAuthenticated } from '../../api/authService';
 
-const ProtectedRoute = ({ children, redirectTo = '/login' }) => {
+const ProtectedRoute = ({ children, linkPart, redirectTo }) => {
   const [isAuth, setIsAuth] = useState(null);
 
   useEffect(() => {
-    // Запит до бекенду перевірити токен (передаємо cookie)
-    axios.get('http://localhost:1488/auth/me', { withCredentials: true })
-      .then(() => setIsAuth(true))
-      .catch(() => setIsAuth(false));
+    const checkAuth = async () => {
+      try {
+        let res = false;
+        if (linkPart === "user") {
+          res = await isUserAuthenticated();
+        } else if (linkPart === "admin") {
+          res = await isAdminAuthenticated();
+        }
+        setIsAuth(res);
+      } catch (err) {
+        console.log("Користувач не авторизований");
+        setIsAuth(false);
+      }
+    };
+
+    checkAuth();
   }, []);
 
-  if (isAuth === null) {
-    // Поки чекаємо відповідь, можна показати спінер або порожній блок
-    return <div>Loading...</div>;
-  }
+  if (isAuth === null) return <></>; // Або <Spinner />
 
-  if (!isAuth) {
-    return <Navigate to={redirectTo} replace />;
-  }
-
-  return children;
+  return isAuth ? children : <Navigate to={redirectTo} replace />;
 };
 
 export default ProtectedRoute;

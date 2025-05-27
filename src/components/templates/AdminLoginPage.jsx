@@ -1,7 +1,7 @@
 // components/templates/LoginPage.jsx
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { authService } from '../../api/authService';
+import { authService, isAdminAuthenticated } from '../../api/authService';
 import style from '../../styles/Login.module.css';
 import Input from '../atoms/Input';
 import Button from '../atoms/Button';
@@ -10,26 +10,13 @@ export default function AdminLoginPage() {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
-    adminKey: ''
+    key: ''
   });
 
   const [errors, setErrors] = useState({});
   const [apiError, setApiError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const location = useLocation();
-
-  // Перевіряємо авторизацію при завантаженні сторінки
-  useEffect(() => {
-    if (authService.isAuthenticated()) {
-      console.log('Користувач уже авторизований, перенаправлення на /account');
-      navigate('/admin-home');
-    }
-    // Відображаємо повідомлення після реєстрації, якщо воно є
-    if (location.state?.message) {
-      setApiError(location.state.message);
-    }
-  }, [navigate, location]);
 
   // Обробник змін полів форми
   const handleChange = (e) => {
@@ -68,8 +55,8 @@ export default function AdminLoginPage() {
     }
 
     // Перевірка ключа адміністратора
-    if (!formData.adminKey) {
-      newErrors.adminKey = "Admin key is required";
+    if (!formData.key) {
+      newErrors.key = "Admin key is required";
     }
 
     setErrors(newErrors);
@@ -88,16 +75,14 @@ export default function AdminLoginPage() {
     setLoading(true);
 
     try {
-      // Зберігаємо email для можливого використання в профілі
-      localStorage.setItem('userEmail', formData.email);
 
-      const userData = await authService.login(formData.email, formData.password, formData.adminKey);
+      const userData = await authService.adminLogin(formData.email, formData.password, formData.key);
       console.log('Успішний вхід:', userData);
 
       // Перевіряємо авторизацію після входу
-      if (authService.isAuthenticated()) {
+      if (isAdminAuthenticated()) {
         console.log('Перенаправлення на /account після успішного входу');
-        navigate('/account');
+        navigate('/admin-home');
       } else {
         console.error('❌ Токен не збережено після входу');
         setApiError('Помилка авторизації: не вдалося зберегти дані сесії');
@@ -149,17 +134,17 @@ export default function AdminLoginPage() {
             </div>
 
             <div className={style.input_container}>
-              <label htmlFor="adminKey">Admin Key:</label>
+              <label htmlFor="key">Admin Key:</label>
               <Input
                 type="text"
-                name="adminKey"
+                name="key"
                 placeholder="Enter admin key"
-                value={formData.adminKey}
+                value={formData.key}
                 onChange={handleChange}
                 required
-                className={errors.adminKey ? style.inputError : ''}
+                className={errors.key ? style.inputError : ''}
               />
-              {errors.adminKey && <span className={style.errorText}>{errors.adminKey}</span>}
+              {errors.key && <span className={style.errorText}>{errors.key}</span>}
             </div>
 
             <div className={style.button_container}>
