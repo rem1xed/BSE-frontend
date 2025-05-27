@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { authService } from '../../api/authService';
+import { authService, isUserAuthenticated } from '../../api/authService';
 import style from '../../styles/Login.module.css';
 import Input from '../atoms/Input';
 import Button from '../atoms/Button';
@@ -54,12 +54,15 @@ export default function LoginPage () {
     try {
       // Логін
       const userData = await authService.login(formData.email, formData.password);
-      console.log('Успішний вхід:', userData);
-      
-      // Перевіряємо авторизацію після входу
-      if (authService.isAuthenticated()) {
-        console.log('Перенаправлення на /account після успішного входу');
-        navigate('/');
+
+      // Після логіну authService має автоматично зберегти email у cookie
+      // Якщо ні — можна викликати окремо setUserEmail(formData.email)
+
+      // Перевірка авторизації через cookie / API
+      const authenticated = await isUserAuthenticated();
+
+      if (authenticated) {
+        navigate('/'); // Або '/account', залежно від логіки
       } else {
         setApiError('Помилка авторизації: не вдалося зберегти дані сесії');
       }
@@ -109,7 +112,7 @@ export default function LoginPage () {
             </div>
 
             <div className={style.forgot_password}>
-              <a href="/password-reset">Forgot Password?</a>
+              <a onClick={() => {navigate("/password-reset")}}>Forgot Password?</a>
             </div>
 
             <div className={style.button_container}>
