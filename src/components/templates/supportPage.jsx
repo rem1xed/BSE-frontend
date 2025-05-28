@@ -1,5 +1,5 @@
 import React from "react";
-import "../../styles/supportPage.css"; // або використай CSS-модулі, якщо так заведено в тебе
+import "../../styles/SupportPage.css"; // або використай CSS-модулі, якщо так заведено в тебе
 import QRCode from "../../assets/photo-QR-code/QR-code.png";
 function SupportPage() {
     return (
