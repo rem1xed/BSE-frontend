@@ -1,0 +1,56 @@
+.advanced_search_page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.search_card {
+  background-color: white;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  width: 100%;
+  text-align: left;
+}
+
+.search_title {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333;
+  text-align: center;
+}
+
+.search_description {
+  font-size: 17px;
+  color: #444;
+  margin-bottom: 25px;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.search_section {
+  margin-bottom: 24px;
+}
+
+.section_title {
+  font-size: 20px;
+  color: #222;
+  margin-bottom: 8px;
+}
+
+.search_section p {
+  font-size: 16px;
+  color: #555;
+  line-height: 1.5;
+}
+
+.search_thanks {
+  font-size: 16px;
+  font-style: italic;
+  color: #666;
+  margin-top: 30px;
+  text-align: center;
+}
