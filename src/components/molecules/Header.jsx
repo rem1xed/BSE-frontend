@@ -207,7 +207,7 @@ const userMenuMobileRef = useRef(null);
         <div className={`${style.line} ${isBurgerOpen ? style.openMiddle : ""}`}></div>
         <div className={`${style.line} ${isBurgerOpen ? style.openBottom : ""}`}></div>
       </div>
-      <a href="" className={style.logo_header_mobile}>BSE</a>
+      <a onClick={() => {navigate('/')}} className={style.logo_header_mobile}>BSE</a>
       </div>
         {isBurgerOpen && (
             <div className={`${style.burgerMenu} ${style.fadeIn}`}>
@@ -281,7 +281,7 @@ const userMenuMobileRef = useRef(null);
       </div>
 
       <div className={style.BasicContent}>
-        <a href="#" className={style.logo}>BSE
+        <a onClick={() => {navigate('/')}} className={style.logo}>BSE
         </a>
 
         <div className={style.dropdown_button_container}>
