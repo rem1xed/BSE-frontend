@@ -18,6 +18,10 @@ export const isAdminAuthenticated = async () => {
   }
 };
 
+export const getAllUsers = async () => {
+  return await api.get("/admin/get/users", { withCredentials: true });
+}
+
 const authService = {
   // === АДМІН ===
   adminLogin: async (email, password, key) => {

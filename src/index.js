@@ -20,7 +20,9 @@ import ForgotPassword from './components/templates/ForgotPasswordPage';
 import AdminLoginPage from './components/templates/AdminLoginPage';
 import AdminHomePage from './components/templates/AdminHomePage';
 import AboutUsPage from './components/templates/AboutUsPage';
-import SupportPage from './components/templates/supportPage';
+import SupportPage from './components/templates/SupportPage';
+import ContactUsPage from './components/templates/ContactUsPage';
+import ChatList from './components/templates/ChatListPage';
 
 
 // USER ELEMENTS
@@ -78,6 +80,8 @@ const router = createBrowserRouter([
       { path: 'add', element: <AddPage /> },
       { path: 'about-us', element: <AboutUsPage /> },
       { path: 'support', element: <SupportPage /> },
+      { path: 'contact-us', element: <ContactUsPage/>},
+      { path: 'chats', element: <ChatList/>},
       { path: '*', element: <NotFoundPage /> },
     ]
   },

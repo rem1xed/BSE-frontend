@@ -1,0 +1,143 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #fff;
+}
+
+.chat-container {
+    display: flex;
+    height: 86.5vh;
+    margin-left: 283px;
+    margin-top: 98px;
+    flex-direction: row;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #f9f9f9;
+    border-right: 1px solid #ccc;
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.sidebar-header {
+    margin-bottom: 20px;
+}
+
+.buy-sell-btn {
+    padding: 8px 16px;
+    font-size: 16px;
+    background-color: #f1f1f1;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    font-weight: bold;
+    margin: 0 auto;
+    display: block;
+    border-radius: 16px;
+}
+
+.msg-p {
+    background: #f1f1f1;
+    width: 209px;
+    height: 47px;
+    font-weight: 400;
+    font-size: 24px;
+    padding-top: 20px;
+    text-align: center;
+    color: #000;
+}
+
+.buy-sell-btn span {
+    text-decoration: underline;
+}
+
+.chat-list {
+    list-style: none;
+    padding: 0;
+}
+
+.chat-list li {
+    margin-bottom: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+}
+
+.chat-list li.active {
+    font-weight: bold;
+    background-color: #e6f0ff;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    background-color: #007bff;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 8px;
+}
+
+.chat-main {
+    flex-grow: 1;
+    padding: 30px;
+    background-color: #fff;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-messages {
+    overflow-y: auto;
+    flex-grow: 1;
+}
+
+.message {
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
+.sender {
+    font-weight: bold;
+    margin-right: 8px;
+}
+
+/* New styles for message input */
+.message-input {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+    position: sticky;
+    bottom: 0;
+    background-color: white;
+    padding: 10px 0;
+    box-sizing: border-box;
+}
+
+.message-input input {
+    width: 650px;
+    padding: 12px;
+    border-radius: 24px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    margin-right: 10px;
+    box-sizing: border-box;
+}
+
+.message-input button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.message-input p {
+    font-size: 12px;
+    color: #888;
+    margin-left: 10px;
+    margin-top: 5px;
+}
