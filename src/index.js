@@ -24,6 +24,7 @@ import SupportPage from './components/templates/SupportPage';
 import ContactUsPage from './components/templates/ContactUsPage';
 import ChatList from './components/templates/ChatListPage';
 import AdvancedSearchPage from './components/templates/AdvancedSearchPage';
+import PrivacyPolicy from './components/templates/PrivacyPolicy';
 import AddAddvertisementPage from './components/templates/AddAddvertisementPage';
 
 
@@ -88,6 +89,7 @@ const router = createBrowserRouter([
       { path: 'contact-us', element: <ContactUsPage/>},
       { path: 'chats', element: <ChatList/>},
       { path: 'advanced-search', element: <AdvancedSearchPage /> },
+      { path: 'privacy-policy', element: <PrivacyPolicy /> },  
       { path: 'create', element: <ProtectedAddAddvertisement /> },
       { path: '*', element: <NotFoundPage /> },
     ]
