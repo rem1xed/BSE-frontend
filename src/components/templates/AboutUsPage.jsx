@@ -3,7 +3,7 @@ import classes from '../../styles/AboutUsPage.module.css';
 
 function AboutUsPage() {
     return (
-        <div className={classes.main_cont}>
+        <main className={classes.main_cont}>
             <div className={classes.up_info}>
                 <h1>About BSE</h1>
                 <img 
@@ -35,7 +35,7 @@ function AboutUsPage() {
                     <li><strong>Гулечко Юрій</strong> — відповідальний за тестування</li>
                 </ul>
             </div>
-        </div>
+        </main>
     );
 }
 
