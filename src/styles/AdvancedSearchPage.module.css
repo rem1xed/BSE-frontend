@@ -3,6 +3,7 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+  margin: 1em;
 }
 
 .search_card {
@@ -53,4 +54,53 @@
   color: #666;
   margin-top: 30px;
   text-align: center;
+}
+
+@media (max-width: 1000px) {
+  .search_card {
+    padding: 20px;
+    max-width: 90%;
+  }
+
+  .search_title {
+    font-size: 28px;
+  }
+
+  .section_title {
+    font-size: 18px;
+  }
+
+  .search_description,
+  .search_section p,
+  .search_thanks {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  .advanced_search_page {
+    padding: 20px 10px;
+    align-items: flex-start;
+  }
+
+  .search_card {
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: none;
+  }
+
+  .search_title {
+    font-size: 24px;
+  }
+
+  .section_title {
+    font-size: 16px;
+  }
+
+  .search_description,
+  .search_section p,
+  .search_thanks {
+    font-size: 14px;
+    line-height: 1.4;
+  }
 }
