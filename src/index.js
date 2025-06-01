@@ -15,7 +15,7 @@ import NotFoundPage from './components/templates/NotFoundPage';
 import RegistrationPage from './components/templates/RegistrationPage';
 import Account from './components/templates/Account';
 import LoginPage from './components/templates/LoginPage';
-import AddPage from './components/templates/addPage';
+import AdvertisementDetailsPage from './components/templates/AdvertisementDetailsPage';
 import ForgotPassword from './components/templates/ForgotPasswordPage';
 import AdminLoginPage from './components/templates/AdminLoginPage';
 import AdminHomePage from './components/templates/AdminHomePage';
@@ -25,7 +25,8 @@ import ContactUsPage from './components/templates/ContactUsPage';
 import ChatList from './components/templates/ChatListPage';
 import AdvancedSearchPage from './components/templates/AdvancedSearchPage';
 import AddAddvertisementPage from './components/templates/AddAddvertisementPage';
-
+// import AdvertisementDetailsPage from './components/templates/AdvertisementDetailsPage';
+// import AdvertisementsListPage from './components/templates/AdvertisementsListPage';
 
 const ProtectedAccount = () => (
   <ProtectedRoute linkPart={'user'} redirectTo={"/login"}>
@@ -57,10 +58,7 @@ const PublicForgotPassword = () => (
   </PublicOnlyRoute>
 );
 
-
 // ADMIN ELEMENTS
-
-
 const ProtectedAdmin = () => (
   <ProtectedRoute linkPart={'admin'} redirectTo={"/"}>
     <AdminHomePage />
@@ -73,8 +71,6 @@ const PublicAdminLogin = () => (
   </PublicOnlyRoute>
 );
 
-
-
 const router = createBrowserRouter([
   {
     path: '/',
@@ -82,13 +78,18 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <Home /> }, // Головна сторінка з повним макетом
       { path: 'account', element: <ProtectedAccount /> },
-      { path: 'add', element: <AddPage /> },
+      // { path: 'add', element: <AddPage /> },
       { path: 'about-us', element: <AboutUsPage /> },
       { path: 'support', element: <SupportPage /> },
       { path: 'contact-us', element: <ContactUsPage/>},
       { path: 'chats', element: <ChatList/>},
       { path: 'advanced-search', element: <AdvancedSearchPage /> },
       { path: 'create', element: <ProtectedAddAddvertisement /> },
+      
+      // Оголошення
+      // { path: 'advertisements', element: <AdvertisementsListPage /> },
+      { path: 'advertisement/:id', element: <AdvertisementDetailsPage /> },
+      
       { path: '*', element: <NotFoundPage /> },
     ]
   },

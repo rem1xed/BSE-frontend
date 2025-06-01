@@ -28,9 +28,7 @@ const Layout = () => {
           className={styles.layout}
         >
           <Header />
-          <main className={styles.mainContent}>
             <Outlet />
-          </main>
           <Footer />
         </motion.div>
       </AnimatePresence>

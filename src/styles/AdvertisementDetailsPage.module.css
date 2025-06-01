@@ -106,13 +106,13 @@
 }
 
 .user_name {
-  margin-left: 10px;
+  margin-left: 20px;
   font-weight: 500;
 }
 
 hr {
-  margin-left: 50px;
-  width: calc(100% - 50px);
+  /* margin-left: 50px; */
+  /* width: calc(100% - 50px); */
   border: none;
   border-top: 1px solid #ccc;
   margin-top: 10px;
@@ -121,7 +121,8 @@ hr {
 
 .user_ads {
   text-align: center;
-  font-weight: 500;
+  font-weight: 600;
+  cursor: pointer;
 }
 
 .product_description {
@@ -261,20 +262,20 @@ hr {
   .page_content {
     flex-direction: column;
   }
-  
+
   .image_wrapper {
     margin-bottom: 20px;
   }
-  
+
   .product_info {
     width: 100%;
     margin-bottom: 20px;
   }
-  
+
   .product_title {
     font-size: 16px;
   }
-  
+
   .product_price {
     font-size: 24px;
   }
@@ -285,38 +286,103 @@ hr {
   .main_container {
     padding: 15px;
   }
-  
+
   .image_wrapper {
     padding: 10px;
     min-width: auto;
   }
-  
-  .product_info, .user_information {
+
+  .product_info,
+  .user_information {
     padding: 15px;
   }
-  
+
   .product_title {
     font-size: 15px;
   }
-  
+
   .product_price {
     font-size: 22px;
   }
-  
-  .arrow_left, .arrow_right {
+
+  .arrow_left,
+  .arrow_right {
     width: 40px;
     height: 50px;
   }
-  
+
   .breadcrumb_navigation {
     font-size: 12px;
   }
-  
+
   .product_description h1 {
     font-size: 20px;
   }
-  
+
   .product_description p {
     font-size: 14px;
   }
+}
+
+.product_actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.product_actions button {
+  width: 100%;
+}
+
+.product_actions button:hover,
+.product_actions button:focus {
+  width: 100%;
+}
+
+#googleMeetButton {
+  background-color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+#googleMeetButton img {
+  width: 20px;
+  height: 20px;
+}
+
+.user_member_since {
+  margin-left: 20px;
+}
+
+.main_error_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.main_loading_container,.main_error_container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.not_found,
+.error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 2px solid #0156ff;
+  border-radius: 16px;
+  padding: 20px;
+  background-color: #fff;
+  gap: 16px;
+}
+
+#return_home,
+#return_home:hover,
+#return_home:focus {
+  width: 100%;
 }
