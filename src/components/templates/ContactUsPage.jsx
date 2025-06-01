@@ -81,7 +81,7 @@ function ContactUsPage() {
 
 
     return (
-        <div className={classes.main_cont}>
+        <main className={classes.main_cont}>
             <div className={classes.up_info}>
                 <h1>Contact Us</h1>
                 <div className={classes.formContainer}>
@@ -125,7 +125,7 @@ function ContactUsPage() {
                   </form>
                 </div>
             </div>
-        </div>
+        </main>
     );
 }
 

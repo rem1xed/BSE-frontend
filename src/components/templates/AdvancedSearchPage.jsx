@@ -3,7 +3,7 @@ import classes from "../../styles/AdvancedSearchPage.module.css";
 
 function AdvancedSearchPage() {
   return (
-    <div className={classes.advanced_search_page}>
+    <main className={classes.advanced_search_page}>
       <div className={classes.search_card}>
         <h2 className={classes.search_title}> Розширений Пошук</h2>
 
@@ -57,7 +57,7 @@ function AdvancedSearchPage() {
           Вдосконалена система пошуку — ваш помічник у світі покупок. Скористайтесь нею вже зараз і переконайтесь у її зручності!
         </p>
       </div>
-    </div>
+    </main>
   );
 }
 

@@ -20,10 +20,11 @@ import ForgotPassword from './components/templates/ForgotPasswordPage';
 import AdminLoginPage from './components/templates/AdminLoginPage';
 import AdminHomePage from './components/templates/AdminHomePage';
 import AboutUsPage from './components/templates/AboutUsPage';
-import SupportPage from './components/templates/SupportPage';
+import SupportPage from './components/templates/supportPage';
 import ContactUsPage from './components/templates/ContactUsPage';
 import ChatList from './components/templates/ChatListPage';
 import AdvancedSearchPage from './components/templates/AdvancedSearchPage';
+import PrivacyPolicy from './components/templates/PrivacyPolicy';
 import AddAddvertisementPage from './components/templates/AddAddvertisementPage';
 // import AdvertisementDetailsPage from './components/templates/AdvertisementDetailsPage';
 // import AdvertisementsListPage from './components/templates/AdvertisementsListPage';
@@ -84,6 +85,7 @@ const router = createBrowserRouter([
       { path: 'contact-us', element: <ContactUsPage/>},
       { path: 'chats', element: <ChatList/>},
       { path: 'advanced-search', element: <AdvancedSearchPage /> },
+      { path: 'privacy-policy', element: <PrivacyPolicy /> },  
       { path: 'create', element: <ProtectedAddAddvertisement /> },
       
       // Оголошення
