@@ -9,6 +9,16 @@ import { settings } from "../../api/settingsService";
 
 // --- AccountInfoContainer ---
 function AccountInfoContainer({ userData, fetchUser }) {
+
+  function fetchDate(){
+    const date =  new Date();
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // +1 бо місяці починаються з 0
+    const year = date.getFullYear();
+    
+    return day + '-' + month + '-' + year;
+  }
+
   useEffect(() => {
     fetchUser();
     // eslint-disable-next-line
@@ -17,8 +27,8 @@ function AccountInfoContainer({ userData, fetchUser }) {
   return (
     <>
       <div className={style.head}>
-        <h3>Welcome, User</h3>
-        <p>Mon 14, April, 2025</p>
+        <h3>Welcome, {userData.firstName}</h3>
+        <p>{fetchDate()}</p>
       </div>
       <div className={style.body}>
         <div className={style.body_inner}>
@@ -26,10 +36,6 @@ function AccountInfoContainer({ userData, fetchUser }) {
             <div className={style.short_info_container}>
               <div className={style.photo_container}>
                 <img src={user_png} alt="User Photo" className={style.user_photo} />
-              </div>
-              <div className={style.name_and_email_container}>
-                <h3>User User</h3>
-                <p>user@example.com</p>
               </div>
             </div>
             <div className={style.edit_container}>
@@ -39,13 +45,13 @@ function AccountInfoContainer({ userData, fetchUser }) {
           <div className={style.info_2}>
             <div className={style.info_column}>
               <div className={style.info_row}>
-                <p>Full Name</p>
+                <p>First Name</p>
                 <Input
                   type="text"
                   name=""
                   id=""
-                  value={userData.fullname}
-                  placeholder="Your full name"
+                  value={userData.firstName}
+                  placeholder="Your first name"
                 />
               </div>
               <div className={style.info_row}>
@@ -69,8 +75,13 @@ function AccountInfoContainer({ userData, fetchUser }) {
             </div>
             <div className={style.info_column}>
               <div className={style.info_row}>
-                <p>Nickname</p>
-                <Input type="text" name="" id="" placeholder="Your nickname" />
+                <p>Last Name</p>
+                <Input 
+                type="text" 
+                name="" 
+                id=""
+                value={userData.lastName}
+                placeholder="Your last name" />
               </div>
               <div className={style.info_row}>
                 <p>Email</p>
@@ -312,6 +323,7 @@ function PreferencesContainer({ style }) {
       setIsLoading(true);
       try {
         const data = await settings.get_targeting_parameters();
+        console.log('Server response:', data);
         if (!data) {
           setPrefData({
             age: "",
@@ -329,8 +341,18 @@ function PreferencesContainer({ style }) {
           });
           return;
         }
+        
+        // Фільтруємо системні поля при отриманні даних
+        const {
+          id,
+          userId,
+          createdAt,
+          updatedAt,
+          ...cleanData
+        } = data;
+        
         setPrefData({
-          ...data,
+          ...cleanData,
           interests: Array.isArray(data.interests) ? data.interests : [],
         });
       } catch (error) {
@@ -370,16 +392,31 @@ function PreferencesContainer({ style }) {
   const savePreferences = async () => {
     setSaveStatus({ type: "info", message: "Збереження..." });
     try {
+      // Створюємо об'єкт лише з дозволеними полями
       const dataToSave = {
-        ...prefData,
+        age: prefData.age || "",
+        country: prefData.country || "",
+        region: prefData.region || "",
+        city: prefData.city || "",
         interests: Array.isArray(prefData.interests) ? prefData.interests : [],
+        profession: prefData.profession || "",
+        industry: prefData.industry || "",
+        educationLevel: prefData.educationLevel || "",
+        educationInstitution: prefData.educationInstitution || "",
+        socialNetwork: prefData.socialNetwork || "",
+        instagramLink: prefData.instagramLink || "",
+        facebookLink: prefData.facebookLink || "",
       };
-      await settings.save_targeting_parameters(dataToSave);
+      
+      console.log('Frontend data to save:', dataToSave);
+      const response = await settings.save_targeting_parameters(dataToSave);
+      console.log('Server response:', response);
       setSaveStatus({ type: "success", message: "Налаштування збережено успішно!" });
       setTimeout(() => {
         setSaveStatus({ type: "", message: "" });
       }, 3000);
     } catch (error) {
+      console.error('Save error:', error);
       setSaveStatus({ type: "error", message: "Помилка збереження налаштувань" });
     }
   };
@@ -623,7 +660,8 @@ export default function Account() {
   const [activeSection, setActiveSection] = useState("dashboard");
   const [showLoader, setShowLoader] = useState(false);
   const [userData, setUserData] = useState({
-    fullname: "",
+    firstName: "",
+    lastName: "",
     nickname: "",
     gender: "",
     email: "",
@@ -636,8 +674,8 @@ export default function Account() {
     try {
       const data = await authService.getUser();
       setUserData({
-        fullname: `${data.firstName} ${data.lastName}`,
-        nickname: "",
+        firstName: data.firstName,
+        lastName: data.lastName,
         email: data.email,
         phoneNumber: data.phone,
       });
@@ -739,7 +777,11 @@ export default function Account() {
               </div>
             </div>
           </div>
-          <Button onClick={handleLogout}>Logout</Button>
+          <Button 
+          onClick={handleLogout}
+          children={'Logout'}
+          id={style.logout_button}
+          />
         </div>
         <div className={style.right}>{renderContainer()}</div>
       </div>

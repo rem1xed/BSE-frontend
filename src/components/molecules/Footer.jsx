@@ -23,7 +23,7 @@ const Footer = function () {
         <ul className={style.list_left}>
           <li className={style.list_element_left}><a className={style.link} onClick={() => navigate("/about-us")}>About Us</a></li>
           <li className={style.list_element_left}><a className={style.link} href="#">Privacy Policy</a></li>
-          <li className={style.list_element_left}><a className={style.link} onClick={() => navigate("/support")}>buy a coffe for us:{")"}</a></li>
+          <li className={style.list_element_left}><a className={style.link} onClick={() => navigate("/support")}>Buy a coffe for us:{")"}</a></li>
           <li className={style.list_element_left}><a className={style.link} href="#">Orders and Returns</a></li>
           <li className={style.list_element_left}><a className={style.link} onClick={() => navigate("/contact-us")}>Contact Us</a></li>
           <li className={style.list_element_left}><a className={style.link} onClick={() => navigate("/advanced-search")}>Advanced Search</a></li>

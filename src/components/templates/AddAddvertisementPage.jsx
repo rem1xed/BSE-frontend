@@ -1,8 +1,17 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import styles from "../../styles/AddAddvertisementPage.module.css"
+import { authService } from '../../api/authService'
+import { advertisementService } from '../../api/advertisementService'
+import Button from '../atoms/Button'
+import { useNavigate } from 'react-router-dom'
+
 
 function AddAddvertisementPage() {
-  const [currentPage, setCurrentPage] = useState('list') // 'list' or 'create'
-  const [advertisements, setAdvertisements] = useState([])
+  const navigate = useNavigate();
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true) // Add loading state
+  const [sent, setSent] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [formData, setFormData] = useState({
     productName: '',
     category: '',
@@ -11,6 +20,9 @@ function AddAddvertisementPage() {
     contactName: '',
     email: '',
     phone: '',
+    currency: 'UAH',
+    city: '',
+    region: '',
     images: [],
   })
 
@@ -31,330 +43,524 @@ function AddAddvertisementPage() {
     { value: 'other', label: 'Інше' }
   ]
 
-  const handleImageUpload = (event) => {
-    const files = Array.from(event.target.files).slice(
-      0,
-      8 - formData.images.length
-    )
-    const imageURLs = files.map((file) => ({
-      id: Date.now() + Math.random(),
-      url: URL.createObjectURL(file),
-    }))
-    setFormData((prev) => ({ ...prev, images: [...prev.images, ...imageURLs] }))
+  const currencies = [
+    { value: 'UAH', label: 'UAH' },
+    { value: 'USD', label: 'USD' },
+    { value: 'EUR', label: 'EUR' },
+  ]
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const userData = await authService.getUser()
+        setUser(userData)
+        // Pre-fill form data with user info if available
+        setFormData(prev => ({
+          ...prev,
+          contactName: userData?.firstName + ' ' + userData?.lastName || '',
+          email: userData?.email || '',
+          phone: userData?.phone
+        }))
+      } catch (error) {
+        console.error('Error fetching user data:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchUserData()
+  }, [])
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || []);
+    const newImages = files.slice(0, 8 - formData.images.length).map(file => ({
+      id: URL.createObjectURL(file), // тимчасовий ID
+      file,
+      url: URL.createObjectURL(file)
+    }));
+
+    setFormData(prev => ({
+      ...prev,
+      images: [...prev.images, ...newImages]
+    }));
+  };
+
+
+  async function fetchUserData () {
+    const user = await authService.getUser();
+    console.log(user);
   }
 
-  const handleDeleteImage = (id) => {
-    setFormData((prev) => ({
-      ...prev,
-      images: prev.images.filter((img) => img.id !== id),
-    }))
-  }
+  const handleDeleteImage = (id: string) => {
+  setFormData(prev => ({
+    ...prev,
+    images: prev.images.filter(img => img.id !== id)
+  }));
+};
 
   const handleChange = (e) => {
     const { name, value } = e.target
     setFormData((prev) => ({ ...prev, [name]: value }))
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    if (!formData.productName || !formData.category || !formData.description || 
-        !formData.price || !formData.contactName || !formData.email || !formData.phone) {
-      alert('Будь ласка, заповніть всі обов\'язкові поля')
-      return
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const form = new FormData();
+    form.append("productName", formData.productName);
+    form.append("category", formData.category);
+    form.append("price", formData.price);
+    form.append("description", formData.description);
+    form.append("contactName", formData.contactName);
+    form.append("email", formData.email);
+    form.append("phone", formData.phone);
+    form.append("currency", formData.currency);
+    form.append("city", formData.city);
+    form.append("region", formData.region);
+
+    console.log(formData.currency);
+
+    formData.images.forEach((img) => {
+      form.append("images", img.file); // бекенд має обробляти як масив файлів
+    });
+
+    try {
+      await advertisementService.createAdvertisement(form);
+      setSent(true);
+      setShowSuccessModal(true);
+      // console.log("Оголошення успішно створено");
+    } catch (err) {
+      console.error("Помилка при створенні оголошення:", err);
     }
-    
-    const newAdvertisement = {
-      ...formData,
-      id: Date.now(),
-    }
-    setAdvertisements((prev) => [...prev, newAdvertisement])
+  };
+
+  const handleCloseModal = () => {
+    setShowSuccessModal(false);
+    navigate('/');
+  };
+
+  const handleCreateAnother = () => {
+    setShowSuccessModal(false);
+    setSent(false);
+    // Очищуємо форму
     setFormData({
       productName: '',
       category: '',
       description: '',
       price: '',
-      contactName: '',
-      email: '',
-      phone: '',
+      contactName: user?.firstName + ' ' + user?.lastName || '',
+      email: user?.email || '',
+      phone: user?.phone || '',
+      currency: 'UAH',
+      city: '',
+      region: '',
       images: [],
-    })
-    setCurrentPage('list')
-  }
+    });
+  };
 
   const getCategoryLabel = (categoryValue) => {
     const category = categories.find(cat => cat.value === categoryValue)
     return category ? category.label : categoryValue
   }
-
-  if (currentPage === 'create') {
+    
     return (
-      <div className="min-h-screen bg-gray-50">
-        <div className="max-w-4xl mx-auto p-6">
-          <div className="bg-white rounded-lg shadow-md p-8">
-            <div className="flex items-center justify-between mb-6">
-              <div>
-                <h1 className="text-2xl font-bold text-gray-900">Створення оголошення</h1>
-                <p className="text-gray-600 mt-1">Заповніть всі необхідні поля</p>
+      <main className={styles.add_main}>
+        <div className={styles['min-h-screen'] + ' ' + styles['bg-gray-50']}>
+          <div className={styles['max-w-4xl'] + ' ' + styles['mx-auto'] + ' ' + styles['p-6']}>
+            <div className={styles['bg-white'] + ' ' + styles['rounded-lg'] + ' ' + styles['shadow-md'] + ' ' + styles['p-8']}>
+              <div className={styles.flex + ' ' + styles['items-center'] + ' ' + styles['justify-between'] + ' ' + styles['mb-6']}>
+                <div>
+                  <h1 className={styles['text-2xl'] + ' ' + styles['font-bold'] + ' ' + styles['text-gray-900']}>Створення оголошення</h1>
+                  <p className={styles['text-gray-600'] + ' ' + styles['mt-1']}>Заповніть всі необхідні поля</p>
+                </div>
               </div>
-              <button 
-                onClick={() => setCurrentPage('list')}
-                className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg transition-colors"
-              >
-                ← Назад до списку
-              </button>
-            </div>
 
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div className="space-y-6">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Назва товару*
-                    </label>
-                    <input
-                      placeholder="Наприклад: iPhone 12 Pro"
-                      type="text"
-                      name="productName"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      value={formData.productName}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Категорія*
-                    </label>
-                    <select
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      name="category"
-                      value={formData.category}
-                      onChange={handleChange}
-                      required
-                    >
-                      <option value="">Оберіть категорію</option>
-                      {categories.map(category => (
-                        <option key={category.value} value={category.value}>
-                          {category.label}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Ціна*
-                    </label>
-                    <div className="relative">
+              <form onSubmit={handleSubmit} className={styles['space-y-6']}>
+                <div className={styles.grid + ' ' + styles['grid-cols-1'] + ' ' + styles['lg:grid-cols-2'] + ' ' + styles['gap-8']}>
+                  <div className={styles['space-y-6']}>
+                    <div>
+                      <label className={styles.block + ' ' + styles['text-sm'] + ' ' + styles['font-medium'] + ' ' + styles['text-gray-700'] + ' ' + styles['mb-2']}>
+                        Назва товару*
+                      </label>
                       <input
-                        placeholder="Наприклад: 10000"
+                        placeholder="Введіть назву оголошення"
                         type="text"
-                        name="price"
-                        className="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                        value={formData.price}
+                        name="productName"
+                        className={styles['w-full'] + ' ' + styles['px-4'] + ' ' + styles['py-3'] + ' ' + styles.border + ' ' + styles['border-gray-300'] + ' ' + styles['rounded-lg'] + ' ' + styles['focus:ring-2'] + ' ' + styles['focus:ring-blue-500'] + ' ' + styles['focus:border-transparent']}
+                        value={formData.productName}
+                        onChange={handleChange}
+                        minLength={14}
+                        maxLength={80}
+                        required
+                      />
+                    </div>
+
+                    <div>
+                      <label className={styles.block + ' ' + styles['text-sm'] + ' ' + styles['font-medium'] + ' ' + styles['text-gray-700'] + ' ' + styles['mb-2']}>
+                        Категорія*
+                      </label>
+                      <select
+                        className={styles['w-full'] + ' ' + styles['px-4'] + ' ' + styles['py-3'] + ' ' + styles.border + ' ' + styles['border-gray-300'] + ' ' + styles['rounded-lg'] + ' ' + styles['focus:ring-2'] + ' ' + styles['focus:ring-blue-500'] + ' ' + styles['focus:border-transparent']}
+                        name="category"
+                        value={formData.category}
+                        onChange={handleChange}
+                        required
+                      >
+                        <option value="">Оберіть категорію</option>
+                        {categories.map(category => (
+                          <option key={category.value} value={category.value}>
+                            {category.label}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
+                    <div>
+                      <label className={styles.block + ' ' + styles['text-sm'] + ' ' + styles['font-medium'] + ' ' + styles['text-gray-700'] + ' ' + styles['mb-2']}>
+                        Ціна*
+                      </label>
+                      <div className={styles.relative + ' ' + styles.oneLine}>
+                        <input
+                          placeholder="Введіть ціну"
+                          type="number"
+                          name="price"
+                          className={styles['w-full'] + ' ' + styles['px-4'] + ' ' + styles['py-3'] + ' ' + styles['pr-12'] + ' ' + styles.border + ' ' + styles['border-gray-300'] + ' ' + styles['rounded-lg'] + ' ' + styles['focus:ring-2'] + ' ' + styles['focus:ring-blue-500'] + ' ' + styles['focus:border-transparent']}
+                          value={formData.price}
+                          onChange={handleChange}
+                          min={0}
+                          max={99999999.99}
+                          required
+                        />
+                        <select
+                          name="currency"
+                          className={styles['w-full'] + ' ' + styles['px-4'] + ' ' + styles['py-3'] + ' ' + styles['pr-12'] + ' ' + styles.border + ' ' + styles['border-gray-300'] + ' ' + styles['rounded-lg'] + ' ' + styles['focus:ring-2'] + ' ' + styles['focus:ring-blue-500'] + ' ' + styles['focus:border-transparent']}
+                          value={formData.currency}
+                          onChange={handleChange}
+                          required
+                        >
+                          {currencies.map(currency => (
+                          <option key={currency.value} value={currency.value}>
+                            {currency.label}
+                          </option>
+                        ))}
+                        </select>
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className={styles.block + ' ' + styles['text-sm'] + ' ' + styles['font-medium'] + ' ' + styles['text-gray-700'] + ' ' + styles['mb-2']}>
+                        Опис товару*
+                      </label>
+                      <textarea
+                        className={styles['w-full'] + ' ' + styles['px-4'] + ' ' + styles['py-3'] + ' ' + styles.border + ' ' + styles['border-gray-300'] + ' ' + styles['rounded-lg'] + ' ' + styles['focus:ring-2'] + ' ' + styles['focus:ring-blue-500'] + ' ' + styles['focus:border-transparent'] + ' ' + styles['h-32'] + ' ' + styles['resize-none']}
+                        placeholder="Детально опишіть товар"
+                        name="description"
+                        value={formData.description}
+                        onChange={handleChange}
+                        style={{height:100}}
+                        minLength={50}
+                        maxLength={10000}
+                        required
+                      />
+                    </div>
+
+                    
+                  </div>
+
+                  <div className={styles['space-y-6']}>
+                    <div>
+                      <label className={styles.block + ' ' + styles['text-sm'] + ' ' + styles['font-medium'] + ' ' + styles['text-gray-700'] + ' ' + styles['mb-2']}>
+                        Фотографії товару (максимум 8)
+                      </label>
+                      <div className={styles['border-2'] + ' ' + styles['border-dashed'] + ' ' + styles['border-gray-300'] + ' ' + styles['rounded-lg'] + ' ' + styles['p-6'] + ' ' + styles['text-center'] + ' ' + styles['hover:border-blue-400'] + ' ' + styles['transition-colors']}>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          multiple
+                          onChange={handleImageUpload}
+                          className={styles.hidden}
+                          id="file-input"
+                        />
+                        <label htmlFor="file-input" className={styles['cursor-pointer']}>
+                          <div className={styles.flex + ' ' + styles['flex-col'] + ' ' + styles['items-center']}>
+                            <div className={styles['w-12'] + ' ' + styles['h-12'] + ' ' + styles['bg-blue-100'] + ' ' + styles['rounded-full'] + ' ' + styles.flex + ' ' + styles['items-center'] + ' ' + styles['justify-center'] + ' ' + styles['mb-3']}>
+                              <span className={styles['text-blue-600'] + ' ' + styles['text-xl']}>+</span>
+                            </div>
+                            <span className={styles['text-blue-600'] + ' ' + styles['font-medium']}>Додати фото</span>
+                            <span className={styles['text-gray-500'] + ' ' + styles['text-sm'] + ' ' + styles['mt-1']}>або перетягніть файли сюди</span>
+                          </div>
+                        </label>
+                      </div>
+
+                      {formData.images.length > 0 && (
+                        <div className={styles.grid + ' ' + styles['grid-cols-2'] + ' ' + styles['gap-3'] + ' ' + styles['mt-4']}>
+                          {formData.images.map((img) => (
+                            <div className={styles.relative + ' ' + styles.group} key={img.id}>
+                              <button
+                                type="button"
+                                className={styles.absolute + ' ' + styles['-top-2'] + ' ' + styles['-right-2'] + ' ' + styles['bg-red-500'] + ' ' + styles['text-white'] + ' ' + styles['w-6'] + ' ' + styles['h-6'] + ' ' + styles['rounded-full'] + ' ' + styles.flex + ' ' + styles['items-center'] + ' ' + styles['justify-center'] + ' ' + styles['text-sm'] + ' ' + styles['hover:bg-red-600'] + ' ' + styles['z-10'] + ' ' + styles['del-btn']}
+                                onClick={() => handleDeleteImage(img.id)}
+                              >
+                                ×
+                              </button>
+                              <img
+                                src={img.url}
+                                alt="Завантажене зображення"
+                                className={styles['w-full'] + ' ' + styles['h-24'] + ' ' + styles['object-cover'] + ' ' + styles['rounded-lg']}
+                              />
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+                <div className={styles['space-y-6']}>
+                  {/* Заголовок секції */}
+                  <div className={styles['border-t'] + ' ' + styles['pt-6']}>
+                    <h3 className={styles['text-lg'] + ' ' + styles['font-medium'] + ' ' + styles['text-gray-900'] + ' ' + styles['mb-6']}>
+                      Контактна інформація
+                    </h3>
+                  </div>
+
+                  {/* Контейнер для всіх полів */}
+                  <div className={styles['grid'] + ' ' + styles['grid-cols-1'] + ' ' + styles['md:grid-cols-2'] + ' ' + styles['gap-6']}>
+                    
+                    {/* Ім'я */}
+                    <div>
+                      <label className={styles.block + ' ' + styles['text-sm'] + ' ' + styles['font-medium'] + ' ' + styles['text-gray-700'] + ' ' + styles['mb-2']}>
+                        Ваше ім'я*
+                      </label>
+                      <input
+                        placeholder={user}
+                        type="text"
+                        name="contactName"
+                        className={styles['w-full'] + ' ' + styles['px-4'] + ' ' + styles['py-3'] + ' ' + styles.border + ' ' + styles['border-gray-300'] + ' ' + styles['rounded-lg'] + ' ' + styles['focus:ring-2'] + ' ' + styles['focus:ring-blue-500'] + ' ' + styles['focus:border-transparent']}
+                        value={formData.contactName}
                         onChange={handleChange}
                         required
                       />
-                      <span className="absolute right-3 top-3 text-gray-500">грн</span>
                     </div>
-                  </div>
 
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Опис товару*
-                    </label>
-                    <textarea
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent h-32 resize-none"
-                      placeholder="Детально опишіть товар"
-                      name="description"
-                      value={formData.description}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div className="space-y-6">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Фотографії товару (максимум 8)
-                    </label>
-                    <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-blue-400 transition-colors">
-                      <input
-                        type="file"
-                        accept="image/*"
-                        multiple
-                        onChange={handleImageUpload}
-                        className="hidden"
-                        id="file-input"
-                      />
-                      <label htmlFor="file-input" className="cursor-pointer">
-                        <div className="flex flex-col items-center">
-                          <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-3">
-                            <span className="text-blue-600 text-xl">+</span>
-                          </div>
-                          <span className="text-blue-600 font-medium">Додати фото</span>
-                          <span className="text-gray-500 text-sm mt-1">або перетягніть файли сюди</span>
-                        </div>
+                    {/* Email */}
+                    <div>
+                      <label className={styles.block + ' ' + styles['text-sm'] + ' ' + styles['font-medium'] + ' ' + styles['text-gray-700'] + ' ' + styles['mb-2']}>
+                        Email*
                       </label>
+                      <input
+                        placeholder={formData.email}
+                        type="email"
+                        name="email"
+                        className={styles['w-full'] + ' ' + styles['px-4'] + ' ' + styles['py-3'] + ' ' + styles.border + ' ' + styles['border-gray-300'] + ' ' + styles['rounded-lg'] + ' ' + styles['focus:ring-2'] + ' ' + styles['focus:ring-blue-500'] + ' ' + styles['focus:border-transparent']}
+                        value={formData.email}
+                        onChange={handleChange}
+                        required
+                      />
                     </div>
 
-                    {formData.images.length > 0 && (
-                      <div className="grid grid-cols-2 gap-3 mt-4">
-                        {formData.images.map((img) => (
-                          <div className="relative group" key={img.id}>
-                            <button
-                              type="button"
-                              className="absolute -top-2 -right-2 bg-red-500 text-white w-6 h-6 rounded-full flex items-center justify-center text-sm hover:bg-red-600 z-10"
-                              onClick={() => handleDeleteImage(img.id)}
-                            >
-                              ×
-                            </button>
-                            <img
-                              src={img.url}
-                              alt="Завантажене зображення"
-                              className="w-full h-24 object-cover rounded-lg"
-                            />
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="border-t pt-6">
-                    <h3 className="text-lg font-medium text-gray-900 mb-4">Контактна інформація</h3>
-                    
-                    <div className="space-y-4">
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                          Ваше ім'я*
-                        </label>
-                        <input
-                          placeholder="Наприклад: Іван"
-                          type="text"
-                          name="contactName"
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                          value={formData.contactName}
-                          onChange={handleChange}
-                          required
-                        />
-                      </div>
-
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                          Email*
-                        </label>
-                        <input
-                          placeholder="Наприклад: example@gmail.com"
-                          type="email"
-                          name="email"
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                          value={formData.email}
-                          onChange={handleChange}
-                          required
-                        />
-                      </div>
-
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                          Телефон*
-                        </label>
-                        <input
-                          placeholder="Наприклад: 0991234567"
-                          type="tel"
-                          name="phone"
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                          value={formData.phone}
-                          onChange={handleChange}
-                          required
-                        />
-                      </div>
+                    {/* Телефон */}
+                    <div>
+                      <label className={styles.block + ' ' + styles['text-sm'] + ' ' + styles['font-medium'] + ' ' + styles['text-gray-700'] + ' ' + styles['mb-2']}>
+                        Телефон*
+                      </label>
+                      <input
+                        placeholder={formData.phone}
+                        type="tel"
+                        name="phone"
+                        className={styles['w-full'] + ' ' + styles['px-4'] + ' ' + styles['py-3'] + ' ' + styles.border + ' ' + styles['border-gray-300'] + ' ' + styles['rounded-lg'] + ' ' + styles['focus:ring-2'] + ' ' + styles['focus:ring-blue-500'] + ' ' + styles['focus:border-transparent']}
+                        value={formData.phone}
+                        onChange={handleChange}
+                        required
+                      />
                     </div>
+
+                    {/* Область */}
+                    <div>
+                      <label className={styles.block + ' ' + styles['text-sm'] + ' ' + styles['font-medium'] + ' ' + styles['text-gray-700'] + ' ' + styles['mb-2']}>
+                        Область*
+                      </label>
+                      <input
+                        placeholder="Введіть область"
+                        type="text"
+                        name="region"
+                        className={styles['w-full'] + ' ' + styles['px-4'] + ' ' + styles['py-3'] + ' ' + styles.border + ' ' + styles['border-gray-300'] + ' ' + styles['rounded-lg'] + ' ' + styles['focus:ring-2'] + ' ' + styles['focus:ring-blue-500'] + ' ' + styles['focus:border-transparent']}
+                        value={formData.region}
+                        onChange={handleChange}
+                        required
+                      />
+                    </div>
+
+                    {/* Місто - займає повну ширину на мобільних, половину на десктопі */}
+                    <div>
+                      <label className={styles.block + ' ' + styles['text-sm'] + ' ' + styles['font-medium'] + ' ' + styles['text-gray-700'] + ' ' + styles['mb-2']}>
+                        Місто*
+                      </label>
+                      <input
+                        placeholder="Введіть місто"
+                        type="text"
+                        name="city"
+                        className={styles['w-full'] + ' ' + styles['px-4'] + ' ' + styles['py-3'] + ' ' + styles.border + ' ' + styles['border-gray-300'] + ' ' + styles['rounded-lg'] + ' ' + styles['focus:ring-2'] + ' ' + styles['focus:ring-blue-500'] + ' ' + styles['focus:border-transparent']}
+                        value={formData.city}
+                        onChange={handleChange}
+                        required
+                      />
+                    </div>
+
+                    <div className={styles.for_button}>
+                      <Button 
+                    id="publish"
+                    type="submit" 
+                    children={"Опублікувати оголошення"}
+                  />
+                    </div>
+
                   </div>
                 </div>
-              </div>
-
-              <div className="flex justify-end pt-6 border-t">
-                <button 
-                  type="submit" 
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-medium transition-colors"
-                >
-                  Опублікувати оголошення
-                </button>
-              </div>
-            </form>
+                <div className={styles.flex + ' ' + styles['justify-end'] + ' ' + styles['pt-6'] + ' ' + styles['border-t']}>
+                  
+                </div>
+              </form>
+            </div>
           </div>
-        </div>
-      </div>
-    )
-  }
 
-  return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="max-w-6xl mx-auto p-6">
-        <div className="flex justify-between items-center mb-8">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900">Оголошення</h1>
-            <p className="text-gray-600 mt-1">Знайдіть те, що шукаєте</p>
-          </div>
-          <button 
-            onClick={() => setCurrentPage('create')}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors"
-          >
-            + Додати оголошення
-          </button>
-        </div>
-
-        {advertisements.length === 0 ? (
-          <div className="text-center py-12">
-            <div className="text-gray-400 text-6xl mb-4">📢</div>
-            <h3 className="text-xl font-medium text-gray-900 mb-2">Поки що немає оголошень</h3>
-            <p className="text-gray-600 mb-6">Станьте першим, хто створить оголошення!</p>
-            <button 
-              onClick={() => setCurrentPage('create')}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors"
+          {/* Success Modal */}
+          {showSuccessModal && (
+            <div 
+              className={styles['fixed'] + ' ' + styles['inset-0'] + ' ' + styles['bg-black'] + ' ' + styles['bg-opacity-50'] + ' ' + styles['flex'] + ' ' + styles['items-center'] + ' ' + styles['justify-center'] + ' ' + styles['z-50']}
+              style={{
+                position: 'fixed',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                zIndex: 9999
+              }}
             >
-              Створити оголошення
-            </button>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {advertisements.map((ad) => (
-              <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow" key={ad.id}>
-                {ad.images.length > 0 && (
-                  <div className="h-48 overflow-hidden">
-                    <img 
-                      src={ad.images[0].url} 
-                      alt={ad.productName} 
-                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                    />
-                  </div>
-                )}
-                <div className="p-6">
-                  <div className="flex justify-between items-start mb-3">
-                    <h3 className="text-lg font-semibold text-gray-900 line-clamp-2">{ad.productName}</h3>
-                    <div className="text-lg font-bold text-blue-600 ml-2">{ad.price} грн</div>
-                  </div>
-                  
-                  <div className="inline-block bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm mb-3">
-                    {getCategoryLabel(ad.category)}
-                  </div>
-                  
-                  <p className="text-gray-600 text-sm mb-4 line-clamp-3">{ad.description}</p>
-                  
-                  <div className="flex justify-between items-center text-sm text-gray-500 border-t pt-3">
-                    <span className="font-medium">{ad.contactName}</span>
-                    <span>Сьогодні</span>
+              <div 
+                className={styles['bg-white'] + ' ' + styles['rounded-lg'] + ' ' + styles['shadow-xl'] + ' ' + styles['p-6'] + ' ' + styles['max-w-md'] + ' ' + styles['w-full'] + ' ' + styles['mx-4']}
+                style={{
+                  backgroundColor: 'white',
+                  borderRadius: '8px',
+                  padding: '24px',
+                  maxWidth: '28rem',
+                  width: '100%',
+                  margin: '0 16px',
+                  boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
+                }}
+              >
+                {/* Success Icon */}
+                <div 
+                  className={styles['flex'] + ' ' + styles['items-center'] + ' ' + styles['justify-center'] + ' ' + styles['mb-4']}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    marginBottom: '16px'
+                  }}
+                >
+                  <div 
+                    className={styles['w-16'] + ' ' + styles['h-16'] + ' ' + styles['bg-green-100'] + ' ' + styles['rounded-full'] + ' ' + styles['flex'] + ' ' + styles['items-center'] + ' ' + styles['justify-center']}
+                    style={{
+                      width: '64px',
+                      height: '64px',
+                      backgroundColor: '#dcfce7',
+                      borderRadius: '50%',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center'
+                    }}
+                  >
+                    <span 
+                      style={{
+                        color: '#16a34a',
+                        fontSize: '24px',
+                        fontWeight: 'bold'
+                      }}
+                    >
+                      ✓
+                    </span>
                   </div>
                 </div>
+
+                {/* Modal Content */}
+                <div style={{ textAlign: 'center' }}>
+                  <h3 
+                    className={styles['text-lg'] + ' ' + styles['font-semibold'] + ' ' + styles['text-gray-900'] + ' ' + styles['mb-2']}
+                    style={{
+                      fontSize: '18px',
+                    fontWeight: '600',
+                    color: '#111827',
+                    marginBottom: '8px'
+                  }}
+                >
+                  Оголошення успішно створено!
+                </h3>
+                <p 
+                  className={styles['text-gray-600'] + ' ' + styles['mb-6']}
+                  style={{
+                    color: '#6b7280',
+                    marginBottom: '24px'
+                  }}
+                >
+                  Ваше оголошення "{formData.productName}" було опубліковано та скоро з'явиться на сайті.
+                </p>
+
+                {/* Action Buttons */}
+                <div 
+                  className={styles['flex'] + ' ' + styles['flex-col'] + ' ' + styles['sm:flex-row'] + ' ' + styles['gap-3']}
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '12px'
+                  }}
+                >
+                  {/* Primary Button */}
+                  <Button
+                    onClick={handleCloseModal}
+                    style={{
+                      fontWeight: 600,
+                      width: '100%',
+                      flex: 1,
+                      backgroundColor: '#2563eb',
+                      color: 'white',
+                      padding: '8px 16px',
+                      borderRadius: '8px',
+                      border: 'none',
+                      cursor: 'pointer',
+                      transition: 'background-color 0.2s'
+                    }}
+                    children={'На головну'}
+                  />
+
+                  {/* Secondary Button */}
+                  <Button
+                    onClick={handleCreateAnother}
+                    style={{
+                      fontWeight: 600,
+                      width: '100%',
+                      flex: 1,
+                      backgroundColor: '#e5e7eb',
+                      color: '#1f2937',
+                      padding: '8px 16px',
+                      borderRadius: '8px',
+                      border: 'none',
+                      cursor: 'pointer',
+                      transition: 'background-color 0.2s'
+                    }}
+                    children={'Створити ще одне'}
+                  />
+                </div>
               </div>
-            ))}
+            </div>
           </div>
         )}
       </div>
-    </div>
-  )
+      </main>
+    )
 }
 
 export default AddAddvertisementPage

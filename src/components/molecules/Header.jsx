@@ -10,44 +10,58 @@ import { faLaptop, faMobileScreen, faBabyCarriage, faSuitcase, faDog, faCouch, f
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
-
-
-// ...
-
-
 // або для деяких з них — solid:
 import { faUser as faUserSolid, faHeart as faHeartSolid, faComments as faCommentsSolid } from "@fortawesome/free-solid-svg-icons";
-
+import { authService } from "../../api/authService";
 
 
 function Header() {
+  const [isSidebarVisible, setIsSidebarVisible] = useState(false); 
+  const [isSidebarFadingOut, setIsSidebarFadingOut] = useState(false);
   const [openSidebar, setOpenSidebar] = useState(false);
   const [isBurgerOpen, setIsBurgerOpen] = useState(false);
   const [activeCategory, setActiveCategory] = useState("electronics");
   const [isDarkTheme, setIsDarkTheme] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const userMenuRef = useRef(null);
- const userButtonRef = useRef(null);
-
-  const [user, setUser] = useState(null); 
+  const userButtonRef = useRef(null);
+  const [isUserMenuMobileOpen, setIsUserMenuMobileOpen] = useState(false);
+  const userMenuMobileRef = useRef(null);
+  const [isUser, setIsUser] = useState({
+    firstName: ''
+  }); 
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
+  const loadUser = async () => {
+    if (authService.isUserAuthenticated()) {
+      try {
+        const user = await authService.getUser();
+        setIsUser({
+          firstName: user.firstName
+        });
+        console.log("User loaded:", user);
+      } catch (error) {
+        console.error("Failed to load user:", error);
+      }
     }
-  }, []);
-  
-  // null — гість (не залогінений)
-  // { username: "Імʼя" } — залогінений користувач
-  const [isUserMenuMobileOpen, setIsUserMenuMobileOpen] = useState(false);
-const userMenuMobileRef = useRef(null);
+  };
+
+  loadUser();
+}, []);
 
   
-  
-  
   const handleFilterClick = () => {
-    setOpenSidebar(!openSidebar);
+    if (isSidebarVisible && !isSidebarFadingOut) {
+      // Закриваємо з fadeOut
+      setIsSidebarFadingOut(true);
+      setTimeout(() => {
+        setIsSidebarVisible(false);
+        setIsSidebarFadingOut(false);
+      }, 300); // тривалість fadeOut у CSS
+    } else if (!isSidebarVisible) {
+      // Відкриваємо з fadeIn
+      setIsSidebarVisible(true);
+    }
   };
   
   useEffect(() => {
@@ -113,11 +127,6 @@ const userMenuMobileRef = useRef(null);
   const toggleUserMenu = () => {
     setIsUserMenuOpen(prev => !prev);
   };
-  const handleLogout = () => {
-  localStorage.removeItem("user"); // Очистити localStorage
-  setUser(null);                   // Скинути стейт користувача
-  setIsUserMenuOpen(false);
-};
 
   const toggleBurger = () => {
     setIsBurgerOpen(!isBurgerOpen);
@@ -229,12 +238,12 @@ const userMenuMobileRef = useRef(null);
   <button className={style.iconButton_mob}><FontAwesomeIcon icon={faHeart} className={style.icon_com_mob} /></button>
 
   <button onClick={toggleUserMenuMobile} className={style.iconButton_mob}>
-    <FontAwesomeIcon icon={user ? faUserSolid : faUser} className={style.icon_com_mob_btn} />
+    <FontAwesomeIcon icon={isUser ? faUserSolid : faUser} className={style.icon_com_mob_btn} />
   </button>
 
   {isUserMenuMobileOpen && (
     <div ref={userMenuMobileRef} className={`${style.userMenuMobile} ${style.fadeIn}`}>
-      {user ? (
+      {isUser ? (
         <>
           <div
             className={style.userMenuHeader}
@@ -243,11 +252,11 @@ const userMenuMobileRef = useRef(null);
               setIsUserMenuMobileOpen(false);
             }}
           >
-            Welcome back, {user.username}
+            {isUser}Welcome back, {isUser.firstName}
           </div>
           <button
             onClick={() => {
-              handleLogout();
+              authService.logout();
               setIsUserMenuMobileOpen(false);
             }}
             className={style.userMenuButton}
@@ -296,19 +305,22 @@ const userMenuMobileRef = useRef(null);
           </div>
           <div className={style.dropdowns}>
             <select>
-              <option>Eng</option>
-              <option>Ukr</option>
+              <option value={"ENG"}>Eng</option>
+              <option value={"UKR"}>Ukr</option>
             </select>
             <select>
-              <option>USD ($)</option>
-              <option>EUR (€)</option>
+              <option value={"UAH"}>UAH (₴)</option>
+              <option value={"USD"}>USD ($)</option>
+              <option value={"EUR"}>EUR (€)</option>
             </select>
           </div>
           <div className={style.comunication} style={{ position: "relative" }}>
   <button onClick={toggleTheme} className={style.iconButton}>
     <FontAwesomeIcon icon={faMoon} className={style.icon_com} />
   </button>
-  <button><FontAwesomeIcon icon={faHeart} className={style.icon_com} /></button>
+  <button className={style.iconButton}>
+    <FontAwesomeIcon icon={faHeart} className={style.icon_com} />
+  </button>
 
   <button
          ref={userButtonRef}
@@ -316,22 +328,22 @@ const userMenuMobileRef = useRef(null);
          className={style.iconButton}
          aria-expanded={isUserMenuOpen}
        >
-    <FontAwesomeIcon icon={user ? faUserSolid : faUser} className={style.icon_com} />
+    <FontAwesomeIcon icon={isUser ? faUserSolid : faUser} className={style.icon_com} />
   </button>
 
   {/* Меню користувача */}
   {isUserMenuOpen && (
   <div ref={userMenuRef} className={`${style.userMenu} ${style.fadeIn}`}>
-    {user ? (
+    {isUser ? (
       <>
         <div
           className={style.userMenuHeader}
           onClick={goToAccount}
         >
-          Welcome back, {user.username}
+          Welcome back, {isUser.firstName}
         </div>
         <button
-          onClick={handleLogout}
+          onClick={() => {authService.logout()}}
           className={style.userMenuButton}
         >
           Logout
@@ -364,8 +376,8 @@ const userMenuMobileRef = useRef(null);
           
         </div>
 
-        {openSidebar && (
-          <div className={`${style.sidebar_container} ${style.fadeIn}`}>
+        {isSidebarVisible && (
+          <div className={`${style.sidebar_container} ${isSidebarFadingOut ? style.fadeOut : style.fadeIn}`}>
             <div className={style.sidebar}>
               <h3>Categories</h3>
               <ul className={style.categories_list}>

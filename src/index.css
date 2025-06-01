@@ -106,3 +106,22 @@ main .registration_container, main .upper_inner_container, main .lower_inner_con
 main{
   padding: 0;
 }
+
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #fff;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #094295;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #094295;
+}
