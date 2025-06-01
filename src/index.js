@@ -26,6 +26,7 @@ import ChatList from './components/templates/ChatListPage';
 import AdvancedSearchPage from './components/templates/AdvancedSearchPage';
 import PrivacyPolicy from './components/templates/PrivacyPolicy';
 import AddAddvertisementPage from './components/templates/AddAddvertisementPage';
+import UserPage from './components/templates/UserPage';
 
 
 const ProtectedAccount = () => (
@@ -92,6 +93,7 @@ const router = createBrowserRouter([
       { path: 'privacy-policy', element: <PrivacyPolicy /> },  
       { path: 'create', element: <ProtectedAddAddvertisement /> },
       { path: '*', element: <NotFoundPage /> },
+      { path: 'user', element: <UserPage />},
     ]
   },
   {

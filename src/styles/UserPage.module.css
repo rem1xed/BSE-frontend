@@ -1,0 +1,101 @@
+.page {
+  display: flex;
+  gap: 32px;
+  padding: 40px;
+  background-color: #f7f8fa;
+}
+
+.userCard {
+  flex: 0 0 280px;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  padding: 20px;
+  background-color: #ffffff;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.avatar {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  margin-bottom: 16px;
+}
+
+.noAvatar {
+  height: 200px;
+  background-color: #e0e0e0;
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #555;
+  margin-bottom: 16px;
+}
+
+.adsContainer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  border: 2px solid #0db9f0;
+  border-radius: 12px;
+  padding: 20px;
+  background-color: #ffffff;
+}
+
+.noAds {
+  color: #888;
+  font-size: 16px;
+  text-align: center;
+}
+.reviewsContainer {
+  margin-top: 30px;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  padding: 20px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.review {
+  padding: 12px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  border: 1px solid #eee;
+}
+
+.noReviews {
+  color: #888;
+  font-style: italic;
+  text-align: center;
+}
+
+.reviewsContainer h4 {
+  margin-bottom: 12px;
+  font-size: 20px;
+  color: #333;
+}
+.logoutButton {
+  margin-top: 16px;
+  padding: 10px 20px;
+  background-color: #0db9f0;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.logoutButton:hover {
+  background-color: #0a9fd4;
+}
+
+.logoutButton:active {
+  background-color: #087fab;
+}
