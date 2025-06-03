@@ -1,9 +1,9 @@
 footer {
     display: flex;
     justify-content: space-between;
-    background-color: #A5A5A5;
-    width: 100%;
-    color: #111;
+    background-color: #3300cf;
+    width: 100%;    
+    color: white;
     padding: 40px 0;
     flex-wrap: wrap;
     position: relative;
@@ -21,7 +21,7 @@ footer ul.list_left {
 }
 
 .footer_header {
-    color: #111;
+    /* color: #111; */
     margin-top: 0;
     font-size: 22px;
     margin-bottom: 20px;
@@ -30,14 +30,15 @@ footer ul.list_left {
 
 footer a.link {
     text-decoration: none;
-    color: #111;
+    /* color: #111; */
+    color: white;
     transition: all 0.2s ease;
 }
 
 footer li.list_element,
 footer li.list_element_left {
     margin: 16px 0;
-    color: #111;
+    /* color: #111*/
     line-height: 1.5;
     transition: all 0.2s ease;
 }
@@ -63,7 +64,7 @@ footer li.list_element_left a.link:focus {
 
 
 .span_footer {
-    color: #007ec2;
+    color: white;
 }
 .dark {
     background-color: #222934;

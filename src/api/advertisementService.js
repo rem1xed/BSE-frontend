@@ -69,7 +69,7 @@ export const advertisementService = {
 
   // Додати в обране
   addToFavorites: async (advertisementId) => {
-    const response = await api.post(`/advertisement/${advertisementId}/favorite`, {}, {
+    const response = await api.post(`/favorites/${advertisementId}`, {}, {
       withCredentials: true,
     })
     return response.data
@@ -77,7 +77,14 @@ export const advertisementService = {
 
   // Видалити з обраного
   removeFromFavorites: async (advertisementId) => {
-    const response = await api.delete(`/advertisement/${advertisementId}/favorite`, {
+    const response = await api.delete(`/favorites/${advertisementId}`, {
+      withCredentials: true,
+    })
+    return response.data
+  },
+
+  isFavorite: async (advertisementId) => {
+    const response = await api.get(`/favorites/${advertisementId}/is-favorite`, {
       withCredentials: true,
     })
     return response.data

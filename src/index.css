@@ -6,12 +6,19 @@
   padding: 0;
   box-sizing: border-box;
   scroll-behavior: smooth;
+  accent-color: #3300cf;
 }
 
 body {
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+select.dark option{
+  background-color: #3300cf;
+  color: white;
+  font-weight: 600;
 }
 
 body.light {
