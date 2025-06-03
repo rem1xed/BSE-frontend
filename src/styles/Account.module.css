@@ -529,3 +529,59 @@ tbody tr:nth-child(even) {
   color: #3300cf;
 }
 
+
+
+
+/* Стилі для банерів зліва та справа */
+.left_banner,
+.right_banner {
+  width: 120px; /* Фіксована ширина банера */
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 10px 20px;
+  position: sticky;
+  top: 0;
+}
+
+.banner_image {
+  width: 100%;
+  max-width: 110px;
+  height: auto;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+}
+
+.banner_image:hover {
+  transform: scale(1.02);
+  cursor: pointer;
+}
+
+/* Адаптивність для мобільних пристроїв */
+@media (max-width: 768px) {
+  .left_banner,
+  .right_banner {
+    display: none; /* Приховуємо банери на мобільних */
+  }
+  
+  .container {
+    width: 100%;
+    padding: 0 10px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .left_banner,
+  .right_banner {
+    width: 80px; /* Зменшуємо ширину банерів на менших екранах */
+  }
+  
+  .banner_image {
+    max-width: 70px;
+  }
+}
+
