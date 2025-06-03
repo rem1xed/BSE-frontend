@@ -6,14 +6,14 @@ import Input from "../atoms/Input";
 import { authService } from "../../api/authService";
 import { useNavigate } from "react-router-dom";
 import { settings } from "../../api/settingsService";
+import AdBanner from "../../media/Ad_Banner.png";
 
 // --- AccountInfoContainer ---
 function AccountInfoContainer({ userData, fetchUser }) {
-
   function fetchDate(){
     const date =  new Date();
     const day = date.getDate().toString().padStart(2, '0');
-    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // +1 бо місяці починаються з 0
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
     const year = date.getFullYear();
     
     return day + '-' + month + '-' + year;
@@ -342,7 +342,6 @@ function PreferencesContainer({ style }) {
           return;
         }
         
-        // Фільтруємо системні поля при отриманні даних
         const {
           id,
           userId,
@@ -392,7 +391,6 @@ function PreferencesContainer({ style }) {
   const savePreferences = async () => {
     setSaveStatus({ type: "info", message: "Збереження..." });
     try {
-      // Створюємо об'єкт лише з дозволеними полями
       const dataToSave = {
         age: prefData.age || "",
         country: prefData.country || "",
@@ -723,6 +721,11 @@ export default function Account() {
 
   return (
     <main className={style.outer_container}>
+      {/* Банер зліва */}
+      <div className={style.left_banner}>
+        <img src={AdBanner} alt="Advertisement" className={style.banner_image} />
+      </div>
+
       <div className={style.container}>
         <div className={style.left}>
           <div className={style.title_outer}>
@@ -784,6 +787,11 @@ export default function Account() {
           />
         </div>
         <div className={style.right}>{renderContainer()}</div>
+      </div>
+
+      {/* Банер справа */}
+      <div className={style.right_banner}>
+        <img src={AdBanner} alt="Advertisement" className={style.banner_image} />
       </div>
     </main>
   );

@@ -1,9 +1,20 @@
 import React from 'react';
 import classes from '../../styles/AboutUsPage.module.css';
+import AdBanner from '../../media/Ad_Banner.png';
 
 function AboutUsPage() {
     return (
         <main className={classes.about_us_main}>
+            {/* Лівий банер */}
+            <div className={classes.left_banner}>
+                <img 
+                    src={AdBanner} 
+                    alt="Advertisement" 
+                    className={classes.banner_image} 
+                    onClick={() => window.open('https://example.com', '_blank')}
+                />
+            </div>
+
             <div className={classes.main_cont}>
                 <div className={classes.up_info}>
                     <h1>About BSE</h1>
@@ -36,6 +47,16 @@ function AboutUsPage() {
                         <li><strong>Гулечко Юрій</strong> — відповідальний за тестування</li>
                     </ul>
                 </div>
+            </div>
+
+            {/* Правий банер */}
+            <div className={classes.right_banner}>
+                <img 
+                    src={AdBanner} 
+                    alt="Advertisement" 
+                    className={classes.banner_image} 
+                    onClick={() => window.open('https://example.com', '_blank')}
+                />
             </div>
         </main>
     );
