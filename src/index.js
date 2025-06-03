@@ -79,7 +79,6 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <Home /> }, // Головна сторінка з повним макетом
       { path: 'account', element: <ProtectedAccount /> },
-      // { path: 'add', element: <AddPage /> },
       { path: 'about-us', element: <AboutUsPage /> },
       { path: 'support', element: <SupportPage /> },
       { path: 'contact-us', element: <ContactUsPage/>},

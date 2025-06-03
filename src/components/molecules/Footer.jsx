@@ -22,7 +22,7 @@ const Footer = function () {
         <h2 className={style.footer_header}>Information</h2>
         <ul className={style.list_left}>
           <li className={style.list_element_left}><a className={style.link} onClick={() => navigate("/about-us")}>About Us</a></li>
-          <li className={style.list_element_left}><a className={style.link} href="#">Privacy Policy</a></li>
+          <li className={style.list_element_left}><a className={style.link} onClick={() => navigate("/privacy-policy")}>Privacy Policy</a></li>
           <li className={style.list_element_left}><a className={style.link} onClick={() => navigate("/support")}>Buy a coffe for us:{")"}</a></li>
           <li className={style.list_element_left}><a className={style.link} href="#">Orders and Returns</a></li>
           <li className={style.list_element_left}><a className={style.link} onClick={() => navigate("/contact-us")}>Contact Us</a></li>

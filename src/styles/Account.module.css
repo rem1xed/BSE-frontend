@@ -2,7 +2,7 @@ html,
 body,
 .outer_container {
   width: 100%;
-  height: 100%;
+  min-height: 100vh;
 }
 
 .outer_container {
@@ -12,15 +12,15 @@ body,
   background-color: #fff;
 }
 
-h2,
-h3 {
+.outer_container h2,
+.outer_container h3 {
   color: #212121;
 }
 
 p,
 .breadcrumb {
   font-size: 13px;
-  font-weight: 200;
+  font-weight: 400;
 }
 
 .container {
@@ -96,7 +96,7 @@ body .button_inner {
 
 .button_inner .active_span {
   transition: all 0.5s ease;
-  background-color: #0156ff;
+  background-color: #3300cf;
   width: 2%;
   border-radius: 16px;
   /* height: 100%; */
@@ -122,7 +122,7 @@ body .button_inner {
 }
 
 .button_inner:has(.active_span) .nav_button {
-  color: #0156ff;
+  color: #3300cf;
   font-weight: 600;
 }
 
@@ -139,19 +139,22 @@ body .button_inner {
 
 .head {
   width: 100%;
-  height: 15%;
+  height: 20%;
   background-color: red;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
-  background: linear-gradient(to right, #b6d3f1, #fcf7e1);
+  background: linear-gradient(to right, #3300cf, #f1e1fc);
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   gap: -5px;
 }
 
-.head * {
+.head p,
+.head h3{
   margin-left: 10px;
+  color: #fff;
+  font-weight: 700;
 }
 
 .body {
@@ -383,13 +386,13 @@ tbody tr:nth-child(even) {
 
 .interests_grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 0.5rem;
 }
 
 @media (min-width: 768px) {
   .interests_grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 
@@ -516,4 +519,13 @@ tbody tr:nth-child(even) {
 
 #logout_button{
   width: 100%;
+  background-color: #3300cf;
 }
+
+#logout_button:hover,
+#logout_button:focus{
+  background-color: #fff;
+  border-color: #3300cf;
+  color: #3300cf;
+}
+

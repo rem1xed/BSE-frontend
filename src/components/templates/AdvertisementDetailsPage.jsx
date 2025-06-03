@@ -27,10 +27,17 @@ function AdvertisementDetailsPage() {
         setError(null)
         
         // Завантажуємо основні дані оголошення
-        const adData = await advertisementService.getAdvertisementBySlug(id)
-        console.log(adData);
-        setAdvertisement({...adData})
-        console.log(advertisement);
+        const adData = await advertisementService.getAdvertisementBySlug(id);
+        const favData = await advertisementService.isFavorite(id);
+        setAdvertisement(adData);
+        setIsFavorite(favData);
+
+        console.log(advertisement)
+        console.log(isFavorite)
+        // setAdvertisement({...adData});
+        // console.log(adData);
+        // console.log(advertisement);
+        // console.log(adData.images);
         // setIsFavorite(adData.advertisement.isFavorite || false)
         
         // Збільшуємо кількість переглядів
@@ -61,11 +68,11 @@ function AdvertisementDetailsPage() {
     
     try {
       if (isFavorite) {
-        // await advertisementService.removeFromFavorites(advertisement.id)
-        // setIsFavorite(false)
+        await advertisementService.removeFromFavorites(advertisement.id)
+        setIsFavorite(false)
       } else {
-        // await advertisementService.addToFavorites(advertisement.id)
-        // setIsFavorite(true)
+        await advertisementService.addToFavorites(advertisement.id)
+        setIsFavorite(true)
       }
     } catch (err) {
       console.error('Помилка зміни статусу обраного:', err)
@@ -164,7 +171,7 @@ function AdvertisementDetailsPage() {
           )}
           
           <img
-            src={advertisement.images?.[currentImageIndex]?.url || '/placeholder-image.jpg'}
+            src={advertisement.images?.[currentImageIndex] || '/placeholder-image.jpg'}
             alt={advertisement.title}
             onError={(e) => {
               if (!e.target.src.includes('placeholder-image.jpg')) {
@@ -344,7 +351,7 @@ function AdvertisementDetailsPage() {
                 className={style.similar_ad_card}
                 onClick={() => navigate(`/ad/${ad.id}`)}
               >
-                <img src={ad.images?.[0]?.url || '/placeholder-image.jpg'} alt={ad.title} />
+                <img src={ad.images?.[0] || '/placeholder-image.jpg'} alt={ad.title} />
                 <div className={style.similar_ad_info}>
                   <h4>{ad.title}</h4>
                   <p className={style.similar_ad_price}>
