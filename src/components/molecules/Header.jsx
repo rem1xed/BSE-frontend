@@ -224,6 +224,8 @@ function Header() {
             <img src={iconFilter} alt="filter icon" width="18" height="18" />
             Filter 
             </button>
+            <button onClick={() => {navigate('/create')}} className={style.burger_item}>Create advertisement</button>
+
             <a className={style.burger_item}>New Arrivals</a>
             <a className={style.burger_item}>Best Sellers</a>
             <a className={style.burger_item}>Today’s Deals</a>
@@ -302,7 +304,9 @@ function Header() {
 
           <div className={style.search_bar}>
             <input type="text" placeholder="Search the products" />
-          </div>
+        </div>
+        
+        <button onClick={() => {navigate('/create')}} className={style.filter}>Create advertisement</button>
           <div className={style.dropdowns}>
             <select>
               <option value={"ENG"}>Eng</option>
