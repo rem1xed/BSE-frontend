@@ -1,85 +1,92 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import Footer from '../molecules/Footer';
 import Advertisement from '../molecules/Advertisement';
 import classes from '../../styles/AdvertismentListPage.module.css';
+import axios from 'axios';
+import { BaseUrl } from '../../api/api';
 
 function AdvertismentListPage() {
-    const [ads, setAds] = useState([]);
-    const [page, setPage] = useState(1);
+  const [ads, setAds] = useState([]);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const [loading, setLoading] = useState(false);
 
-    const generateMockAds = (count) => {
-        const templates = [
-            {
-                image: 'https://uastore.com.ua/files/resized/products/fujitsue734merchtitul.1800x1800w.jpg',
-                description: 'Ноутбук Fujitsu Lifebook E734 — компактний та надійний пристрій для роботи.',
-                condition: 'Б/у',
-                location: 'Львів, Україна',
-                price: '499$'
-            },
-            {
-                image: 'https://images.samsung.com/is/image/samsung/p6pim/ua/sm-a546ezkdsek/gallery/ua-galaxy-a54-5g-sm-a546-sm-a546ezkdsek-535853812?$684_547_PNG$',
-                description: 'Смартфон Samsung Galaxy A54 5G — потужність і стиль.',
-                condition: 'Новий',
-                location: 'Київ, Україна',
-                price: '899$'
-            },
-            {
-                image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVCCSK7b-InrH1inTlyZlZYcn5zSC1H7NEoQ&s',
-                description: 'Ігрова консоль Sony PlayStation 5 Digital Edition.',
-                condition: 'Б/у',
-                location: 'Одеса, Україна',
-                price: '599$'
-            },
-        ];
+  const loadMoreAds = useCallback(async () => {
+    if (loading || !hasMore) return;
 
-        const result = [];
-        for (let i = 0; i < count; i++) {
-            const template = templates[i % templates.length];
-            result.push({ ...template, id: Date.now() + Math.random() });
+    setLoading(true);
+    try {
+      const res = await axios.get(`http://localhost:1488/advertisement?page=${page}&limit=6`);
+      const newAds = res.data.data;
+      console.log(newAds)
+      console.log('Завантажено оголошень:', newAds.length, 'на сторінці', page);
+
+      if (newAds.length === 0) {
+        setHasMore(false);
+      } else {
+        setAds((prev) => {
+          // Перевіряємо на дублікати за ID
+          const existingIds = new Set(prev.map(ad => ad.id));
+          const uniqueNewAds = newAds.filter(ad => !existingIds.has(ad.id));
+          
+          return [...prev, ...uniqueNewAds];
+        });
+        
+        // Перевіряємо чи це остання сторінка
+        if (page >= res.data.totalPages) {
+          setHasMore(false);
+        } else {
+          setPage(prev => prev + 1);
         }
-        return result;
+      }
+    } catch (error) {
+      console.error('Помилка при завантаженні оголошень:', error);
+    } finally {
+      setLoading(false);
+    }
+  }, [page, loading, hasMore]);
+
+  // Початкове завантаження
+  useEffect(() => {
+    loadMoreAds();
+  }, []); // Видалили залежності
+
+  // Обробник скролу
+  useEffect(() => {
+    const handleScroll = () => {
+      const bottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 100;
+      if (bottom && !loading && hasMore) {
+        loadMoreAds();
+      }
     };
 
-    const loadMoreAds = () => {
-        const newAds = generateMockAds(6); // по 6 штук за раз
-        setAds((prev) => [...prev, ...newAds]);
-    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [loadMoreAds, loading, hasMore]); // Оновлені залежності
 
-    useEffect(() => {
-        loadMoreAds(); // initial load
-    }, []);
-
-    useEffect(() => {
-        const handleScroll = () => {
-            const bottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 50;
-            if (bottom) {
-                loadMoreAds();
-            }
-        };
-
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
-
-    return (
-        <div className={classes.Page}>
-            <div className={classes.advertisList}>
-                <h1>Advertisement</h1>
-                <div className={classes.Advertisement_Conteiner}>
-                    {ads.map((item) => (
-                        <Advertisement
-                            key={item.id}
-                            image={item.image}
-                            description={item.description}
-                            condition={item.condition}
-                            location={item.location}
-                            price={item.price}
-                        />
-                    ))}
-                </div>
-            </div>
+  return (
+    <div className={classes.Page}>
+      <div className={classes.advertisList}>
+        <h1>Advertisements</h1>
+        <div className={classes.Advertisement_Container}>
+          {ads.map((item) => (
+            <Advertisement
+              key={item.id}
+              image={item.images?.[0] || 'https://via.placeholder.com/300'}
+              description={item.description}
+              condition={item.condition || 'Not noticed'}
+              location={`${item.city}, ${item.region}`}
+              price={`${item.price} ${item.currency || '₴'}`}
+              link={`/advertisement/${item.id}`}
+            />
+          ))}
         </div>
-    );
+        {loading && <p>Завантаження...</p>}
+        {!hasMore && ads.length > 0 && <p>Це всі оголошення 🙂</p>}
+        {!hasMore && ads.length === 0 && <p>Оголошень не знайдено</p>}
+      </div>
+    </div>
+  );
 }
 
 export default AdvertismentListPage;

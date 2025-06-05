@@ -12,6 +12,9 @@ import {
     faQuestion 
 } from '@fortawesome/free-solid-svg-icons';
 import { getAllUsers } from '../../api/authService';
+import Button from '../atoms/Button'
+import { advertisementService } from '../../api/advertisementService';
+
 
 library.add(faHouse, faUser, faBox, faExclamationTriangle, faQuestion);
 
@@ -24,11 +27,18 @@ const AdminHomePage = () => {
     // States для різних даних
     const [users, setUsers] = useState([]);
     const [ads, setAds] = useState([]);
-    const [complaints, setComplaints] = useState([]);
+    const [advertisementComplaints, setAdvertisementComplaints] = useState([]);
+    const [userComplaints, setUserComplaints] = useState([]);
     const [questions, setQuestions] = useState([]);
     const [stats, setStats] = useState({});
     const [loading, setLoading] = useState(false);
-
+    const [sortField, setSortField] = useState(null);
+    const [sortDirection, setSortDirection] = useState('ASC');
+    const [complaintsSortField, setComplaintsSortField] = useState(null);
+    const [complaintsSortDirection, setComplaintsSortDirection] = useState('ASC');
+    const [userComplaintsSortField, setUserComplaintsSortField] = useState(null);
+    const [userComplaintsSortDirection, setUserComplaintsSortDirection] = useState('ASC');
+    
     // Дані за замовчуванням (можна видалити після підключення API)
     const defaultStats = {
         totalComplaints: 154,
@@ -40,30 +50,24 @@ const AdminHomePage = () => {
         blockedUsers: 37,
     };
 
-    const weeklyComplaintsData = [4, 6, 3, 7, 5, 8, 2];
+    const weeklyuserComplaintsData = [4, 6, 3, 7, 5, 8, 2];
     const weeklyLabels = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Нд'];
 
     // ============= КОРИСТУВАЧІ =============
-    
     const fetchUsers = async () => {
         setLoading(true);
         try {
             const response = await getAllUsers();
-            console.log('Response users:', response);
-            
-            // Адаптуємо дані з response.data
             const usersData = response.data.map(user => ({
                 id: user.id,
                 username: `${user.firstName} ${user.lastName}`, 
                 email: user.email,
-                phone: user.phone, // Адаптуйте під вашу логіку
-                createdAt: user.createdAt
+                phone: user.phone,
+                createdAt: user.createdAt,
+                status: user.status || 'Активний', // додайте статус, якщо є
             }));
-            
             setUsers(usersData);
-            
         } catch (error) {
-            console.error('Помилка завантаження користувачів:', error);
             setUsers([]);
         } finally {
             setLoading(false);
@@ -71,211 +75,237 @@ const AdminHomePage = () => {
     };
 
     const viewUser = (userId) => {
-        console.log('Переглянути користувача:', userId);
-        // Додайте вашу логіку
+        setVisiblePanel(`userView-${userId}`);
     };
 
     const blockUser = async (userId) => {
         try {
             // await api.post(`/admin/users/${userId}/block`);
-            console.log('Заблокувати користувача:', userId);
-            // Оновити список користувачів
             fetchUsers();
-        } catch (error) {
-            console.error('Помилка блокування користувача:', error);
-        }
+        } catch (error) {}
     };
 
     const unblockUser = async (userId) => {
         try {
             // await api.post(`/admin/users/${userId}/unblock`);
-            console.log('Розблокувати користувача:', userId);
             fetchUsers();
-        } catch (error) {
-            console.error('Помилка розблокування користувача:', error);
-        }
+        } catch (error) {}
     };
 
     // ============= ОГОЛОШЕННЯ =============
-    const fetchAds = async () => {
-        setLoading(true);
-        try {
-            // const response = await api.get('/admin/ads');
-            // setAds(response.data);
-            
-            setAds([
-                { id: 2001, title: 'Продам велосипед', username: 'andrii_k', status: 'Активне', createdAt: '2024-11-02' },
-                { id: 2002, title: 'Куплю ноутбук', username: 'marina12', status: 'На модерації', createdAt: '2024-11-01' },
-            ]);
-        } catch (error) {
-            console.error('Помилка завантаження оголошень:', error);
-        } finally {
-            setLoading(false);
+    
+    const fetchAds = async (field) => {
+    setLoading(true);
+    try {
+        let direction = 'ASC';
+
+        if (field === sortField) {
+        // Якщо клікаємо по тому ж полю, міняємо напрямок
+        direction = sortDirection === 'ASC' ? 'DESC' : 'ASC';
         }
+
+        setSortField(field);
+        setSortDirection(direction);
+
+        const params = {
+        sortField: field,
+        sortDirection: direction,
+        };
+
+        const adsData = await advertisementService.getAdvertisements(params);
+        console.log(adsData)
+        setAds(adsData);
+
+    } catch (error) {
+        console.error(error);
+    } finally {
+        setLoading(false);
+    }
     };
 
     const viewAd = (adId) => {
-        console.log('Переглянути оголошення:', adId);
         setVisiblePanel(`adView-${adId}`);
     };
 
     const approveAd = async (adId) => {
         try {
             // await api.post(`/admin/ads/${adId}/approve`);
-            console.log('Схвалити оголошення:', adId);
             fetchAds();
             setVisiblePanel(null);
-        } catch (error) {
-            console.error('Помилка схвалення оголошення:', error);
-        }
+        } catch (error) {}
     };
 
     const rejectAd = async (adId) => {
         try {
             // await api.post(`/admin/ads/${adId}/reject`);
-            console.log('Відхилити оголошення:', adId);
             fetchAds();
             setVisiblePanel(null);
-        } catch (error) {
-            console.error('Помилка відхилення оголошення:', error);
-        }
+        } catch (error) {}
     };
 
     const blockAd = async (adId) => {
         try {
             // await api.post(`/admin/ads/${adId}/block`);
-            console.log('Заблокувати оголошення:', adId);
             fetchAds();
             setVisiblePanel(null);
-        } catch (error) {
-            console.error('Помилка блокування оголошення:', error);
-        }
+        } catch (error) {}
     };
 
-    // ============= СКАРГИ =============
-    const fetchComplaints = async () => {
+    // ============= СКАРГИ НА ОГОЛОШЕННЯ =============
+
+    const fetchAdvertisementComplaints = async (field) => {
+    setLoading(true);
+    try {
+        let direction = 'ASC';
+
+        if (field === complaintsSortField) {
+        direction = complaintsSortDirection === 'ASC' ? 'DESC' : 'ASC';
+        }
+
+        setComplaintsSortField(field);
+        setComplaintsSortDirection(direction);
+
+        const params = {
+        sortField: field,
+        sortDirection: direction,
+        };
+
+        const response = advertisementService.getAllUsercomplaint();
+
+        setAdvertisementComplaints(response.data);
+    } catch (error) {
+        console.error(error);
+        setAdvertisementComplaints([]);
+    } finally {
+        setLoading(false);
+    }
+    };
+
+    const viewAdvertisementComplaint = (complaintId) => {
+        setVisiblePanel(`advertisementComplaintView-${complaintId}`);
+    };
+
+    const resolveAdvertisementComplaint = async (complaintId) => {
+        try {
+            // await api.post(`/admin/advertisement-complaints/${complaintId}/resolve`);
+            fetchAdvertisementComplaints();
+            setVisiblePanel(null);
+        } catch (error) {}
+    };
+
+    const archiveAdvertisementComplaint = async (complaintId) => {
+        try {
+            // await api.post(`/admin/advertisement-complaints/${complaintId}/archive`);
+            fetchAdvertisementComplaints();
+            setVisiblePanel(null);
+        } catch (error) {}
+    };
+
+    // ============= СКАРГИ НА КОРИСТУВАЧІВ =============
+
+    const fetchUserComplaints = async (field) => {
+    setLoading(true);
+    try {
+        let direction = 'ASC';
+
+        if (field === userComplaintsSortField) {
+        direction = userComplaintsSortDirection === 'ASC' ? 'DESC' : 'ASC';
+        }
+
+        setUserComplaintsSortField(field);
+        setUserComplaintsSortDirection(direction);
+
+        const params = {
+        sortField: field,
+        sortDirection: direction,
+        };
+
+        const response = advertisementService.getAllUsercomplaint();
+
+        setUserComplaints(response.data);
+    } catch (error) {
+        console.error(error);
+        setUserComplaints([]);
+    } finally {
+        setLoading(false);
+    }
+    };
+
+
+    const viewUserComplaint = (complaintId) => {
+        setVisiblePanel(`userComplaintView-${complaintId}`);
+    };
+
+    const resolveUserComplaint = async (complaintId) => {
+        try {
+            // await api.post(`/admin/user-complaints/${complaintId}/resolve`);
+            fetchUserComplaints();
+            setVisiblePanel(null);
+        } catch (error) {}
+    };
+
+    const archiveUserComplaint = async (complaintId) => {
+        try {
+            // await api.post(`/admin/user-complaints/${complaintId}/archive`);
+            fetchUserComplaints();
+            setVisiblePanel(null);
+        } catch (error) {}
+    };
+
+    // ============= ПИТАННЯ =============
+    const fetchQuestions = async () => {
         setLoading(true);
         try {
-            // const response = await api.get('/admin/complaints');
-            // setComplaints(response.data);
-            
-            setComplaints([
-                { 
-                    id: 501, 
-                    fromUser: { id: 101, username: 'andrii_k' },
-                    toUser: { id: 102, username: 'marina12' },
-                    reason: 'Шахрайство',
-                    description: 'Користувач не надіслав товар після оплати.',
-                    status: 'Очікує',
-                    createdAt: '2024-11-01'
-                },
-            ]);
+            const response = await getFormData();
+            if (response.data && Array.isArray(response.data)) {
+                const transformedData = response.data.map(item => ({
+                    id: item.id,
+                    fromUser: { 
+                        username: item.fullName, 
+                        phone: item.phone, 
+                        email: item.email 
+                    },
+                    subject: 'Питання з форми',
+                    message: item.problem,
+                    status: 'Нове',
+                    createdAt: new Date(item.createdAt).toLocaleDateString('uk-UA')
+                }));
+                setQuestions(transformedData);
+            } else {
+                setQuestions([]);
+            }
         } catch (error) {
-            console.error('Помилка завантаження скарг:', error);
+            setQuestions([]);
         } finally {
             setLoading(false);
         }
     };
 
-    const viewComplaint = (complaintId) => {
-        console.log('Переглянути скаргу:', complaintId);
-        setVisiblePanel(`complaintView-${complaintId}`);
-    };
-
-    const resolveComplaint = async (complaintId) => {
-        try {
-            // await api.post(`/admin/complaints/${complaintId}/resolve`);
-            console.log('Вирішити скаргу:', complaintId);
-            fetchComplaints();
-            setVisiblePanel(null);
-        } catch (error) {
-            console.error('Помилка вирішення скарги:', error);
-        }
-    };
-
-    const archiveComplaint = async (complaintId) => {
-        try {
-            // await api.post(`/admin/complaints/${complaintId}/archive`);
-            console.log('Архівувати скаргу:', complaintId);
-            fetchComplaints();
-            setVisiblePanel(null);
-        } catch (error) {
-            console.error('Помилка архівування скарги:', error);
-        }
-    };
-
-    // ============= ПИТАННЯ =============
-    const fetchQuestions = async () => {
-    setLoading(true);
-    try {
-        const response = await getFormData();
-        console.log(response);
-        
-        // Перевіряємо чи є дані
-        if (response.data && Array.isArray(response.data)) {
-            // Трансформуємо дані з сервера до потрібного формату
-            const transformedData = response.data.map(item => ({
-                id: item.id,
-                fromUser: { 
-                    username: item.fullName, 
-                    phone: item.phone, 
-                    email: item.email 
-                },
-                subject: 'Питання з форми',
-                message: item.problem,
-                status: 'Нове',
-                createdAt: new Date(item.createdAt).toLocaleDateString('uk-UA')
-            }));
-            
-            setQuestions(transformedData);
-        } else {
-            setQuestions([]);
-        }
-        
-    } catch (error) {
-        console.error('Помилка завантаження питань:', error);
-        setQuestions([]); // Встановлюємо порожній масив при помилці
-    } finally {
-        setLoading(false);
-    }
-};
-
     const viewQuestion = (questionId) => {
-        console.log('Переглянути питання:', questionId);
         setVisiblePanel(`questionView-${questionId}`);
     };
 
     const answerQuestion = async (questionId, answer) => {
         try {
             // await api.post(`/admin/questions/${questionId}/answer`, { answer });
-            console.log('Відповісти на питання:', questionId, answer);
             fetchQuestions();
             setVisiblePanel(null);
-        } catch (error) {
-            console.error('Помилка відповіді на питання:', error);
-        }
+        } catch (error) {}
     };
 
     const closeQuestion = async (questionId) => {
         try {
             // await api.post(`/admin/questions/${questionId}/close`);
-            console.log('Закрити питання:', questionId);
             fetchQuestions();
             setVisiblePanel(null);
-        } catch (error) {
-            console.error('Помилка закриття питання:', error);
-        }
+        } catch (error) {}
     };
 
     // ============= СТАТИСТИКА =============
     const fetchStats = async () => {
         try {
-            // const response = await api.get('/admin/stats');
-            // setStats(response.data);
-            
             setStats(defaultStats);
         } catch (error) {
-            console.error('Помилка завантаження статистики:', error);
             setStats(defaultStats);
         }
     };
@@ -293,8 +323,11 @@ const AdminHomePage = () => {
             case 'ads':
                 fetchAds();
                 break;
-            case 'complaints':
-                fetchComplaints();
+            case 'advertisementComplaints':
+                fetchAdvertisementComplaints();
+                break;
+            case 'userComplaints':
+                fetchUserComplaints();
                 break;
             case 'questions':
                 fetchQuestions();
@@ -316,7 +349,7 @@ const AdminHomePage = () => {
                     datasets: [
                         {
                             label: 'Кількість скарг',
-                            data: weeklyComplaintsData,
+                            data: weeklyuserComplaintsData,
                             borderColor: '#007bff',
                             backgroundColor: 'rgba(0,123,255,0.1)',
                             tension: 0.4,
@@ -364,6 +397,7 @@ const AdminHomePage = () => {
             'Активний': `${styles.badge} ${styles.active}`,
             'Заблокований': `${styles.badge} ${styles.blocked}`,
             'На модерації': `${styles.badge} ${styles.pending}`,
+            'Нове': `${styles.badge} ${styles.pending}`,
         };
         return <span className={statusClasses[status] || styles.badge}>{status}</span>;
     };
@@ -376,12 +410,20 @@ const AdminHomePage = () => {
                 {renderTabButton('Головна', 'home', <FontAwesomeIcon icon="fa-solid fa-house" />)}
                 {renderTabButton('Користувачі', 'users', <FontAwesomeIcon icon="fa-solid fa-user" />)}
                 {renderTabButton('Оголошення', 'ads', <FontAwesomeIcon icon="fa-solid fa-box" />)}
-                {renderTabButton('Скарги', 'complaints', <FontAwesomeIcon icon="fa-solid fa-exclamation-triangle" />)}
+                {renderTabButton('Скарги на оголошення', 'advertisementComplaints', <FontAwesomeIcon icon="fa-solid fa-exclamation-triangle" />)}
+                {renderTabButton('Скарги на користувачів', 'userComplaints', <FontAwesomeIcon icon="fa-solid fa-exclamation-triangle" />)}
                 {renderTabButton('Питання', 'questions', <FontAwesomeIcon icon="fa-solid fa-question" />)}
+                <Button
+                    children={"Ukr"}
+                    id={styles.ukrButton}
+                />
+                <Button
+                    children={"Eng"}
+                    id={styles.engButton}
+                />
             </div>
 
             <div className={styles.main_conteiner}>
-                {loading && <div className={styles.loading}>Завантаження...</div>}
 
                 {/* Головна */}
                 {activeTab === 'home' && (
@@ -460,6 +502,34 @@ const AdminHomePage = () => {
                                 ))}
                             </tbody>
                         </table>
+                        {/* Панель перегляду користувача */}
+                        {users.map((user) =>
+                            visiblePanel === `userView-${user.id}` && (
+                                <div className={styles.panel_view} key={`panel-user-${user.id}`}>
+                                    <h3>Користувач</h3>
+                                    <p><strong>ID:</strong> {user.id}</p>
+                                    <p><strong>Ім'я:</strong> {user.username}</p>
+                                    <p><strong>Email:</strong> {user.email}</p>
+                                    <p><strong>Телефон:</strong> {user.phone}</p>
+                                    <p><strong>Статус:</strong> {getStatusBadge(user.status)}</p>
+                                    <p><strong>Дата реєстрації:</strong> {user.createdAt}</p>
+                                    <div className={styles.actions}>
+                                        {user.status === 'Активний' ? (
+                                            <button className={styles.btn} style={{backgroundColor:"red"}} onClick={() => blockUser(user.id)}>
+                                                Заблокувати
+                                            </button>
+                                        ) : (
+                                            <button className={styles.btn} style={{backgroundColor:"green"}} onClick={() => unblockUser(user.id)}>
+                                                Розблокувати
+                                            </button>
+                                        )}
+                                        <button className={styles.btn} style={{backgroundColor:"#6c6a68"}} onClick={() => togglePanel(null)}>
+                                            Назад
+                                        </button>
+                                    </div>
+                                </div>
+                            )
+                        )}
                     </section>
                 )}
 
@@ -468,18 +538,18 @@ const AdminHomePage = () => {
                     <section className={styles.section}>
                         <header className={styles.header}>
                             <h1>Оголошення</h1>
-                            <button className={styles.refresh_btn} onClick={fetchAds}>
+                            <button className={styles.refresh_btn} onClick={() => (fetchAds())}>
                                 🔄 Оновити
                             </button>
                         </header>
                         <table className={styles.table}>
                             <thead>
                                 <tr>
-                                    <th>ID</th>
-                                    <th>Назва</th>
-                                    <th>Користувач</th>
-                                    <th>Статус</th>
-                                    <th>Дата</th>
+                                    <th onClick={() => fetchAds('id')}>ID</th>
+                                    <th onClick={() => fetchAds('productName')}>Назва</th>
+                                    <th onClick={() => fetchAds('contactName')}>Користувач</th>
+                                    <th onClick={() => fetchAds('status')}>Статус</th>
+                                    <th onClick={() => fetchAds('createdAt')}>Дата</th>
                                     <th>Дії</th>
                                 </tr>
                             </thead>
@@ -487,8 +557,8 @@ const AdminHomePage = () => {
                                 {ads.map((ad) => (
                                     <tr key={ad.id}>
                                         <td>{ad.id}</td>
-                                        <td>{ad.title}</td>
-                                        <td>{ad.username}</td>
+                                        <td>{ad.productName}</td>
+                                        <td>{ad.contactName}</td>
                                         <td>{getStatusBadge(ad.status)}</td>
                                         <td>{ad.createdAt}</td>
                                         <td>
@@ -504,25 +574,123 @@ const AdminHomePage = () => {
                         {/* Панель перегляду оголошення */}
                         {ads.map((ad) => 
                             visiblePanel === `adView-${ad.id}` && (
-                                <div className={styles.panel_view} key={`panel-${ad.id}`}>
-                                    <h3>Оголошення</h3>
-                                    <p><strong>ID:</strong> {ad.id}</p>
-                                    <p><strong>Назва:</strong> {ad.title}</p>
-                                    <p><strong>Користувач:</strong> {ad.username}</p>
-                                    <p><strong>Статус:</strong> {ad.status}</p>
-                                    <div className={styles.actions}>
-                                        <button className={styles.btn} style={{backgroundColor:"green"}} onClick={() => approveAd(ad.id)}>
-                                            Схвалити
-                                        </button>
-                                        <button className={styles.btn} style={{backgroundColor:"#e8d300"}} onClick={() => rejectAd(ad.id)}>
-                                            Відхилити
-                                        </button>
-                                        <button className={styles.btn} style={{backgroundColor:"red"}} onClick={() => blockAd(ad.id)}>
-                                            Заблокувати
-                                        </button>
-                                        <button className={styles.btn} style={{backgroundColor:"#6c6a68"}} onClick={() => togglePanel(null)}>
+                                <div className={styles.modal_overlay} key={`panel-adcomplaint-${ad.id}`}>
+                                    <div className={styles.panel_view} key={`panel-${ad.id}`}>
+                                        <h3>Оголошення</h3>
+                                        <div className={styles.adImages}>
+                                            {ad.images.map((ad_image) => 
+                                                <img src={ad_image} className={styles.viewImage} />
+                                            )}
+                                        </div>
+                                        <div className={styles.info}>
+                                            <p><strong>ID:</strong> {ad.id}</p>
+                                            <p><strong>Назва:</strong> {ad.productName}</p>
+                                            <p><strong>Ціна:</strong> {ad.price+' '+ad.currency}</p>
+                                            <p><strong>Категорія:</strong> {ad.category}</p>
+                                            <p><strong>Користувач:</strong> {'id: '+ad.author.id+' '+ad.contactName}</p>
+                                            <p><strong>Статус:</strong> {ad.status}</p>
+                                            <p><strong>Опис:</strong> {ad.description}</p>
+                                            <p><strong>Область:</strong> {ad.region}</p>
+                                            <p><strong>Місто:</strong> {ad.city}</p>
+                                        </div>
+                                        <div className={styles.actions}>
+                                        {/* PENDING_REVIEW: Схвалити/Відхилити */}
+                                        {ad.status === 'pending_review' && (
+                                            <>
+                                                <button
+                                                    className={styles.btn}
+                                                    style={{ backgroundColor: "green" }}
+                                                    // onClick={() => approveAd(ad.id)}
+                                                >
+                                                    Схвалити
+                                                </button>
+                                                <button
+                                                    className={styles.btn}
+                                                    style={{ backgroundColor: "#e8d300" }}
+                                                    // onClick={() => rejectAd(ad.id)}
+                                                >
+                                                    Відхилити
+                                                </button>
+                                            </>
+                                        )}
+
+                                        {/* ACTIVE: Заблокувати, Архівувати, Позначити як продане */}
+                                        {ad.status === 'active' && (
+                                            <>
+                                                <button
+                                                    className={styles.btn}
+                                                    style={{ backgroundColor: "red" }}
+                                                    // onClick={() => blockAd(ad.id)}
+                                                >
+                                                    Заблокувати
+                                                </button>
+                                                <button
+                                                    className={styles.btn}
+                                                    style={{ backgroundColor: "#888" }}
+                                                    // onClick={() => archiveAd(ad.id)}
+                                                >
+                                                    Архівувати
+                                                </button>
+                                                <button
+                                                    className={styles.btn}
+                                                    style={{ backgroundColor: "#007bff" }}
+                                                    // onClick={() => markAsSold(ad.id)}
+                                                >
+                                                    Позначити як продане
+                                                </button>
+                                            </>
+                                        )}
+
+                                        {/* INACTIVE: Активувати, Архівувати */}
+                                        {ad.status === 'inactive' && (
+                                            <>
+                                                <button
+                                                    className={styles.btn}
+                                                    style={{ backgroundColor: "green" }}
+                                                    // onClick={() => activateAd(ad.id)}
+                                                >
+                                                    Активувати
+                                                </button>
+                                                <button
+                                                    className={styles.btn}
+                                                    style={{ backgroundColor: "#888" }}
+                                                    // onClick={() => archiveAd(ad.id)}
+                                                >
+                                                    Архівувати
+                                                </button>
+                                            </>
+                                        )}
+
+                                        {/* SOLD: Архівувати */}
+                                        {ad.status === 'sold' && (
+                                            <button
+                                                className={styles.btn}
+                                                style={{ backgroundColor: "#888" }}
+                                                // onClick={() => archiveAd(ad.id)}
+                                            >
+                                                Архівувати
+                                            </button>
+                                        )}
+
+                                        {/* ARCHIVED: Активувати */}
+                                        {ad.status === 'archived' && (
+                                            <button
+                                                className={styles.btn}
+                                                style={{ backgroundColor: "green" }}
+                                                // onClick={() => activateAd(ad.id)}
+                                            >
+                                                Активувати
+                                            </button>
+                                        )}
+
+                                        <button
+                                            className={styles.btn}
+                                            style={{ backgroundColor: "#6c6a68" }}
+                                            onClick={() => togglePanel(null)}
+                                        >
                                             Назад
                                         </button>
+                                    </div>
                                     </div>
                                 </div>
                             )
@@ -530,12 +698,85 @@ const AdminHomePage = () => {
                     </section>
                 )}
 
-                {/* Скарги */}
-                {activeTab === 'complaints' && (
+                {/* Скарги на оголошення */}
+                {activeTab === 'advertisementComplaints' && (
                     <section className={styles.section}>
                         <header className={styles.header}>
-                            <h1>Скарги</h1>
-                            <button className={styles.refresh_btn} onClick={fetchComplaints}>
+                            <h1>Скарги на оголошення</h1>
+                            <button className={styles.refresh_btn} onClick={fetchAdvertisementComplaints}>
+                                🔄 Оновити
+                            </button>
+                        </header>
+                        <table className={styles.table}>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Від кого</th>
+                                    <th>На оголошення</th>
+                                    <th>Причина</th>
+                                    <th>Статус</th>
+                                    <th>Дії</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {advertisementComplaints.map((complaint) => (
+                                    <tr key={complaint.id}>
+                                        <td>{complaint.id}</td>
+                                        <td>
+                                            id:{complaint.fromUser.id}<br />
+                                            {complaint.fromUser.username}
+                                        </td>
+                                        <td>
+                                            id:{complaint.toAd.id}<br />
+                                            {complaint.toAd.title}
+                                        </td>
+                                        <td>{complaint.reason}</td>
+                                        <td>{getStatusBadge(complaint.status)}</td>
+                                        <td>
+                                            <button className={styles.btn} onClick={() => viewAdvertisementComplaint(complaint.id)}>
+                                                Переглянути
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+
+                        {/* Панель перегляду скарги на оголошення */}
+                        {advertisementComplaints.map((complaint) => 
+                            visiblePanel === `advertisementComplaintView-${complaint.id}` && (
+                                <div className={styles.modal_overlay} key={`panel-adcomplaint-${complaint.id}`}>
+                                    <div className={styles.panel_view}>
+                                        <h3>Скарга на оголошення</h3>
+                                        <p><strong>ID:</strong> {complaint.id}</p>
+                                        <p><strong>Від:</strong> {complaint.fromUser.username} (id:{complaint.fromUser.id})</p>
+                                        <p><strong>На оголошення:</strong> {complaint.toAd.title} (id:{complaint.toAd.id})</p>
+                                        <p><strong>Причина:</strong> {complaint.reason}</p>
+                                        <p><strong>Опис:</strong> {complaint.description}</p>
+                                        <div className={styles.actions}>
+                                            <button className={styles.btn} onClick={() => resolveAdvertisementComplaint(complaint.id)}>
+                                                Позначити як вирішене
+                                            </button>
+                                            <button className={styles.btn} style={{backgroundColor:"#e8d300"}} onClick={() => archiveAdvertisementComplaint(complaint.id)}>
+                                                Архівувати
+                                            </button>
+                                            <button className={styles.btn} style={{backgroundColor:"#6c6a68"}} onClick={() => togglePanel(null)}>
+                                                Назад
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            )
+                        )}
+                    </section>
+                )}
+
+                {/* Скарги на користувачів */}
+                {activeTab === 'userComplaints' && (
+                    <section className={styles.section}>
+                        <header className={styles.header}>
+                            <h1>Скарги на користувачів</h1>
+                            <button className={styles.refresh_btn} onClick={fetchUserComplaints}>
                                 🔄 Оновити
                             </button>
                         </header>
@@ -551,7 +792,7 @@ const AdminHomePage = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {complaints.map((complaint) => (
+                                {userComplaints.map((complaint) => (
                                     <tr key={complaint.id}>
                                         <td>{complaint.id}</td>
                                         <td>
@@ -565,7 +806,7 @@ const AdminHomePage = () => {
                                         <td>{complaint.reason}</td>
                                         <td>{getStatusBadge(complaint.status)}</td>
                                         <td>
-                                            <button className={styles.btn} onClick={() => viewComplaint(complaint.id)}>
+                                            <button className={styles.btn} onClick={() => viewUserComplaint(complaint.id)}>
                                                 Переглянути
                                             </button>
                                         </td>
@@ -574,21 +815,21 @@ const AdminHomePage = () => {
                             </tbody>
                         </table>
 
-                        {/* Панель перегляду скарги */}
-                        {complaints.map((complaint) => 
-                            visiblePanel === `complaintView-${complaint.id}` && (
-                                <div className={styles.panel_view} key={`panel-${complaint.id}`}>
-                                    <h3>Скарга</h3>
+                        {/* Панель перегляду скарги на користувача */}
+                        {userComplaints.map((complaint) => 
+                            visiblePanel === `userComplaintView-${complaint.id}` && (
+                                <div className={styles.panel_view} key={`panel-usercomplaint-${complaint.id}`}>
+                                    <h3>Скарга на користувача</h3>
                                     <p><strong>ID:</strong> {complaint.id}</p>
                                     <p><strong>Від:</strong> {complaint.fromUser.username} (id:{complaint.fromUser.id})</p>
                                     <p><strong>На:</strong> {complaint.toUser.username} (id:{complaint.toUser.id})</p>
                                     <p><strong>Причина:</strong> {complaint.reason}</p>
                                     <p><strong>Опис:</strong> {complaint.description}</p>
                                     <div className={styles.actions}>
-                                        <button className={styles.btn} onClick={() => resolveComplaint(complaint.id)}>
+                                        <button className={styles.btn} onClick={() => resolveUserComplaint(complaint.id)}>
                                             Позначити як вирішене
                                         </button>
-                                        <button className={styles.btn} style={{backgroundColor:"#e8d300"}} onClick={() => archiveComplaint(complaint.id)}>
+                                        <button className={styles.btn} style={{backgroundColor:"#e8d300"}} onClick={() => archiveUserComplaint(complaint.id)}>
                                             Архівувати
                                         </button>
                                         <button className={styles.btn} style={{backgroundColor:"#6c6a68"}} onClick={() => togglePanel(null)}>

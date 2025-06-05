@@ -3,11 +3,12 @@
 }
 
 
-.Advertisement_Conteiner{
+.Advertisement_Container{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
     width:100%;
+    gap:16px;
 }
 .advertisList h1 {
     text-align: left;
@@ -16,7 +17,7 @@
 
 
 @media (max-width: 1000px) {
-    .Advertisement_Conteiner {
+    .Advertisement_Container {
         display: flex;
         flex-wrap: wrap;
         max-width: 1000px;

@@ -12,11 +12,21 @@ export const advertisementService = {
 
   // Отримати всі оголошення з фільтрами та пагінацією
   getAdvertisements: async (params = {}) => {
-    const response = await api.get('/advertisement', {
+    const response = await api.get('/admin/get/ads', {
       params,
       withCredentials: true,
     })
     return response.data
+  },
+
+  getAdvertisementsAmount: async (id) => {
+    const response = await api.get(`/advertisement/adsCount/${id}`);
+    return response;
+  },
+
+  generateLink: async (id, link) => {
+    const response = await api.post(`/meet/generatelink/${id}`, {AdLink: link}, {withCredentials: true});
+    return response;
   },
 
   // Отримати оголошення за slug
@@ -261,6 +271,52 @@ export const advertisementService = {
   // Відновити з архіву
   unarchiveAdvertisement: async (id) => {
     const response = await api.patch(`/advertisement/${id}/unarchive`, {}, {
+      withCredentials: true,
+    })
+    return response.data
+  },
+
+
+
+  addUsercomplaint: async (id, dto) => {
+    const response = await api.post(`/usercomplaints/${id}`, {dto}, {
+      withCredentials: true,
+    })
+    return response.data
+  },
+
+  deleteUsercomplaint: async (id) => {
+    const response = await api.delete(`/usercomplaints/${id}`, {}, {
+      withCredentials: true,
+    })
+    return response.data
+  },
+
+  getAllUsercomplaint: async (id) => {
+    const response = await api.get(`/admin/get/usercomp`, {}, {
+      withCredentials: true,
+    })
+    return response.data
+  },
+
+
+
+  addAdvertisementcomplaint: async (id, dto) => {
+    const response = await api.post(`/advertisementcomplaints/${id}`, {dto}, {
+      withCredentials: true,
+    })
+    return response.data
+  },
+
+  deleteAdvertisementcomplaint: async (id) => {
+    const response = await api.delete(`/advertisementcomplaints/${id}`, {}, {
+      withCredentials: true,
+    })
+    return response.data
+  },
+
+  getAllAdvertisementcomplaint: async (id) => {
+    const response = await api.get(`/admin/get/adcomp`, {}, {
       withCredentials: true,
     })
     return response.data
