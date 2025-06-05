@@ -4,6 +4,44 @@
   align-items: center;
   min-height: 100vh;
   margin: 1em;
+  position: relative;
+}
+
+/* Стилі для банерів */
+.left_banner,
+.right_banner {
+  width: 120px;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  position: fixed;
+  top: 0;
+  z-index: 10;
+}
+
+.left_banner {
+  left: 0;
+}
+
+.right_banner {
+  right: 0;
+}
+
+.banner_image {
+  width: 100%;
+  max-width: 110px;
+  height: auto;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+  cursor: pointer;
+}
+
+.banner_image:hover {
+  transform: scale(1.02);
 }
 
 .search_card {
@@ -14,6 +52,7 @@
   max-width: 800px;
   width: 100%;
   text-align: left;
+  z-index: 1;
 }
 
 .search_title {
@@ -56,6 +95,18 @@
   text-align: center;
 }
 
+/* Адаптивність */
+@media (max-width: 1200px) {
+  .left_banner,
+  .right_banner {
+    width: 80px;
+  }
+  
+  .banner_image {
+    max-width: 70px;
+  }
+}
+
 @media (max-width: 1000px) {
   .search_card {
     padding: 20px;
@@ -78,15 +129,22 @@
 }
 
 @media (max-width: 768px) {
+  .left_banner,
+  .right_banner {
+    display: none;
+  }
+
   .advanced_search_page {
     padding: 20px 10px;
     align-items: flex-start;
+    margin: 0;
   }
 
   .search_card {
     padding: 15px;
     border-radius: 10px;
     box-shadow: none;
+    max-width: 100%;
   }
 
   .search_title {
@@ -102,5 +160,24 @@
   .search_thanks {
     font-size: 14px;
     line-height: 1.4;
+  }
+}
+
+@media (max-width: 480px) {
+  .search_card {
+    padding: 12px;
+  }
+
+  .search_title {
+    font-size: 22px;
+    margin-bottom: 15px;
+  }
+
+  .search_description {
+    margin-bottom: 20px;
+  }
+
+  .search_section {
+    margin-bottom: 20px;
   }
 }
