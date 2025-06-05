@@ -3,7 +3,7 @@
   width: 30%;
   height: 30px;
   border: none;
-  background-color: #0156ff;
+  background-color: #3300cf;
   color: #fff;
   transition: all 0.1s ease-in-out;
   outline: none;
@@ -14,9 +14,9 @@
   border-radius: 50px;
   width: 30%;
   height: 30px;
-  border: 3px solid #0156ff;
+  border: 3px solid #3300cf;
   background-color: #fff;
-  color: #0156ff;
+  color: #3300cf;
   transition: all 0.1s ease-in-out;
   background-color: rgba(194, 207, 255, 0.20); /* for auth pages*/
 }

@@ -1,5 +1,6 @@
 import React from 'react';
 import classes from '../../styles/AboutUsPage.module.css';
+import image from "../../media/teamPhoto.png"
 
 function AboutUsPage() {
     return (
@@ -7,11 +8,6 @@ function AboutUsPage() {
             <div className={classes.main_cont}>
                 <div className={classes.up_info}>
                     <h1>About BSE</h1>
-                    <img 
-                        src="https://via.placeholder.com/300x200.png?text=BSE+Platform" 
-                        alt="BSE team photo" 
-                        className={classes.photo} 
-                    />
                     <h2>BSE - онлайн платформа оголошень</h2>
                     <h3 className={classes.slogan}>Buy, Sell, Enjoy</h3>
                     <p>
@@ -25,6 +21,12 @@ function AboutUsPage() {
 
                 <div className={classes.team_section}>
                     <h2>Команда проєкту</h2>
+                    <img 
+                        src={image}
+                        alt="BSE team photo" 
+                        className={classes.photo} 
+                    />
+                    <p><strong>Ментор команди:</strong> Андрій Чорний</p>
                     <p><strong>Капітан команди:</strong> Віталій Струтинський — також Fullstack розробник</p>
                     <h3>Члени команди:</h3>
                     <ul>

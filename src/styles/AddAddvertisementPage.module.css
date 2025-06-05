@@ -138,7 +138,7 @@ body {
 }
 
 .text-gray-500 {
-  color: #64748b;
+  color: #3300cf;
 }
 
 .text-gray-400 {
@@ -146,12 +146,12 @@ body {
 }
 
 .text-blue-600 {
-  color: #2563eb;
+  color: #3300cf;
   font-weight: 600;
 }
 
 .text-blue-700 {
-  color: #1d4ed8;
+  color: #3300cf;
 }
 
 /* Buttons */
@@ -459,7 +459,7 @@ textarea::placeholder {
 
 /* Special Elements */
 .bg-blue-100 {
-  background: rgba(219, 234, 254, 0.8);
+  background: #3300cf2e;
   backdrop-filter: blur(10px);
 }
 

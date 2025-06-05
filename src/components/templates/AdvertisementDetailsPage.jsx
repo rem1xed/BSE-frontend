@@ -16,51 +16,62 @@ function AdvertisementDetailsPage() {
   const [error, setError] = useState(null);
   const [isFavorite, setIsFavorite] = useState(false);
   const [similarAds, setSimilarAds] = useState([]);
+  const [adsCount, setAdsCount] = useState(0);
 
   // Завантаження даних оголошення
   useEffect(() => {
     const fetchAdvertisement = async () => {
-      if (!id) return
-      
+      if (!id) return;
+
       try {
-        setLoading(true)
-        setError(null)
-        
-        // Завантажуємо основні дані оголошення
+        setLoading(true);
+        setError(null);
+
         const adData = await advertisementService.getAdvertisementBySlug(id);
-        const favData = await advertisementService.isFavorite(id);
         setAdvertisement(adData);
-        setIsFavorite(favData);
+        console.log(adData);
+        const userAdsCount = await advertisementService.getAdvertisementsAmount(adData.author.id)
+        setAdsCount(userAdsCount.data.total);
 
-        console.log(advertisement)
-        console.log(isFavorite)
-        // setAdvertisement({...adData});
-        // console.log(adData);
-        // console.log(advertisement);
-        // console.log(adData.images);
-        // setIsFavorite(adData.advertisement.isFavorite || false)
-        
-        // Збільшуємо кількість переглядів
-        // await advertisementService.incrementViews(id)
-        
-
-
-        // Завантажуємо схожі оголошення
-        // const similarData = await advertisementService.getSimilarAdvertisements(id, 4)
-        // setSimilarAds(similarData.advertisements || [])
-        
-
+        // ❗ Якщо користувач авторизований — запитуємо статус обраного
+        try {
+          const favData = await advertisementService.isFavorite(id);
+          setIsFavorite(favData);
+        } catch (err) {
+          // Мовчки ігноруємо помилку авторизації
+          if (err.response?.status !== 401) {
+            console.error('Помилка перевірки "в обраному":', err);
+          }
+        }
 
       } catch (err) {
-        console.error('Помилка завантаження оголошення:', err)
-        setError(err.response?.data?.message || 'Помилка завантаження даних')
+        console.error('Помилка завантаження оголошення:', err);
+        setError(err.response?.data?.message || 'Помилка завантаження даних');
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
-    }
+    };
 
-    fetchAdvertisement()
-  }, [id])
+    fetchAdvertisement();
+  }, [id]);
+
+
+  const generateMeetLink = async () => {
+    try {
+      const response = await advertisementService.generateLink(advertisement.author.id, window.location.href);
+      const meetUrl = response.data.meetingUri;
+
+      if (meetUrl) {
+        window.open(meetUrl, '_blank'); // відкриває правильну URL
+      } else {
+        console.error('Посилання не повернуто з бекенду');
+      }
+
+      console.log('Response:', response);
+    } catch (error) {
+      console.log('Помилка при створенні лінку:', error);
+    }
+  };
 
   // Обробка додавання/видалення з обраного
   const handleToggleFavorite = async () => {
@@ -152,13 +163,19 @@ function AdvertisementDetailsPage() {
   return (
     <main className={style.main_container}>
       <nav className={style.breadcrumb_navigation}>
-        <span onClick={() => navigate('/')}>Home</span>
-        <span>&rarr;</span>
-        <span onClick={() => navigate(`/category/${advertisement.category.id}`)}>
-          {advertisement.category.name}
+        <span
+          className={style.cursor}
+          onClick={() => navigate('/')}>
+          Home
         </span>
         <span>&rarr;</span>
-        <span>{advertisement.title}</span>
+        <span 
+          className={style.cursor}
+          onClick={() => navigate(`/category/${advertisement.category}`)}>
+          {String(advertisement.category).charAt(0).toUpperCase() + String(advertisement.category).slice(1)}
+        </span>
+        <span>&rarr;</span>
+        <span>{advertisement.productName}</span>
       </nav>
 
       <div className={style.page_content}>
@@ -230,7 +247,7 @@ function AdvertisementDetailsPage() {
                 </Button>
 
                 <Button 
-                onClick={() => navigate(`/messages/new?userId=${advertisement.author.id}`)}
+                onClick={() => generateMeetLink()}
                 id={style.googleMeetButton}>
                   Plan A Meet <img src={googleMeetImage} alt="" />
                 </Button>
@@ -279,7 +296,7 @@ function AdvertisementDetailsPage() {
               className={style.user_ads}
               onClick={() => navigate(`/user/${advertisement.author.id}/ads`)}
             >
-              Всі оголошення користувача ({advertisement.author?.adsCount || 0})
+              Всі оголошення користувача ({adsCount || 0})
             </p>
           </div>
         </div>
@@ -325,10 +342,6 @@ function AdvertisementDetailsPage() {
       )}
 
       <div className={style.product_stats}>
-        <div className={style.stat_item}>
-          <i className="fa-solid fa-eye"></i>
-          <span>Переглядів: {advertisement.views || 0}</span>
-        </div>
         <div className={style.stat_item}>
           <i className="fa-solid fa-clock"></i>
           <span>Оновлено: {formatDate(advertisement.updatedAt)}</span>

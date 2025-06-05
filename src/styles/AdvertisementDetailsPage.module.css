@@ -352,6 +352,13 @@ hr {
   height: 20px;
 }
 
+#googleMeetButton:hover,
+#googleMeetButton:focus{
+  color: #fff;
+  transform: scale(1.03);
+  border: none;
+}
+
 .user_member_since {
   margin-left: 20px;
 }
@@ -385,4 +392,8 @@ hr {
 #return_home:hover,
 #return_home:focus {
   width: 100%;
+}
+
+.cursor{
+  cursor: pointer;
 }
