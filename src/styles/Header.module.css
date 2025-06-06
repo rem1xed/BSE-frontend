@@ -790,3 +790,161 @@ header {
 .fadeOut {
     animation: fadeOut 0.25s ease-out forwards;
 }
+
+
+
+
+
+
+
+
+
+
+/* --- MOBILE FIRST --- */
+header {
+    display: flex;
+    flex-direction: column;
+    background-color: #3300cf;
+    width: 100%;
+}
+
+.mobile_header {
+    display: flex;
+    margin: 0 16px;
+    padding: 7px 0;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.BasicContent {
+    display: none;
+}
+
+.comunication {
+    display: none;
+}
+
+.search_bar {
+    display: none;
+}
+
+.dropdowns {
+    display: none;
+}
+
+.logo {
+    display: none;
+}
+
+.filter {
+    display: none;
+}
+
+/* --- DESKTOP --- */
+@media (min-width: 768px) {
+    .mobile_header {
+        display: none;
+    }
+    .BasicContent {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        padding: 10px 0;
+    }
+    .logo {
+        display: block;
+        font-size: 28px;
+        font-weight: 700;
+        margin-right: 24px;
+        color: #fff;
+        cursor: pointer;
+        text-decoration: none;
+    }
+    .search_bar {
+        display: flex;
+        width: 350px;
+        margin: 0 16px;
+    }
+    .dropdowns {
+        display: flex;
+        gap: 10px;
+        margin-left: 10px;
+    }
+    .comunication {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-left: 20px;
+    }
+    .filter {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background-color: #1b0264;
+        color: white;
+        border-radius: 8px;
+        font-weight: 700;
+        font-size: 16px;
+        cursor: pointer;
+        border: none;
+        justify-content: start;
+        padding: 6px 10px;
+        position: relative;
+        margin-left: 25px;
+        transition: background-color 0.2s;
+    }
+}
+
+/* --- SMALL DEVICES --- */
+@media (max-width: 480px) {
+    .mobile_header {
+        padding: 4px 4px;
+    }
+    .logo_header_mobile {
+        font-size: 18px;
+    }
+    .burgerMenu {
+        width: 100vw;
+        left: 0;
+    }
+    .userMenuMobile {
+        min-width: 120px;
+        max-width: 95vw;
+    }
+}
+
+
+
+
+@media (max-width: 767px) {
+    .search_bar,
+    .dropdowns,
+    .comunication,
+    .logo {
+        display: none !important;
+    }
+    .mobile_header {
+        display: flex !important;
+    }
+}
+@media (min-width: 768px) {
+    .mobile_header {
+        display: none !important;
+    }
+    .BasicContent,
+    .search_bar,
+    .dropdowns,
+    .comunication,
+    .logo {
+        display: flex !important;
+    }
+}
+
+
+
+
+
+.burgerMenu {
+    overflow-x: auto;
+}

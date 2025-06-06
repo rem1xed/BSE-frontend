@@ -323,7 +323,6 @@ function PreferencesContainer({ style }) {
       setIsLoading(true);
       try {
         const data = await settings.get_targeting_parameters();
-        console.log('Server response:', data);
         if (!data) {
           setPrefData({
             age: "",
@@ -406,15 +405,12 @@ function PreferencesContainer({ style }) {
         facebookLink: prefData.facebookLink || "",
       };
       
-      console.log('Frontend data to save:', dataToSave);
       const response = await settings.save_targeting_parameters(dataToSave);
-      console.log('Server response:', response);
       setSaveStatus({ type: "success", message: "Налаштування збережено успішно!" });
       setTimeout(() => {
         setSaveStatus({ type: "", message: "" });
       }, 3000);
     } catch (error) {
-      console.error('Save error:', error);
       setSaveStatus({ type: "error", message: "Помилка збереження налаштувань" });
     }
   };

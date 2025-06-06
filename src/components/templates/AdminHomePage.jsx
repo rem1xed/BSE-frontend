@@ -113,11 +113,9 @@ const AdminHomePage = () => {
         };
 
         const adsData = await advertisementService.getAdvertisements(params);
-        console.log(adsData)
         setAds(adsData);
 
     } catch (error) {
-        console.error(error);
     } finally {
         setLoading(false);
     }
@@ -174,7 +172,6 @@ const AdminHomePage = () => {
 
         setAdvertisementComplaints(response.data);
     } catch (error) {
-        console.error(error);
         setAdvertisementComplaints([]);
     } finally {
         setLoading(false);
@@ -224,7 +221,6 @@ const AdminHomePage = () => {
 
         setUserComplaints(response.data);
     } catch (error) {
-        console.error(error);
         setUserComplaints([]);
     } finally {
         setLoading(false);

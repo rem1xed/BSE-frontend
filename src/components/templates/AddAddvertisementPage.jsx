@@ -62,7 +62,6 @@ function AddAddvertisementPage() {
           phone: userData?.phone
         }))
       } catch (error) {
-        console.error('Error fetching user data:', error)
       } finally {
         setLoading(false)
       }
@@ -88,7 +87,6 @@ function AddAddvertisementPage() {
 
   async function fetchUserData () {
     const user = await authService.getUser();
-    console.log(user);
   }
 
   const handleDeleteImage = (id: string) => {
@@ -118,7 +116,6 @@ function AddAddvertisementPage() {
     form.append("city", formData.city);
     form.append("region", formData.region);
 
-    console.log(formData.currency);
 
     formData.images.forEach((img) => {
       form.append("images", img.file); // бекенд має обробляти як масив файлів
@@ -128,9 +125,7 @@ function AddAddvertisementPage() {
       await advertisementService.createAdvertisement(form);
       setSent(true);
       setShowSuccessModal(true);
-      // console.log("Оголошення успішно створено");
     } catch (err) {
-      console.error("Помилка при створенні оголошення:", err);
     }
   };
 

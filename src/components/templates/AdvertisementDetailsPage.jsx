@@ -4,6 +4,8 @@ import style from '../../styles/AdvertisementDetailsPage.module.css'
 import Button from '../atoms/Button'
 import { advertisementService } from '../../api/advertisementService'
 import googleMeetImage from '../../assets/advertisement/google_meet_48.png'
+import { createChat } from '../../api/chatService'
+import DOMPurify from 'dompurify';
 
 function AdvertisementDetailsPage() {
   const { id } = useParams();
@@ -29,7 +31,6 @@ function AdvertisementDetailsPage() {
 
         const adData = await advertisementService.getAdvertisementBySlug(id);
         setAdvertisement(adData);
-        console.log(adData);
         const userAdsCount = await advertisementService.getAdvertisementsAmount(adData.author.id)
         setAdsCount(userAdsCount.data.total);
 
@@ -40,12 +41,10 @@ function AdvertisementDetailsPage() {
         } catch (err) {
           // Мовчки ігноруємо помилку авторизації
           if (err.response?.status !== 401) {
-            console.error('Помилка перевірки "в обраному":', err);
           }
         }
 
       } catch (err) {
-        console.error('Помилка завантаження оголошення:', err);
         setError(err.response?.data?.message || 'Помилка завантаження даних');
       } finally {
         setLoading(false);
@@ -55,6 +54,20 @@ function AdvertisementDetailsPage() {
     fetchAdvertisement();
   }, [id]);
 
+  const handleCreateChat = async () => {
+    try {
+      // Не дозволяємо створювати чат із самим собою
+      if (advertisement.author.id === advertisement.currentUserId) {
+        alert("Ви не можете створити чат із самим собою");
+        return;
+      }
+      const chat = await createChat(advertisement.id, advertisement.author.id);
+      // Переходимо у вікно чату (залежить від вашого роутінгу)
+      navigate(`/chats/${chat.chatId}`);
+    } catch (err) {
+      alert("Не вдалося створити чат: " + (err.response?.data?.message || err.message));
+    }
+  };
 
   const generateMeetLink = async () => {
     try {
@@ -64,12 +77,9 @@ function AdvertisementDetailsPage() {
       if (meetUrl) {
         window.open(meetUrl, '_blank'); // відкриває правильну URL
       } else {
-        console.error('Посилання не повернуто з бекенду');
       }
 
-      console.log('Response:', response);
     } catch (error) {
-      console.log('Помилка при створенні лінку:', error);
     }
   };
 
@@ -86,7 +96,6 @@ function AdvertisementDetailsPage() {
         setIsFavorite(true)
       }
     } catch (err) {
-      console.error('Помилка зміни статусу обраного:', err)
     }
   }
 
@@ -145,7 +154,6 @@ function AdvertisementDetailsPage() {
   }
 
   if (error?.response?.status === 400) {
-    console.log(advertisement);
     return (
       <main className={style.main_error_container}>
         <div className={style.not_found}>
@@ -241,10 +249,10 @@ function AdvertisementDetailsPage() {
                 </Button>
 
                 <Button 
-                onClick={() => navigate(`/messages/new?userId=${advertisement.author.id}`)}
+                onClick={handleCreateChat}
                 id="messageButton">
-                  Message
-                </Button>
+                Надіслати повідомлення
+              </Button>
 
                 <Button 
                 onClick={() => generateMeetLink()}
@@ -306,7 +314,7 @@ function AdvertisementDetailsPage() {
         <h1>Опис товару</h1>
         <div 
           className={style.description_content}
-          dangerouslySetInnerHTML={{ __html: advertisement.description }}
+          dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(advertisement.description) }}
         />
         
         {advertisement.specifications && Object.keys(advertisement.specifications).length > 0 && (

@@ -10,7 +10,6 @@ const settings = {
       const response = await api.patch('/user/settings', formData, {withCredentials: true});
       return response.data;
     } catch (error) {
-      console.error('Помилка збереження параметрів:', error);
       throw error;
     }
   },
@@ -20,7 +19,6 @@ const settings = {
       const response = await api.get("/user/settings", {withCredentials: true});
       return response.data;
     } catch (error) {
-      console.error('Помилка отримання параметрів:', error);
       return {
         age: '',
         country: '',

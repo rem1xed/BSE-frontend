@@ -16,7 +16,6 @@ const ProtectedRoute = ({ children, linkPart, redirectTo }) => {
         }
         setIsAuth(res);
       } catch (err) {
-        console.log("Користувач не авторизований");
         setIsAuth(false);
       }
     };
