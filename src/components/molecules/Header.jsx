@@ -9,6 +9,8 @@ import { faMoon, faHeart, faUser } from "@fortawesome/free-regular-svg-icons"; /
 import { faLaptop, faMobileScreen, faBabyCarriage, faSuitcase, faDog, faCouch, faScrewdriverWrench, faKey, faShirt, faVolleyball } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
+
 
 // або для деяких з них — solid:
 import { faUser as faUserSolid, faHeart as faHeartSolid, faComments as faCommentsSolid } from "@fortawesome/free-solid-svg-icons";
@@ -39,9 +41,7 @@ function Header() {
         setIsUser({
           firstName: user.firstName
         });
-        console.log("User loaded:", user);
       } catch (error) {
-        console.error("Failed to load user:", error);
       }
     }
   };
@@ -66,11 +66,6 @@ function Header() {
   
   useEffect(() => {
     function handleClickOutside(event) {
-      console.log("clicked:", event.target);
-      console.log(
-        "insideMenu?", userMenuRef.current?.contains(event.target),
-        "insideBtn?", userButtonRef.current?.contains(event.target)
-      );
       if (
         userMenuRef.current &&
         !userMenuRef.current.contains(event.target) &&
@@ -96,7 +91,12 @@ function Header() {
       document.removeEventListener("mousedown", handleClickOutsideMobile);
     };
   }, []);
-  
+
+  const { i18n } = useTranslation();
+
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+  };
   
   
   const navigate = useNavigate();
@@ -240,12 +240,12 @@ function Header() {
   <button className={style.iconButton_mob}><FontAwesomeIcon icon={faHeart} className={style.icon_com_mob} /></button>
 
   <button onClick={toggleUserMenuMobile} className={style.iconButton_mob}>
-    <FontAwesomeIcon icon={isUser ? faUserSolid : faUser} className={style.icon_com_mob_btn} />
+    <FontAwesomeIcon icon={isUser && isUser.firstName ? faUserSolid : faUser} className={style.icon_com_mob_btn} />
   </button>
 
   {isUserMenuMobileOpen && (
     <div ref={userMenuMobileRef} className={`${style.userMenuMobile} ${style.fadeIn}`}>
-      {isUser ? (
+      {isUser && isUser.firstName ? (
         <>
           <div
             className={style.userMenuHeader}
@@ -308,9 +308,12 @@ function Header() {
         
         <button onClick={() => {navigate('/create')}} className={style.filter}>Create advertisement</button>
           <div className={style.dropdowns}>
-            <select>
-              <option value={"ENG"}>Eng</option>
-              <option value={"UKR"}>Ukr</option>
+            <select
+              value={i18n.language}
+              onChange={e => changeLanguage(e.target.value)}
+            >
+              <option value="ua">Ukr</option>
+              <option value="en">Eng</option>
             </select>
             <select>
               <option value={"UAH"}>UAH (₴)</option>
@@ -332,13 +335,13 @@ function Header() {
          className={style.iconButton}
          aria-expanded={isUserMenuOpen}
        >
-    <FontAwesomeIcon icon={isUser ? faUserSolid : faUser} className={style.icon_com} />
+    <FontAwesomeIcon icon={isUser && isUser.firstName ? faUserSolid : faUser} className={style.icon_com} />
   </button>
 
   {/* Меню користувача */}
   {isUserMenuOpen && (
   <div ref={userMenuRef} className={`${style.userMenu} ${style.fadeIn}`}>
-    {isUser ? (
+    {isUser && isUser.firstName ? (
       <>
         <div
           className={style.userMenuHeader}

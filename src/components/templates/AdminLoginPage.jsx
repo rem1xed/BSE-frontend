@@ -77,18 +77,14 @@ export default function AdminLoginPage() {
     try {
 
       const userData = await authService.adminLogin(formData.email, formData.password, formData.key);
-      console.log('Успішний вхід:', userData);
 
       // Перевіряємо авторизацію після входу
       if (isAdminAuthenticated()) {
-        console.log('Перенаправлення на /account після успішного входу');
         navigate('/admin-home');
       } else {
-        console.error('❌ Токен не збережено після входу');
         setApiError('Помилка авторизації: не вдалося зберегти дані сесії');
       }
     } catch (err) {
-      console.error('Помилка входу:', err);
       setApiError(err.response?.data?.message || 'Невірний логін або пароль');
     } finally {
       setLoading(false);

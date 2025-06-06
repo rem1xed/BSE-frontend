@@ -63,9 +63,7 @@ const authService = {
     try {
       await api.post('/auth/logout', {}, { withCredentials: true });
     } catch (err) {
-      console.warn('Logout error:', err);
     }
-    console.log('Вихід виконано успішно');
     return true;
   },
 
@@ -73,9 +71,7 @@ const authService = {
     try {
       await api.post('/admin/logout', {}, { withCredentials: true });
     } catch (err) {
-      console.warn('Logout error:', err);
     }
-    console.log('Вихід виконано успішно');
     return true;
   },
 

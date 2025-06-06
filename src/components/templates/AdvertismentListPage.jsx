@@ -3,7 +3,7 @@ import Footer from '../molecules/Footer';
 import Advertisement from '../molecules/Advertisement';
 import classes from '../../styles/AdvertismentListPage.module.css';
 import axios from 'axios';
-import { BaseUrl } from '../../api/api';
+import AdBanner from '../../media/Ad_Banner.png';
 
 function AdvertismentListPage() {
   const [ads, setAds] = useState([]);
@@ -18,8 +18,6 @@ function AdvertismentListPage() {
     try {
       const res = await axios.get(`http://localhost:1488/advertisement?page=${page}&limit=6`);
       const newAds = res.data.data;
-      console.log(newAds)
-      console.log('Завантажено оголошень:', newAds.length, 'на сторінці', page);
 
       if (newAds.length === 0) {
         setHasMore(false);
@@ -40,7 +38,6 @@ function AdvertismentListPage() {
         }
       }
     } catch (error) {
-      console.error('Помилка при завантаженні оголошень:', error);
     } finally {
       setLoading(false);
     }
@@ -66,6 +63,17 @@ function AdvertismentListPage() {
 
   return (
     <div className={classes.Page}>
+
+      {/* Лівий банер */}
+      <div className={classes.left_banner}>
+        <img 
+          src={AdBanner} 
+          alt="Advertisement" 
+          className={classes.banner_image} 
+          onClick={() => window.open('https://example.com', '_blank')}
+        />
+      </div>
+
       <div className={classes.advertisList}>
         <h1>Advertisements</h1>
         <div className={classes.Advertisement_Container}>
@@ -82,8 +90,18 @@ function AdvertismentListPage() {
           ))}
         </div>
         {loading && <p>Завантаження...</p>}
-        {!hasMore && ads.length > 0 && <p>Це всі оголошення 🙂</p>}
-        {!hasMore && ads.length === 0 && <p>Оголошень не знайдено</p>}
+        {!hasMore && ads.length > 0 && <p>All advertisements 🙂</p>}
+        {!hasMore && ads.length === 0 && <p>Advertisements not found</p>}
+      </div>
+
+      {/* Правий банер */}
+      <div className={classes.right_banner}>
+        <img 
+          src={AdBanner} 
+          alt="Advertisement" 
+          className={classes.banner_image} 
+          onClick={() => window.open('https://example.com', '_blank')}
+        />
       </div>
     </div>
   );

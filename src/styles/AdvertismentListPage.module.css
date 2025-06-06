@@ -1,3 +1,41 @@
+/* Стилі для банерів */
+.left_banner,
+.right_banner {
+    width: 120px;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    position: fixed;
+    top: 0;
+    z-index: 10;
+}
+
+.left_banner {
+    left: 0;
+}
+
+.right_banner {
+    right: 0;
+}
+
+.banner_image {
+    width: 100%;
+    max-width: 110px;
+    height: auto;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+    cursor: pointer;
+}
+
+.banner_image:hover {
+    transform: scale(1.02);
+}
+
+
 .advertisList{
     width: 100%;
 }

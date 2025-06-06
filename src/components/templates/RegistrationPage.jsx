@@ -104,7 +104,6 @@ export default function RegistrationPage() {
                 lastName: formData.lastName
             };
             
-            console.log('Sending data:', userData); // Додаємо для дебагу
             
             try {
                 await authService.registerUser(userData);
@@ -124,7 +123,6 @@ export default function RegistrationPage() {
                 }
             });
         } catch (err) {
-            console.error("Registration error:", err.response?.data || err);
             
             if (err.response?.data?.message) {
                 // Обробляємо різні типи помилок від бекенду

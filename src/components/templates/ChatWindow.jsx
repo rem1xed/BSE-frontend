@@ -1,54 +1,60 @@
-import { useState } from "react";
-import "../../styles/ChatList.css"
-
-const allMessages = {
-  Ihor: [
-    { sender: "Ihor", icon: "🧑‍💼", text: "Hello this is your advertisement?" },
-    { sender: "user1", icon: "🌷", text: "Yeah it's mine" },
-    { sender: "Ihor", icon: "🧑‍💼", text: "could you sell it a little cheaper, 150hrn less?" },
-    { sender: "user1", icon: "🌷", text: "Yes i think it's a good idea" },
-  ],
-  Roman: [{ sender: "Roman", icon: "🌐", text: "Hi, is the product still available?" }],
-  Petro: [{ sender: "Petro", icon: "😇", text: "Hey, I want to buy it tomorrow!" }],
-  user1: [{ sender: "user1", icon: "🌷", text: "Ok!" }],
-};
+import { useState, useEffect, useRef } from "react";
+import { getChatMessages, sendMessage } from "../../api/chatService";
+import "../../styles/ChatList.css";
 
 function ChatWindow({ selectedUser }) {
-  const [messages, setMessages] = useState(allMessages[selectedUser] || []);
+  const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
+  const messagesEndRef = useRef(null);
 
-  const handleSendMessage = () => {
-    if (newMessage.trim() !== "") {
-      const newMsg = {
-        sender: "user1",
-        icon: "🌷",
-        text: newMessage,
-      };
-      setMessages([...messages, newMsg]);
-      setNewMessage(""); 
+  useEffect(() => {
+    if (!selectedUser) return;
+    getChatMessages(selectedUser.chatId)
+      .then(setMessages)
+      .catch(() => setMessages([]));
+  }, [selectedUser]);
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
+  const handleSendMessage = async () => {
+    if (newMessage.trim() === "" || !selectedUser) return;
+    const messageToSend = newMessage;
+    setNewMessage("");
+    console.log(messageToSend)
+    
+    try {
+      const sentMessage = await sendMessage({ chatId: selectedUser.chatId, message: messageToSend });
+      setMessages(prev => [...prev, sentMessage]);
+
+    } catch (error) {
+      // обробка помилки
     }
   };
+
 
   return (
     <main className="chat-main">
       <div className="chat-messages">
         {messages.map((msg, index) => (
-          <div className="message" key={index}>
-            <span className="sender">{msg.icon} {msg.sender}:</span> {msg.text}
+          <div className="message" key={msg.messageId || index}>
+            <span className="sender">{msg.senderName}:</span> {msg.message}
           </div>
         ))}
+        <div ref={messagesEndRef} />
       </div>
-
       <div className="message-input">
         <input
           type="text"
           value={newMessage}
-          onChange={(e) => setNewMessage(e.target.value)}
+          onChange={e => setNewMessage(e.target.value)}
           placeholder="Send a message"
+          onKeyDown={e => e.key === "Enter" && handleSendMessage()}
         />
         <button className="btn" onClick={handleSendMessage}>
-    <img src={`${process.env.PUBLIC_URL}/photo-chat/btnn.png`} alt="send" />
-  </button>
+          <img src={`${process.env.PUBLIC_URL}/photo-chat/btnn.png`} alt="send" />
+        </button>
       </div>
     </main>
   );
